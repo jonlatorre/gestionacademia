@@ -1,0 +1,78 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+### BEGIN LICENSE
+# This file is in the public domain
+### END LICENSE
+
+import sys
+import os
+import gtk
+
+import gettext
+from gettext import gettext as _
+gettext.textdomain('gestionacademia')
+
+# optional Launchpad integration
+# this shouldn't crash if not found as it is simply used for bug reporting
+try:
+    import LaunchpadIntegration
+    launchpad_available = True
+except:
+    launchpad_available = False
+
+# Add project root directory (enable symlink, and trunk execution).
+PROJECT_ROOT_DIRECTORY = os.path.abspath(
+    os.path.dirname(os.path.dirname(os.path.realpath(sys.argv[0]))))
+
+if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'gestionacademia'))
+    and PROJECT_ROOT_DIRECTORY not in sys.path):
+    sys.path.insert(0, PROJECT_ROOT_DIRECTORY)
+    os.putenv('PYTHONPATH', PROJECT_ROOT_DIRECTORY) # for subprocesses
+
+def notificar_fallo(exc_type, exc_value, exc_traceback):
+    from gestionacademia.utils._global import mostrar_aviso, pedir_confirmacion, enviar_informe_fallo
+    log.critical('UNCAUGHT EXCEPTION %r: %s' % (exc_type, traceback.format_tb(exc_traceback)))
+    print traceback.format_tb(exc_traceback)
+    if pedir_confirmacion("Ha ocurrido un error. ¿Quiere notificarlo al desarrollador?","Fallo"):
+        enviar_informe_fallo()
+        
+if __name__ == "__main__":
+    # Support for command line options.
+    import logging
+    import optparse
+    parser = optparse.OptionParser(version="%prog %ver")
+    parser.add_option(
+        "-v", "--verbose", action="store_true", dest="verbose",
+        help=_("Show debug messages"))
+    (options, args) = parser.parse_args()
+
+    # Set the logging level to show debug messages.
+    if options.verbose:
+        logging.basicConfig(format='%(asctime)s - %(levelname)s: %(message)s',level=logging.DEBUG)
+        logging.debug('logging enabled')
+    else:
+        logging.basicConfig(format='%(asctime)s - %(levelname)s: %(message)s',filename='debug.log',level=logging.DEBUG)
+    # Run the application.
+    from gestionacademia.models.gestionacademia_model import GestionacademiaModel
+    from gestionacademia.controllers.gestionacademia_ctrl import GestionacademiaCtrl
+    from gestionacademia.views.gestionacademia_view import GestionacademiaView
+
+    import logging
+    import sys
+    import traceback
+
+
+    log = logging.getLogger()
+
+    sys.excepthook = notificar_fallo
+
+
+    m = GestionacademiaModel()
+    v = GestionacademiaView()
+    c = GestionacademiaCtrl(m, v)
+
+    logging.debug("Lanzamos el programa")
+
+    gtk.main()
+
+    logging.debug("Salimos del programa de manera correcta")
