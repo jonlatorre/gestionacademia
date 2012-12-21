@@ -271,7 +271,7 @@ class GrupoModel (Model):
         print "Imprimiendo las planillas del mes %s"%mes
         num = 0
         ano = date.today().year
-	#FIXME esto estaría mejor en el controlador o en la vista
+        #FIXME esto estaría mejor en el controlador o en la vista
         if mes == 1:
             print "Estamos trabajando cone l mes de enero!"
             res = pedir_confirmacion("Hemos detectado que quieres imprimir las notas de Enero, ¿quieres que sea el mes de Enero de %s ?"%(ano+1),"¿Usar el año que viene?")

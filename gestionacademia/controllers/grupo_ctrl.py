@@ -168,6 +168,11 @@ class GrupoCtrl (Controller):
     def on_cb_mes_asistencia_changed(self,widget):
         mes = cb_get_active(self.view['cb_mes_asistencia'])
         ano = date.today().year
+        if mes == 1:
+            print "Estamos trabajando cone l mes de enero!"
+            res = pedir_confirmacion("Hemos detectado que quieres imprimir las notas de Enero, ¿quieres que sea el mes de Enero de %s ?"%(ano+1),"¿Usar el año que viene?")
+            if res:
+                ano = ano + 1;
         self.model.grupo.imprimir_planilla_asistencia(ano,mes)
         mostrar_aviso("Impresa la planilla de asistencia para el mes %s/%s del grupo %s"%
             (mes,ano,self.model.grupo.nombre),"Impresion terminada")
