@@ -1,0 +1,1003 @@
+
+Bienvenido 
+==========
+Bienvenido a Microsoft(r) MS-DOS(r), el sistema operativo m s utilizado por 
+usuarios de PC. Esta versi¢n de MS-DOS incluye muchas caracter¡sticas 
+nuevas que transformar n su equipo en una herramienta poderosa para uso 
+comercial o personal.  
+
+Este archivo, el Suplemento del Manual del usuario de Microsoft MS-DOS, 
+describe brevemente caracter¡sticas nuevas de MS-DOS 6.22 y explica 
+c¢mo utilizar la compresi¢n integrada de DriveSpace de Microsoft.  
+
+Si todav¡a no tiene instalada esta versi¢n de MS-DOS en su equipo, 
+consulte el cap¡tulo "Introducci¢n" del Manual del usuario de Microsoft 
+MS-DOS para obtener informaci¢n sobre c¢mo utilizar el programa de 
+instalaci¢n.  
+
+
+Caracter¡sticas nuevas de MS-DOS 6.22 
+=====================================
+MS-DOS 6.22 incluye DriveSpace de Microsoft, una compresi¢n de disco 
+integrada que aumenta el espacio disponible en el disco mediante la 
+compresi¢n de archivos. DriveSpace resulta similar a DoubleSpace, 
+incluido con algunas versiones anteriores de MS-DOS; sin embargo, 
+DriveSpace almacena la informaci¢n comprimida en un formato diferente. 
+Para obtener m s informaci¢n acerca de DriveSpace, consulte la secci¢n 
+siguiente. (Si est  utilizando actualmente DoubleSpace, escriba HELP 
+DBLSPACE a continuaci¢n del s¡mbolo del sistema de MS-DOS para obtener 
+informaci¢n sobre el uso de DoubleSpace con MS-DOS 6.22.) 
+
+DriveSpace de MS-DOS 6.22 tambi‚n incluye varias caracter¡sticas nuevas 
+de seguridad y comodidad que no estaban en DoubleSpace de MS-DOS 6. 
+Para obtener m s informaci¢n, escriba HELP WHATSNEW a continuaci¢n del 
+s¡mbolo del sistema de MS-DOS y presione ENTRAR a continuaci¢n. 
+
+Para obtener informaci¢n acerca de otras caracter¡sticas nuevas de MS-
+DOS, consulte el cap¡tulo "Bienvenido" del Manual del usuario de 
+Microsoft MS-DOS o escriba HELP WHATSNEW a continuaci¢n del s¡mbolo 
+del sistema de MS-DOS y presione ENTRAR a continuaci¢n. 
+ 
+
+Liberar espacio en el disco con DriveSpace 
+==========================================
+DriveSpace libera espacio en el disco duro y en disquetes mediante la 
+compresi¢n de los datos que contengan. DriveSpace es f cil de instalar y de 
+utilizar. Para obtener instrucciones sobre la instalaci¢n de DriveSpace, 
+consulte "Instalaci¢n de DriveSpace" m s adelante en este archivo. Despu‚s 
+de instalar DriveSpace, el disco tendr  de un 50 a un 100 por ciento m s 
+de espacio libre.  
+
+Despu‚s de instalar DriveSpace, podr  mantener las unidades comprimidas 
+utilizando el programa de mantenimiento de pantalla completa de 
+DriveSpace o escribiendo comandos a continuaci¢n del s¡mbolo del 
+sistema de MS-DOS. Para obtener informaci¢n acerca del programa de 
+DriveSpace para administrar unidades comprimidas, consulte "Uso 
+de DriveSpace para administrar unidades comprimidas" posteriormente en 
+este archivo. Para obtener m s informaci¢n acerca de la administraci¢n de 
+unidades comprimidas desde el s¡mbolo del sistema de MS-DOS, escriba 
+HELP DRVSPACE a continuaci¢n del s¡mbolo del sistema. Para obtener 
+informaci¢n sobre c¢mo localizar errores de disco en una unidad 
+comprimida, escriba HELP SCANDISK a continuaci¢n del s¡mbolo del sistema 
+de MS-DOS. 
+
+Tambi‚n podr  utilizar DriveSpace para comprimir disquetes, unidades de 
+medios reemplazables o unidades de disco duro adicionales. Para obtener 
+m s informaci¢n, consulte "Compresi¢n de unidades adicionales" 
+posteriormente en este archivo.  
+
+El resto de este archivo explica c¢mo instalar y utilizar DriveSpace.  
+
+
+Obtener Ayuda 
+=============
+DriveSpace incluye ayuda extensa en pantalla para comandos, cuadros de 
+di logo y procedimientos.  
+
+Para obtener ayuda mientras se ejecuta DriveSpace:
+
+ *  Presione F1 cuando se presente una pantalla, cuadro de di logo o 
+    mensaje de error de DriveSpace.  
+ 
+Para obtener ayuda sobre el comando DRVSPACE:
+
+ *  Escriba HELP DRVSPACE a continuaci¢n del s¡mbolo del sistema.  
+ 
+ 
+Instalar DriveSpace 
+===================
+Cuando ejecute DriveSpace por primera vez, se iniciar  la instalaci¢n de 
+DriveSpace. La instalaci¢n de DriveSpace comprime los datos en la unidad 
+que seleccione. Despu‚s de que la instalaci¢n de DriveSpace se haya 
+completado, su disco tendr  de un 50 a un 100 por ciento m s de espacio 
+libre que antes.  
+ 
+Nota: Despu‚s de ejecutar la instalaci¢n de DriveSpace, no podr  utilizar el 
+      programa Desinstalar para restaurar su versi¢n anterior de DOS. No 
+      instale DriveSpace si desea poder utilizar el programa Desinstalar.  
+ 
+Durante la instalaci¢n de DriveSpace, podr  seleccionar "Instalaci¢n 
+r pida" o "Instalaci¢n personalizada". Para comprimir los archivos 
+existentes en la unidad C y hacer que DriveSpace determine la 
+configuraci¢n de compresi¢n por usted, elija "Instalaci¢n r pida". Para 
+comprimir una unidad de disco duro distinta de C o para utilizar el espacio 
+vac¡o en una unidad existente para crear una nueva unidad comprimida, 
+elija "Instalaci¢n personalizada". Cuando utilice la instalaci¢n 
+personalizada, podr  determinar usted mismo la configuraci¢n de compresi¢n. 
+Para obtener m s informaci¢n acerca de la ejecuci¢n de la instalaci¢n 
+personalizada, consulte "Uso de la instalaci¢n personalizada" 
+posteriormente en este archivo.  
+
+La secci¢n siguiente explica cada m‚todo de instalaci¢n. 
+
+
+Usar la instalaci¢n r pida 
+--------------------------
+Instalaci¢n r pida es la manera m s f cil de instalar DriveSpace. Esta 
+instalaci¢n comprime los archivos existentes en la unidad C. Para 
+comprimir los archivos en una unidad que no sea la unidad C, use la 
+Instalaci¢n personalizada. Para obtener m s informaci¢n, consulte la 
+siguiente secci¢n. 
+ 
+Nota: Antes de ejecutarn la instalaci¢n r pida, deber  hacer una copia de 
+      seguridad de los archivos de la unidad C. Para obtener informaci¢n 
+      acerca de Copia de seguridad (Backup) de Microsoft, consulte el 
+      cap¡tulo "Administraci¢n de su sistema" del Manual del usuario de 
+      Microsoft MS-DOS.  
+ 
+Para instalar DriveSpace usando la Instalaci¢n r pida:
+
+1. Salga de todos los programas que se est‚n ejecutando (incluyendo 
+   Microsoft Windows).  
+
+   Si ‚sta conectado a una red, inicie el software de red y con‚ctese a las 
+   unidades que use habitualmente.  
+ 
+2. Escriba lo siguiente a continuaci¢n del s¡mbolo del sistema:  
+
+       DRVSPACE  
+
+   Aparecer  la pantalla Bienvenido.  
+	
+3. Para continuar DriveSpace, presione ENTRAR. 
+
+   DriveSpace mostrar  una pantalla que le pedir  que elija entre 
+   "Instalaci¢n r pida" e "Instalaci¢n personalizada"  
+
+4. Para elegir "Instalaci¢n r pida", presione la tecla ENTRAR.  
+
+   DriveSpace mostrar  una pantalla de confirmaci¢n. que da un c lculo 
+   aproximado de la cantidad de tiempo que llevar  comprimir la unidad C.  
+	
+5. Para comprimir la unidad C, presione la tecla C.  
+
+   DriveSpace comprueba que la unidad C no tenga errores, y despu‚s 
+   reconstruye y comprime la unidad C. Este proceso puede tardar desde 
+   varios minutos hasta varias horas, dependiendo de la velocidad de su 
+   disco duro, su procesador y la cantidad de datos que su disco duro 
+   contiene. El proceso es sumamente fiable, puesto que DriveSpace 
+   verifica y vuelve a verificar la fiabilidad de los datos mientras comprime 
+   sus archivos. De hecho, si el proceso de compresi¢n se interrumpe 
+   accidentalmente (por ejemplo durante una interrupci¢n del suministro 
+   el‚ctrico), DriveSpace reanudar  el proceso y continuar  sin ninguna 
+   p‚rdida de datos.  
+
+   El programa Instalar de DriveSpace interrumpe la ejecuci¢n de su PC y 
+   la inicia dos veces durante el proceso de compresi¢n.  
+
+   Cuando haya terminado la instalaci¢n de DriveSpace, el programa 
+   indicar  cu nto tiempo tard¢ el proceso de compresi¢n y cu nto 
+   espacio libre contiene su nueva unidad de disco.  
+
+6. Para salir de DriveSpace, despu‚s de que ha comprimido la unidad C, 
+   presione la tecla ENTRAR. 
+ 
+Despu‚s de completarse la ejecuci¢n del programa Instalar de DriveSpace, 
+las unidades de su PC estar n configuradas de una manera diferente:   
+
+ *  La unidad C estar  comprimida y tendr  m s espacio libre del que ten¡a 
+    antes. Podr  usar la unidad C de la misma manera que antes de instalar 
+    DriveSpace.  
+
+ *  Su PC tendr  una nueva unidad que no est  comprimida. Esta unidad se 
+    utiliza para almacenar archivos que deban permanecer descomprimidos. 
+    Por ejemplo, el archivo de intercambio permanente de Microsoft 
+    Windows no funciona adecuadamente cuando est  comprimido. Si su 
+    archivo de intercambio permanente se encontraba previamente en la 
+    unidad C, DriveSpace lo mover  a la nueva unidad no comprimida.  
+ 
+    DriveSpace tambi‚n usa la nueva unidad no comprimida para almacenar 
+    archivos importantes del sistema, como por ejemplo IO.SYS, 
+    MSDOS.SYS, DRVSPACE.BIN, DRVPACE.INI y DRVPACE.000. Si 
+    cambia a esta unidad e intenta consultar una lista de los archivos que 
+    contiene, probablemente la unidad parecer  vac¡a. Esto se debe a que la 
+    mayor¡a de los archivos que contiene son archivos ocultos y de s¢lo-
+    lectura. Para ver los archivos, escriba DIR /A a continuaci¢n del s¡mbolo 
+    del sistema.  
+
+
+Advertencia:  No altere los archivos ocultos de la nueva unidad. Si cambia 
+	      o elimina estos archivos, es posible que pierda todos los 
+	      archivos de su unidad C.  
+ 
+Para obtener informaci¢n acerca de c¢mo ajustar la configuraci¢n de su 
+unidad comprimida, consulte "Usar DriveSpace para administrar unidades 
+de disco comprimidas", m s adelante en este archivo. Para obtener 
+informaci¢n acerca de c¢mo comprimir unidades de disco adicionales, 
+consulte "Comprimir unidades de disco adicionales", m s adelante en este 
+archivo. Para obtener m s informaci¢n acerca de c¢mo comprimir 
+disquetes, consulte "Usar DriveSpace con disquetes", m s adelante en 
+este archivo.  
+
+
+Usar Instalaci¢n personalizada 
+------------------------------
+La Instalaci¢n personalizada proporciona m s control sobre el proceso de 
+compresi¢n que la Instalaci¢n r pida. Use la Instalaci¢n personalizada:  
+
+ *  Para comprimir los datos en el disco duro de una unidad que no sea la 
+    unidad C.  
+
+ *  Si no desea comprimir los datos existentes.  
+
+    La compresi¢n de los datos existentes puede tardar mucho tiempo. Si 
+    no desea comprimir los datos existentes, puede indicar a DriveSpace 
+    que utilice parte del espacio libre en una unidad existente para crear 
+    una nueva unidad de disco comprimida. Este m‚todo no comprime datos 
+    existentes y es mucho m s r pido.  
+
+ *  Para que usted mismo pueda determinar las configuraciones de 
+    compresi¢n.  
+
+Dependiendo de si est  comprimiendo una unidad existente o creando 
+una nueva, podr  especificar la letra de la unidad para la nueva unidad, 
+la raz¢n de compresi¢n proyectada y la cantidad de espacio que dejar  
+sin comprimir.  
+ 
+Nota: Antes de utilizar la Instalaci¢n personalizada para comprimir una 
+      unidad existente, deber  hacer copias de seguridad de los archivos 
+      de esa unidad. 
+
+Para obtener informaci¢n sobre el uso de Copia de seguridad (Backup) de 
+Microsoft, consulte el cap¡tulo "Administraci¢n de su sistema" en el 
+Manual del usuario de Microsoft MS-DOS. 
+ 
+Para instalar DriveSpace usando la Instalaci¢n personalizada:
+	
+1. Salga de todos los programas que se est‚n ejecutando (incluyendo 
+   Windows).  
+
+   Si ‚sta conectado a una red, inicie el software de red y con‚ctese a las 
+   unidades que use habitualmente. 
+	
+2. Escriba lo siguiente a continuaci¢n del s¡mbolo del sistema:  
+
+	DRVSPACE  
+
+   Aparecer  la pantalla Bienvenido.  
+
+3. Para continuar con DriveSpace, presione la tecla ENTRAR.  
+   
+   DriveSpace mostrar  una pantalla que le pedir  que elija entre 
+   "Instalaci¢n r pida" e "Instalaci¢n personalizada".  
+	
+4. Seleccione "Instalaci¢n personalizada" presionando FLECHA ABAJO y 
+   despu‚s la tecla ENTRAR.  
+
+   DriveSpace mostrar  la pantalla siguiente, en la que podr  elegir entre 
+   comprimir una unidad existente o crear una nueva unidad comprimida. 
+   Para obtener informaci¢n acerca de c¢mo elegir un m‚todo de 
+   compresi¢n, presione la tecla F1.  
+	
+5. Seleccione el m‚todo de compresi¢n que desee presionando la tecla 
+   FLECHA ARRIBA o FLECHA ABAJO y despu‚s presionando ENTRAR.  
+
+   Si su PC tiene m s de una unidad de disco duro, DriveSpace mostrar  
+   una lista de unidades. Si eligi¢ comprimir una unidad existente, elija la 
+   unidad deseada y despu‚s presione la tecla ENTRAR. Si est  creando una 
+   nueva unidad comprimida, seleccione la unidad que contenga el espacio 
+   libre que DriveSpace utilizar  para crear la nueva unidad.  
+   DriveSpace mostrar  una pantalla con las configuraciones de 
+   compresi¢n predeterminadas.  
+	
+6. Si corresponde, cambie las configuraciones de compresi¢n seg£n le 
+   convenga. Para cambiar una configuraci¢n, presione la tecla FLECHA 
+   ARRIBA o FLECHA ABAJO hasta que la configuraci¢n est‚ resaltada y 
+   despu‚s presione la tecla ENTRAR para consultar las alternativas. Para 
+   obtener informaci¢n sobre las configuraciones de compresi¢n, presione F1.  
+
+7. Cuando todas las configuraciones sean las correctas, presione la tecla 
+   ENTRAR para continuar con DriveSpace.  
+
+   DriveSpace mostrar  una pantalla de confirmaci¢n que da un c lculo 
+   aproximado de la cantidad aproximada que llevar  comprimir la unidad 
+   o el espacio libre seleccionados.  
+ 
+8. Para iniciar el proceso de compresi¢n, presione la tecla C.  
+
+   DriveSpace comprueba que la unidad especificada no tenga errores de 
+   disco y despu‚s realizar  el proceso de compresi¢n con las 
+   configuraciones especificadas. Este proceso podr  tardar desde varios 
+   minutos hasta varias horas, dependiendo de la velocidad de su disco 
+   duro, del procesador, de la cantidad de datos que contenga su disco y 
+   de que haya elegido comprimir datos existentes o crear una nueva 
+   unidad comprimida. El proceso es sumamente fiable, puesto que 
+   DriveSpace verifica y vuelve a verificar la fiabilidad de los datos 
+   mientras comprime los archivos existentes. Adem s, si el proceso de 
+   compresi¢n se interrumpe accidentalmente (por ejemplo durante una 
+   interrupci¢n del suministro el‚ctrico), DriveSpace reanudar  el proceso 
+   y continuar  sin ninguna p‚rdida de datos.  
+
+   El programa Instalar de DriveSpace interrumpe la ejecuci¢n de su PC y 
+   la reanuda dos veces durante el proceso de compresi¢n.  
+   Cuando haya terminado la instalaci¢n de DriveSpace, el programa 
+   indicar  cu nto tiempo tard¢ el proceso de compresi¢n y cu nto 
+   espacio libre contiene su nueva unidad de disco.  
+	
+9. Para salir de DriveSpace, despu‚s de que haya comprimido la unidad o 
+   el espacio libre seleccionados, presione la tecla ENTRAR.  
+ 
+Cuando haya terminado de ejecutar DriveSpace, las unidades de su PC 
+tendr n una configuraci¢n diferente. Los resultados variar n, dependiendo 
+del m‚todo de compresi¢n que haya utilizado.  
+
+
+Si elige comprimir una unidad existente 
+---------------------------------------
+Si elige "Comprimir una unidad existente" durante la ejecuci¢n de la 
+Instalaci¢n personalizada:  
+
+ *  La unidad que seleccion¢ en el paso 5 se comprimir  y contendr  m s 
+    espacio libre del que ten¡a anteriormente. Podr  usar la unidad 
+    comprimida de la misma manera que antes de instalar DriveSpace.  
+
+ *  Su PC tendr  una nueva unidad que no est  comprimida. Esta unidad se 
+    usa para almacenar archivos que no deban comprimirse. Por ejemplo, el 
+    archivo de intercambio permanente de Microsoft Windows no funciona 
+    adecuadamente cuando est  comprimido. Si su archivo de intercambio 
+    permanente de Microsoft Windows anteriormente se encontraba en la 
+    que usted comprimi¢, DriveSpace lo mover  a la nueva unidad no 
+    comprimida.  
+ 
+    DriveSpace utiliza tambi‚n la nueva unidad sin comprimir para 
+    almacenar importantes archivos del sistema como DRVSPACE.000. Si 
+    ha comprimido la unidad C, la nueva unidad sin comprimir contendr  
+    tambi‚n los archivos IO.SYS, MSDOS.SYS, DRVSPACE.BIN y 
+    DRVSPACE.INI. Si intenta presentar una lista de los archivos que 
+    contiene esta unidad, probablemente apararecer  vac¡a. Esto se debe a 
+    que la mayor parte de los archivos que contiene tienen atributo de 
+    oculto; muchos tienen tambi‚n atributo de s¢lo-lectura. Para ver los 
+    archivos, escriba DIR /A a continuaci¢n del s¡mbolo del sistema.  
+     
+Advertencia: No altere los archivos ocultos de la nueva unidad. Si cambia 
+	     o elimina estos archivos, es posible que no pueda obtener 
+	     acceso a los archivos ubicados en su unidad comprimida.  
+ 
+
+Si elige crear una nueva unidad comprimida 
+------------------------------------------
+Si elige "Crear una nueva unidad comprimida" durante la ejecuci¢n de la 
+Instalaci¢n personalizada:   
+
+ *  Su PC dispondr  de una nueva unidad comprimida que actualmente 
+    estar  vac¡a. Aunque la nueva unidad s¡ utiliza algo de espacio en el 
+    disco lo compensa proporcionando m s espacio libre del que utiliza.  
+    
+ *  La unidad que conten¡a el espacio libre que ha utilizado para crear la 
+    nueva unidad comprimida contendr  menos espacio libre que 
+    anteriormente. Este espacio lo est  utilizando la nueva unidad 
+    comprimida. Este espacio es utilizado ahora por la nueva unidad 
+    comprimida, que se almacena en un archivo oculto con un nombre de 
+    archivo como DRVSPACE.001.  
+ 
+    Para obtener informaci¢n acerca de c¢mo ajustar la configuraci¢n de su 
+    unidad comprimida, consulte "Usar DriveSpace para administrar unidades 
+    comprimidas", m s adelante en este archivo. Para obtener informaci¢n 
+    acerca de c¢mo comprimir unidades adicionales, consulte "Comprimir 
+    unidades adicionales", m s adelante en este archivo. Para obtener 
+    informaci¢n acerca de c¢mo comprimir disquetes, consulte "Usar 
+    DriveSpace con disquetes", m s adelante en este archivo. 
+    
+
+¨Qu‚ es la compresi¢n de discos? 
+================================
+No necesita saber nada acerca de la compresi¢n de discos para ejecutar el 
+programa Instalar de DriveSpace: simplemente escriba DRVSPACE a 
+continuaci¢n del s¡mbolo del sistema, siga las instrucciones mostradas en 
+la pantalla y DriveSpace se ocupar  de todo lo dem s.  
+ 
+Sin embargo, si desea ajustar o modificar la configuraci¢n de DriveSpace, 
+necesitar  comprender algunos conceptos y t‚rminos de compresi¢n. Esta 
+secci¢n explica los t‚rminos que deber  conocer cuando use DriveSpace 
+para administrar o modificar sus unidades comprimidas.  
+
+
+Archivos de volumen comprimidos y unidades principales 
+------------------------------------------------------
+Una unidad comprimida no es en realidad una unidad de disco, aunque la 
+mayor¡a de los programas lo consideren as¡. En su lugar, la unidad 
+comprimida existe en su disco duro como un archivo de volumen comprimido 
+(AVC).  
+
+Un archivo de volumen comprimido es un archivo del sistema oculto que 
+contiene una unidad comprimida. Cada AVC se asigna a una unidad no 
+comprimida, a la que se conoce como unidad anfitri¢n del AVC. Un archivo 
+AVC se almacena en el directorio ra¡z de su unidad anfitri¢n y tiene 
+un nombre de archivo como DRVSPACE.000.  
+
+La mayor¡a de los archivos AVC pueden almacenar m s datos que el 
+espacio que ocupan en sus unidades principales. Por ejemplo, un archivo 
+com£n AVC podr¡a ocupar 10 MB de espacio en su unidad anfitri¢n pero 
+podr¡a contener 20 MB de datos comprimidos. DriveSpace asigna una letra 
+de unidad al AVC para que lo pueda usar como una unidad de disco y para 
+que pueda acceder a los archivo que contiene.   
+ 
+Advertencia:  No altere el nuevo archivo de volumen comprimido. Si lo 
+	      hace, podr¡a perder todos los archivos de su unidad comprimida.  
+ 
+
+C¢mo calcula DriveSpace el espacio libre en una unidad comprimida 
+-----------------------------------------------------------------
+En una unidad no comprimida, el espacio libre es una indicaci¢n de la 
+cantidad de datos adicionales que pueden almacenarse en esa unidad. Por 
+ejemplo, si una unidad dispone de 2 MB de espacio libre, dispondr  de 2 
+MB para almacenar datos en dicha unidad. Sin embargo, el espacio libre en 
+una unidad comprimida es s¢lo una proyecci¢n de la cantidad de informaci¢n 
+que puede almacenar en esa unidad.   
+ 
+Cuando almacena un archivo en una unidad comprimida, DriveSpace 
+comprime el archivo de manera que utilice la menor cantidad de espacio 
+posible. Algunos archivos son m s comprimibles que otros. Por ejemplo, 
+un archivo de mapa de bits puede comprimirse mucho m s que un archivo 
+de programa. DriveSpace no podr  detectar la compresibilidad de los 
+archivos que a£n no est‚n almacenados, as¡ que para informar sobre el 
+espacio libre en una unidad comprimida, s¢lo podr  proporcionar una 
+estimaci¢n.  
+
+DriveSpace eval£a el espacio libre de una unidad usando la raz¢n de 
+compresi¢n estimada, que usted podr  establecer para especificar la 
+compresibilidad de los archivos que tenga previsto almacenar. Por ejemplo, 
+si la raz¢n de compresi¢n estimada est  establecida como 3 a 1, 
+DriveSpace calcula el espacio libre de la unidad bas ndose en el supuesto 
+de que los archivos que almacene tendr n una proporci¢n de 
+compresibilidad de 3 a 1; es decir, que cada archivo puede comprimirse 
+hasta un tercio de su tama¤o original.  
+
+Normalmente, la mejor raz¢n de compresi¢n estimada que se puede utilizar 
+es la raz¢n de compresi¢n real para los archivos que ya est n almacenados 
+en la unidad. De vez en cuando, quiz  deseee cambiar la raz¢n de 
+compresi¢n estimada de cada unidad para que coincida con la raz¢n de 
+comprensi¢n real de la unidad. Para hacer esto para todas las unidades 
+comprimidas, escriba DRVSPACE /RATIO /ALL a continuaci¢n del s¡mbolo del 
+sistema.  
+
+Quiz  desee cambiar la raz¢n de compresi¢n estimada si difiere 
+demasiado de la compresibilidad real de los archivos que desee almacenar. 
+Por ejemplo, si tiene previsto almacenar archivos de alta compresibilidad, 
+como por ejemplo archivos de mapas de bits, podr¡a especificar una raz¢n 
+de compresi¢n estimada m s alta. O bien, si tiene previsto almacenar 
+archivos que no se puedan comprimir mucho m s, podr¡a especificar una 
+proporci¢n m s baja.  
+ 
+Nota: Cambiar la raz¢n de compresi¢n estimada de una unidad no afecta a la 
+      proporci¢n de compresi¢n real utilizada por DriveSpace para los 
+      archivos de esa unidad, solamente cambia el m‚todo que DriveSpace 
+      utiliza para estimar el espacio libre de la unidad comprimida.  
+ 
+
+Usar DriveSpace para administrar unidades comprimidas 
+=====================================================
+Generalmente trabajar con una unidad comprimida es igual que hacerlo con 
+una unidad que no est‚ comprimida . Por ejemplo, guardar, copiar y 
+eliminar archivos se hace de la misma manera tanto en una unidad 
+comprimida como en una unidad sin comprimir. Algunas tareas, sin 
+embargo, s¢lo se podr n realizar en unidades comprimidas. Por ejemplo, 
+podr  cambiar el tama¤o de una unidad comprimida, pero no podr  
+cambiar el tama¤o de una unidad sin comprimir.  
+ 
+Para mantener o modificar unidades comprimidas o para crear unidades 
+comprimidas adicionales, use el programa DriveSpace, que le 
+proporcionar  un entorno de pantalla completa con comandos ejecutables 
+desde men£s muy f cil de utilizar.  
+
+Tambi‚n puede administrar unidades comprimidas desde el s¡mbolo del 
+sistema de MS-DOS utilizando modificadores con el comando DRVSPACE. 
+Para obtener informaci¢n, escriba HELP DRVSPACE a continuaci¢n del 
+s¡mbolo del sistema.  
+
+Para iniciar el programa DriveSpace:
+
+ *  Escriba DRVSPACE a continuaci¢n del s¡mbolo del sistema.  
+
+    Se presenta la pantalla principal de DriveSpace. Esta pantalla muestra 
+    una lista de las unidades comprimidas existentes. Podr  trabajar con 
+    estas unidades, comprimir unidades adicionales o crear nuevas unidades 
+    comprimidas. En esta pantalla podr  realizar las siguientes tareas: 
+
+ *  Trabajar con una unidad comprimida. Para hacerlo, haga clic con el 
+    Mouse en la unidad para seleccionarla o presione la tecla FLECHA 
+    ARRIBA o FLECHA ABAJO hasta que la unidad est‚ seleccionada. Despu‚s 
+    elija el comando deseado en el men£ Unidad o en Utilidades. (Para 
+    obtener una descripci¢n de los comandos de estos men£s, consulte las 
+    tablas que se muestran m s adelante en esta secci¢n.)  
+
+ *  Comprimir una unidad existente. Para hacerlo, en el men£ Comprimir, 
+    elija el comando Unidad existente. Use este comando para comprimir 
+    archivos en un disco duro o en un disquete. Para obtener m s 
+    informaci¢n, consulte "Comprimir unidades adicionales", m s adelante 
+    en este archivo.  
+
+ *  Agregar una nueva unidad comprimida. Podr  crear una nueva unidad 
+    comprimida usando el espacio libre de una unidad existente. Para 
+    hacerlo, en el men£ Comprimir, elija el comando Crear nueva unidad. 
+    Para obtener m s informaci¢n, consulte "Comprimir unidades adicionales" 
+    m s adelante en este cap¡tulo. Tambi‚n podr  agregar una unidad 
+    comprimida cargando un archivo de volumen comprimido. Para obtener 
+    m s informaci¢n, consulte "Creaci¢n de una nueva unidad comprimida" 
+    posteriormente en este archivo.  
+
+El men£ Unidad incluye comandos que podr  usar para trabajar con la 
+unidad comprimida que est‚ seleccionada. La siguiente tabla describe los 
+comandos del men£ Unidad.  
+
+Comando         Prop¢sito
+---------------------------------------------------------------------------
+Informaci¢n     Muestra informaci¢n sobre la unidad seleccionada. 
+		Cuando elige este comando, aparece el cuadro de di logo 
+		Informaci¢n de la unidad comprimida que muestra 
+		informaci¢n acerca del espacio libre y en uso de la unidad, 
+		el nombre de su archivo de volumen comprimido y las 
+		razones de compresi¢n estimadas y reales, y otra 
+		informaci¢n. Tambi‚n podr  consultar el cuadro de 
+		di logo Informaci¢n de la unidad comprimida haciendo 
+		doble clic en el nombre de la unidad o presionando la tecla 
+		ENTRAR cuando la unidad est‚ seleccionada. Para obtener 
+		m s informaci¢n, presione la tecla F1 cuando el cuadro de 
+		di logo Informaci¢n de la unidad comprimida est‚ visible 
+		en su pantalla. 
+
+Cambiar tama¤o  Aumenta o reduce el tama¤o de la unidad seleccionada. A 
+		diferencia de una unidad no comprimida, el tama¤o de una 
+		unidad comprimida puede cambiarse. Puede que le 
+		convenga aumentar el tama¤o de una unidad comprimida 
+		si su unidad anfitri¢n contiene suficiente espacio libre. O 
+		puede que le convenga reducir el tama¤o de una unidad 
+		comprimida si necesita m s espacio libre en la unidad 
+		anfitri¢n. Para obtener m s informaci¢n, elija el comando 
+		Cambiar tama¤o y presione la tecla F1.  
+
+Cambiar raz¢n   Cambia la raz¢n de compresi¢n estimada de la unidad 
+		seleccionada. DriveSpace utiliza esta raz¢n para estimar 
+		cu nto espacio libre contiene la unidad. Puede que le 
+		convenga cambiar la raz¢n de compresi¢n estimada si 
+		tiene previsto almacenar nuevos archivos con una 
+		proporci¢n de compresi¢n muy diferente a la proporci¢n 
+		real. Para obtener m s informaci¢n, elija el comando 
+		Cambiar raz¢n y presione la tecla F1. 
+
+Cargar          Establece una conexi¢n entre un archivo de volumen 
+		comprimido y una letra de unidad de tal manera que pueda 
+		usar los archivos contenidos en el AVC. DriveSpace 
+		generalmente carga los archivos AVC autom ticamente. 
+		Usted tendr  que cargar un AVC £nicamente si lo 
+		descarg¢ o si el AVC se encuentra en un disquete y 
+		desactiv¢ la opci¢n de habilitaci¢n de autocargado. Para 
+		obtener m s informaci¢n, elija el comando Cargar y 
+		presione la tecla F1. Para obtener m s informaci¢n acerca 
+		de c¢mo usar DriveSpace con disquetes, consulte "Usar 
+		DriveSpace con disquetes", m s adelante en este archivo. 
+
+Descargar       Interrumpe la conexi¢n entre el archivo de volumen 
+		comprimido de la unidad seleccionada y su letra de 
+		unidad. Al descargar una unidad no podr  acceder a ella 
+		temporalmente. Para obtener m s informaci¢n, elija Indice 
+		en el men£ Ayuda y a continuaci¢n seleccione el tema 
+		"Descargara una unidad comprimida". 
+
+Formato         Da formato a la unidad comprimida seleccionada. Como 
+		ocurre al dar formato a una unidad no comprimida, el dar 
+		formato a una unidad comprimida elimina todos los 
+		archivos que contiene. Para obtener m s informaci¢n, en 
+		el men£ Ayuda, elija el comando Indice y despu‚s 
+		seleccione el tema "Formato". Para obtener m s 
+		informaci¢n acerca de c¢mo usar disquetes comprimidos, 
+		consulte "Usar DriveSpace con disquetes", m s adelante 
+		en este archivo. 
+
+Eliminar        Elimina la unidad comprimida seleccionada y el archivo de 
+		volumen comprimido asociado. Eliminar una unidad 
+		comprimida borra la unidad y todos los archivos que 
+		contiene. En el men£ Ayuda, elija el comando Indice y 
+		despu‚s seleccione el tema "Eliminar una unidad 
+		comprimida". 
+
+Salir           Finaliza la ejecuci¢n del programa DriveSpace y le 
+		devuelve al s¡mbolo del sistema. (MS-DOS contin£a 
+		proporcionando acceso a sus unidades comprimidas 
+		despu‚s de haber salido de DriveSpace.) 
+
+El men£ Comprimir contiene comandos que podr  usar para crear 
+unidades comprimidas adicionales. Para obtener informaci¢n acerca de 
+c¢mo comprimir unidades adicionales, consulte la siguiente secci¢n 
+"Comprimir unidades adicionales". Para obtener informaci¢n acerca de 
+c¢mo comprimir y trabajar con disquetes, consulte "Usar DriveSpace con 
+disquetes", m s adelante en este archivo.   
+
+El men£ Utilidades incluye comandos que podr  usar para trabajar con 
+unidades comprimidas. La siguiente tabla describe los comandos del men£ 
+Utilidades.  
+
+Comando         Prop¢sito
+---------------------------------------------------------------------------
+Defragmentar    Defragmenta la unidad comprimida seleccionada. Al 
+		reconstruir una unidad comprimida se consolida el 
+		espacio libre que contiene. Si tiene previsto reducir el 
+		tama¤o de una unidad comprimida, primero deber¡a usar 
+		el comando Defragmentar para consolidar el espacio 
+		libre en la unidad. Puede tambi‚n necesitar usar el 
+		comando Defragmentar si la unidad comprimida est  
+		agotando el espacio libre en el disco. Para obtener m s 
+		informaci¢n, elija el comando Defragmentar y a 
+		continuaci¢n presione F1. 
+
+Descomprimir    Descomprime una unidad que fue comprimida utilizando 
+		DriveSpace. Cuando descomprima la £ltima unidad 
+		cargada, DriveSpace eliminar  tambi‚n DRVSPACE.BIN 
+		de la memoria. (DRVSPACE.BIN es la porci¢n de MS-
+		DOS que proporciona acceso a unidades comprimidas. 
+		Utiliza aproximadamente 50K de memoria).
+
+Opciones        Presenta el cuadro de di logo Opciones de DriveSpace, 
+		en el que se podr  habilitar o deshabilitar las funciones 
+		de DoubleGuard y Automount. Este cuadro de di logo 
+		tambi‚n permite cambiar otras configuraciones.  Para 
+		obtener m s informaci¢n, elija el comando Opciones y a 
+		continuaci¢n presione F1 cuando el cuadro de di logo 
+		Opciones de DriveSpace est‚ en su pantalla. 
+
+ 
+Comprimir unidades adicionales 
+==============================
+DriveSpace ofrece dos maneras de agregar unidades comprimidas. Podr :  
+
+ *  Comprimir una unidad de disco existente o un disquete.  
+
+ *  Crear una nueva unidad de disco comprimida usando el espacio libre de 
+    una unidad existente.  
+ 
+El resto de esta secci¢n explica ambos m‚todos. 
+
+
+Comprimir una unidad existente 
+------------------------------
+Podr  usar DriveSpace para comprimir los archivos de unidades de disco 
+duro existentes, disquetes u otros medios intercambiables. Comprimir una 
+unidad existente crea m s espacio disponible en la misma.  
+ 
+Nota:  Antes de comprimir una unidad existente, deber  hacer copia de 
+       seguridad de los archivos en esa unidad. Para obtener informaci¢n 
+       sobre el uso de Copia de seguridad (Backup) de Microsoft, consulte 
+       el cap¡tulo "Administraci¢n de su sistema" en el Manual del usuario 
+       de Microsoft MS-DOS. 
+ 
+Para comprimir una unidad existente:
+
+1. En la pantalla principal de DriveSpace, elija el comando Unidad 
+   existente del men£ Comprimir. (Si est  comprimiendo un disquete o 
+   alg£n otro medio intercambiable, aseg£rese de que tenga formato y de 
+   que est‚ en la unidad antes de elegir el comando Unidad existente.)  
+   DriveSpace examinar  su PC y despu‚s mostrar  una lista de las 
+   unidades que se pueden comprimir. (La lista no incluir  las unidades no 
+   comprimidas que est‚n demasiado llenas para comprimirse, ni incluir  
+   unidades comprimidas, unidades de red, unidades de CD-ROM, 
+   unidades de Interlnk ni unidades que se hayan asociado con una letra de 
+   unidad mediante el comando Subst. Para obtener m s informaci¢n, 
+   presione F1 cuando se presente esta lista). 
+ 
+2. Seleccione la unidad que desee comprimir presionando FLECHA ARRIBA 
+   o FLECHA ABAJO, y despu‚s presione la tecla ENTRAR.  
+   Se presenta una pantalla que le dar  la oportunidad de cambiar la 
+   configuraci¢n que DriveSpace usar  para comprimir la unidad.  
+	
+3. Cambie la configuraci¢n como sea necesario. Para obtener m s 
+   informaci¢n sobre c¢mo cambiar la configuraci¢n, presione F1.  
+
+4. Cuando termine de cambiar la configuraci¢n, presione ENTRAR.  
+   DriveSpace mostrar  una pantalla de confirmaci¢n indicando que est  
+   listo para comprimir la unidad.  
+	
+5. Para comprimir la unidad, presione la tecla C.  
+
+   DriveSpace comprueba que la unidad especificada no tenga errores, la 
+   defragmenta y la comprime, y despu‚s reinicia su PC para que la nueva 
+   configuraci¢n de la unidad entre en efecto.  
+ 
+
+Crear una nueva unidad comprimida 
+---------------------------------
+Si su unidad de disco duro contiene una gran cantidad de espacio sin 
+comprimir, puede que le convenga convertir el espacio no utilizado en una 
+nueva unidad comprimida. La nueva unidad proporcionar  m s capacidad 
+de almacenamiento que la cantidad de espacio que ocupe. 
+
+Para convertir espacio libre en una nueva unidad comprimida:
+
+1. En la pantalla principal de DriveSpace, elija el comando Crear nueva 
+   unidad del men£ Comprimir.  
+
+   DriveSpace examinar  su PC y despu‚s mostrar  una lista de unidades 
+   no comprimidas que contengan espacio libre. (La lista no incluir  
+   unidades sin comprimir que no contengan suficiente espacio libre, ni 
+   unidades de red, unidades de CD-ROM, unidades de Interlink ni 
+   unidades que se hayan asociado a una letra de unidad mediante el 
+   comando Subst).  
+
+   La lista mostrar  el espacio libre de cada unidad no comprimida y el 
+   tama¤o que tendr  la nueva unidad comprimida.   
+
+2. Seleccione la unidad que contenga el espacio que desee usar y despu‚s 
+   presione la tecla ENTRAR.  
+
+   Se presenta una pantalla que le dar  la oportunidad de cambiar la 
+   configuraci¢n que DriveSpace usar  para comprimir la unidad.  
+	
+3. Cambie la configuraci¢n como sea necesario. Para obtener m s 
+   informaci¢n sobre c¢mo cambiar la configuraci¢n, presione F1.  
+
+4. Cuando termine de cambiar la configuraci¢n, presione ENTRAR.  
+   Se presentar  una pantalla de confirmaci¢n.  
+ 
+5. Para crear la nueva unidad comprimida, presione C.  
+
+   DriveSpace crear  la nueva unidad comprimida y despu‚s actualizar  la 
+   lista de unidades en la pantalla principal de DriveSpace para que incluya 
+   la nueva unidad.  
+ 
+
+Usar DriveSpace con disquetes 
+=============================
+DriveSpace se puede usar para aumentar la capacidad de almacenamiento 
+de disquetes. Cuando comprima un disquete, lo podr  usar para almacenar 
+datos o para transferir datos de un equipo a otro.  
+ 
+Nota: Para usar un disquete comprimido para transferir datos de un equipo a 
+      otro, ambos equipos deber n estar ejecutando DriveSpace.  
+ 
+
+Comprimir un disquete 
+---------------------
+La compresi¢n de un disquete es similar a la compresi¢n de una unidad de 
+disco duro. Podr  comprimir un disquete que est‚ completamente vac¡o o 
+uno que contenga archivos. (Sin embargo, no podr  crear una nueva 
+unidad comprimida en un disquete). 
+ 
+Nota: Aseg£rese de que el disquete tenga formato y de que tenga al menos 
+      0,65 MB de espacio libre. DriveSpace no puede comprimir un disco de 
+      360K, un disco sin formato o un disco que est‚ completamente lleno.  
+ 
+Para comprimir un disquete:
+
+1. Inserte un disquete con formato en una unidad de disquete..  
+
+2. En la pantalla principal de DriveSpace, elija el comando Unidad 
+   existente del men£ Comprimir.  
+
+   DriveSpace examinar  su PC y despu‚s mostrara una lista de las 
+   unidades que se puedan comprimir. (Si la lista no incluye el disquete 
+   que acaba de insertar, aseg£rese de que el disco tenga formato y de que 
+   tenga por lo menos 0,65 MB de espacio libre.)  
+	
+3. Seleccione la unidad que contenga el disquete que desee comprimir 
+   presionando la tecla FLECHA ARRIBA o FLECHA ABAJO, y despu‚s 
+   presione la tecla ENTRAR. 
+
+   DriveSpace mostrar  una pantalla de confirmaci¢n indicando que est  
+   preparado para comprimir esa unidad.  
+ 
+4. Para comprimir el disquete, presione la tecla C.  
+
+   DriveSpace comprueba que el disquete no tenga errores. Despu‚s 
+   defragmentar , comprimir  y cargar  el disquete seleccionado y 
+   despu‚s actualizar  la lista de unidades de la pantalla principal de 
+   DriveSpace para que incluya el nuevo disquete comprimido.  
+ 
+Una vez que DriveSpace termine de comprimir el disquete:  
+
+ *  El disquete contendr  m s espacio libre del que ten¡a antes. El disquete 
+    se podr  usar de la misma manera que antes de comprimirlo, con la 
+    excepci¢n de que si cambia de disquetes o vuelve a iniciar su PC, 
+    deber  volver a cargar el disquete. Para obtener m s informaci¢n 
+    acerca de c¢mo usar un disquete comprimido, consulte la siguiente 
+    secci¢n.  
+
+ *  Su PC tendr  una letra de unidad como por ejemplo F. Esta nueva letra 
+    de unidad representa la unidad anfitri¢n de los disquetes comprimidos, 
+    que contiene el archivo de volumen comprimido del disquete. Tanto la 
+    nueva letra de unidad como la letra de la unidad original est n asociadas 
+    con la misma unidad de disquetes f¡sica. Para obtener informaci¢n, 
+    consulte "¨Qu‚ es la compresi¢n de discos?" anteriormente en este 
+    archivo.  
+ 
+
+Usar un disquete comprimido 
+---------------------------
+Por regla general, un disquete comprimido se usa igual que un disquete sin 
+comprimir.  
+
+Como opci¢n predeterminada, DriveSpace carga autom ticamente un 
+disquete comprimido cuando se intenta utilizar ese disco. Esto hace posible 
+el uso del disco como si se tratara de un disquete sin comprimir. (Sin 
+embargo, si desactiva la opci¢n de habilitaci¢n de autocargado del cuadro 
+de di logo Opciones, debe cargar usted mismo los disquetes comprimidos. 
+Para obtener m s informaci¢n, consulte la secci¢n siguiente).Para obtener 
+acceso al contenido de un disquete comprimido, inserte el disquete en la 
+unidad y despu‚s utilice un comando como dir (por ejemplo, si el disco 
+est  en la unidad A, escriba DIR /A). 
+
+
+Usar disquetes comprimidos sin autocargado (Automount)  
+------------------------------------------------------
+Si apenas utiliza disquetes comprimidos, quiz  desee desactivar la funci¢n 
+de autocargado. Cuando esta funci¢n est  activada, utiliza aproximadamente 
+4K de memoria. 
+
+Para desactivar la funci¢n de autocargado, elija Opciones de DriveSpace 
+en el men£ Herramienas y a continuaci¢n desactive la casilla de 
+habilitaci¢n de autocargado. 
+ 
+Nota:  Antes de cargarlo, un disquete comprimido parecer  estar casi lleno. 
+       Si ha desactivado la opci¢n para habilitar el autocargado y cambia 
+       a la unidad de disquetes para ejecutar el comando DIR, MS-DOS 
+       generalmente presentar  un archivo de texto que se llama 
+       LEAESTO.TXT. Este archivo explica brevemente c¢mo se carga un 
+       disquete. El comando DIR generalmente informar  de que el 
+       disquete no contiene casi nada de espacio libre, puesto que la 
+       mayor parte del espacio lo utiliza el archivo comprimido. El archivo 
+       de volumen comprimido es un archivo del sistema, de s¢lo-lectura y 
+       oculto, llamado DRVSPACE.000.   
+ 
+Cuando se desactive el autocargado, todav¡a ser  posible utilizar disquetes 
+comprimidos pero deber  cargarlos usted mismo. Podr  hacerlo en la 
+pantalla principal de DriveSpace o a continuaci¢n del s¡mbolo del sistema 
+de MS-DOS.  
+
+Para cargar un disquete comprimido desde la pantalla principal de DriveSpace:
+
+1. Inserte el disquete comprimido en la unidad.  
+
+2. En la pantalla principal de DriveSpace, elija el comando Cargar del 
+   men£ Unidad.  
+
+   DriveSpace buscar  los archivos AVC sin cargar y mostrar  una lista 
+   de los que encuentre.  
+	
+3. Seleccione el archivo AVC que se encuentra en su disquete comprimido 
+   utilizando las teclas FLECHA ARRIBA o FLECHA ABAJO y a continuaci¢n 
+   presione ENTRAR.  
+	
+4. DriveSpace cargar  el archivo AVC y despu‚s actualizar  la lista de 
+   unidades comprimidas de la pantalla principal de DriveSpace para que 
+   incluya el nuevo disquete cargado.  
+ 
+   El disquete comprimido permanecer  cargado y los archivos que contenga 
+   permanecer n disponibles hasta que cambie de disquetes o vuelva a iniciar 
+   su PC.  
+
+Para cargar un disquete comprimido desde el s¡mbolo del sistema de MS-DOS:
+
+1. Inserte el disquete comprimido en la unidad y despu‚s cierre la puerta 
+   de la unidad.  
+	
+2. Escriba DRVSPACE /MOUNT y la letra de unidad en la que se encuentre el 
+   disquete. Por ejemplo, para cargar el disquete en la unidad A, escribir¡a:  
+   
+      DRVSPACE /MOUNT A:
+
+   DriveSpace presenta los mensajes siguientes:  
+
+      DriveSpace est  cargando la unidad A. 
+      La unidad A se ha cargado con ‚xito. 
+ 
+El disquete comprimido permanecer  cargado hasta que cambie de disquete 
+o vuelva a iniciar su PC.  
+
+Si lo desea podr  incluir el comando DRVSPACE /MOUNT en su archivo 
+AUTOEXEC.BAT. Por ejemplo, si generalmente tiene un disquete comprimido 
+en la unidad B y desea cargarlo cada vez que inicie la ejecuci¢n de 
+su PC, podr¡a agregar el comando DRVSPACE /MOUNT B: a su archivo 
+AUTOEXEC.BAT. Para obtener m s informaci¢n acerca del archivo 
+AUTOEXEC.BAT, consulte el cap¡tulo "Configuraci¢n de su sistema", 
+en el Manual del usuario de MS-DOS.  
+
+
+Obtener informaci¢n sobre unidades comprimidas 
+----------------------------------------------
+Existen varias maneras de consultar informaci¢n acerca de sus unidades 
+comprimidas:   
+
+ *  En DriveSpace, elija el comando Informaci¢n del men£ Unidad para 
+    consultar informaci¢n detallada sobre una unidad comprimida. Para 
+    obtener m s informaci¢n, presione la tecla F1 mientras el cuadro de 
+    di logo Unidad comprimida est‚ visible en su pantalla. (Tambi‚n podr  
+    presentar informaci¢n detallada acerca de una unidad escribiendo 
+    DRVSPACE /INFO a continuaci¢n del s¡mbolo del sistema; para obtener 
+    m s informaci¢n acerca de este comando, escriba HELP DRVSPACE /INFO.) 
+
+ *  A continuaci¢n del s¡mbolo del sistema de MS-DOS, cambie a la unidad 
+    comprimida acerca de la cual desee obtener informaci¢n y despu‚s 
+    escriba DIR /C. MS-DOS mostrar  una lista de los archivos del directorio 
+    actual y la proporci¢n media de compresi¢n de la lista completa de 
+    archivos. (Si la unidad comprimida estuviese vac¡a, DIR /C no mostrar  
+    informaci¢n de compresi¢n.) Para obtener m s informaci¢n, escriba 
+    HELP DIR a continuaci¢n del s¡mbolo del sistema. 
+ 
+ *  A continuaci¢n del s¡mbolo del sistema de MS-DOS, escriba DRVSPACE 
+    /LIST para consultar una lista de las unidades de su PC. Este comando 
+    presenta una lista y describe todas las unidades de su PC (excepto las 
+    unidades de red). Utilice este comando para obtener una idea m s 
+    completa de la configuraci¢n de las unidades de su equipo.  
+    
+ *  Si usa Microsoft Windows, en el men£ Utilidades del Administrador de 
+    archivos, elija Informaci¢n de DriveSpace. Para obtener m s 
+    informaci¢n, presione la tecla F1 mientras el cuadro de di logo 
+    Informaci¢n DriveSpace est‚ visible en su pantalla.  
+ 
+ 
+¨C¢mo funcionan DriveSpace y la memoria? 
+----------------------------------------
+Cuando inicie su PC, MS-DOS cargar  DRVSPACE.BIN en la memoria. 
+DRVSPACE.BIN es la parte de MS-DOS que permite el acceso a sus 
+unidades comprimidas. Requiere 50K de memoria aproximadamente. MS-
+DOS carga DRVSPACE.BIN, junto con otras funciones del sistema 
+operativoa antes de ejecutar los comandos en sus archivos CONFIG.SYS y 
+AUTOEXEC.BAT. Inicialmente, DRVSPACE.BIN realiza el cargado en la 
+parte superior de la memoria convencional. Como opci¢n predeterminada, 
+MS-DOS mueve DRVSPACE.BIN a la parte inferior de la memoria 
+convencional despu‚s de ejecutar los comandos del archivo CONFIG.SYS. 
+Podr  utilizar el controlador de dispositivos DRVSPACE.SYS para mover 
+DRVSPACE.BIN a una parte espec¡fica de la memoria. (El controlador de 
+dispositivos DRVSPACE.SYS no permite el acceso a las unidades 
+comprimidas; simplemente determina la ubicaci¢n final en la memoria de 
+DRVSPACE.BIN.) (El programa de instalaci¢n de DriveSpace agrega 
+autom ticamente el comando device para el controlador de dispositivos 
+DRVSPACE.SYS al archivo CONFIG.SYS.) 
+
+Hay dos razones por las que puede usar DRVSPACE.SYS para mover 
+DRVSPACE.BIN de la parte superior de la memoria convencional:  
+
+ *  Para evitar conflictos con los programas que requieran acceso a la parte 
+    superior de la memoria convencional.  
+
+    Algunos programas requieren acceso a la parte superior de la memoria 
+    convencional y no funcionan correctamente si DRVSPACE.BIN se encuentra 
+    en ella.
+
+*   Para liberar memoria convencional.  
+
+    Si su PC tiene memoria extendida, DRVSPACE.SYS puede mover parte 
+    de DRVSPACE.BIN al  rea de memoria alta (HMA). (Como opci¢n 
+    predeterminada, los programas de instalaci¢n de MS-DOS y de 
+    DriveSpace configuran el equipo de esta manera.) Adem s, si dispone 
+    de un equipo 80386 o superior con memoria extendida, podr  ejecutar 
+    el programa MemMaker para mover el resto de DRVSPACE.BIN al  rea 
+    de memoria superior.   (Para obtener instrucciones sobre c¢mo ejecutar 
+    MemMaker, consulte el cap¡tulo "Aumento de la memoria disponible" en el 
+    Manual del usuario de Microsoft MS-DOS.) Para obtener m s informaci¢n 
+    sobre DRVSPACE.SYS y DRVSPACE.BIN, escriba HELP DRVSPACE.SYS a 
+    continuaci¢n del s¡mbolo del sistema de MS-DOS. 
+ 
+ 
+Obtener m s informaci¢n sobre DriveSpace 
+========================================
+Para obtener sugerencias sobre c¢mo utilizar DriveSpace y respuestas a 
+preguntas comunes sobre DriveSpace, escriba HELP DRVTIPS a continuaci¢n 
+del s¡mbolo del sistema. 
+
+Para obtener informaci¢n sobre c¢mo usar el comando DRVSPACE, escriba 
+HELP DRVSPACE a continuaci¢n del s¡mbolo del sistema. 
+
+Para obtener informaci¢n sobre c¢mo usar el programa DriveSpace, 
+presione F1 mientras el programa DriveSpace se est‚ ejecutando. 
+
+Para obtener informaci¢n t‚cnica sobre DriveSpace, incluyendo informaci¢n 
+sobre c¢mo se escriben los programas que usan MRCI (Interfaz de compresi¢n 
+a tiempo real de Microsoft), deber  conseguir el juego de recursos de 
+Microsoft MS-DOS. Para obtener detalles, consulte el cup¢n de la parte 
+posterior de su Manual del usuario de Microsoft MS-DOS. 
+
+Soluci¢n de problemas de DriveSpace 
+===================================
+Si surgen problemas durante la ejecuci¢n de DriveSpace o con sus 
+unidades comprimidas, consulte la secci¢n de DriveSpace del archivo 
+LEAME.TXT. Este archivo se encuentra en el directorio que contiene los 
+archivos de MS-DOS. Podr  ver este archivo usando un editor de texto. 
+Por ejemplo, para ver el archivo utilizando el Editor de MS-DOS, cambie al 
+directorio que contenga sus archivos de MS-DOS y escriba a continuaci¢n 
+EDIT LEAME.TXT a continuaci¢n del s¡mbolo del sistema.  
+
+Si surgen problemas de errores de disco en una unidad comprimida, 
+ejecute el programa ScanDisk en esa unidad. Para obtener m s informaci¢n 
+sobre ScanDisk, escriba HELP SCANDISK a continuaci¢n del s¡mbolo del 
+sistema. 
+
+

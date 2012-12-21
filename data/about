@@ -1,0 +1,20 @@
+<big><b>A trivial example of gtkmvc</b></big>
+
+<i>Copyright (C) 2006 by Roberto Cavada 
+cavada@irst.itc.it</i>
+
+The idea of this example is to demonstrate
+the separation of logic and presentation
+(<i>GUI</i>) layers of the application. 
+
+The tutorial has been designed with 
+an exaggerately complex structure,
+as the goal is to show how <i>gtkmvc</i>
+can be effectively used to design
+and develop middle and large 
+applications.
+
+<b>Hope you enjoy working with 
+<i>gtkmvc</i>!</b>
+
+<i>Roberto Cavada</i>

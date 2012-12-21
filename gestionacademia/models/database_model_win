@@ -1,0 +1,107 @@
+# -*- coding: utf-8 -*-
+### BEGIN LICENSE
+# This file isls .. in the public domain
+### END LICENS
+
+from gtkmvc import Model, observer
+from gtkmvc.model import SQLObjectModel
+from gtkmvc.adapters.basic import Adapter
+from gtkmvc import observable
+from gtkmvc.support.metaclasses import ObservablePropertyMetaSQL
+from sqlobject import *
+from sqlobject.inheritance import InheritableSQLObject
+
+from gestionacademia.utils import _config
+
+import gtk
+import new
+import os
+
+from gtkmvc.support import factories
+
+##FIXME pasar esto a opciones de conf
+##Linux
+##BBDD=os.path.join('.','data', 'db', 'acagest.db')
+##Win
+
+BBDD='sqlite:///C:\\ProgramData\\acagest.db'
+##sqlhub.processConnection = connectionForURI('sqlite://'+BBDD)
+
+sqlhub.processConnection = connectionForURI(BBDD)
+
+
+class Banco(SQLObject):
+    nombre = StringCol()
+    codigo = DecimalCol(size=4,precision=0,unique=True)
+    direccion = StringCol()
+    ciudad = StringCol()
+    provincia = StringCol()
+    cp = DecimalCol(size=5,precision=0)
+
+class Alumno(SQLObject):
+    activo = BoolCol(default=1)
+    nombre = StringCol()
+    apellido1 = StringCol()
+    apellido2 = StringCol()
+    telefono = DecimalCol(size=9,precision=0)
+    movil = DecimalCol(size=9,precision=0)
+    email = StringCol()
+    dni = StringCol(unique=True)
+    fecha_nacimiento = DateCol()
+    fecha_creacion = DateTimeCol.now()
+    direccion = StringCol()
+    ciudad = StringCol()
+    provincia = StringCol()
+    cp = DecimalCol(size=5,precision=0)
+    banco = ForeignKey('Banco',cascade='null')
+    sucursal = DecimalCol(size=4,precision=0)
+    cuenta = StringCol()
+    observaciones = StringCol()
+    grupo = RelatedJoin('Grupo')
+
+class Horario(SQLObject):
+    lunes_ho = StringCol(default="")
+    lunes_cl = StringCol(default="")
+    lunes_pf = StringCol(default="")
+    martes_ho = StringCol(default="")
+    martes_cl = StringCol(default="")
+    martes_pf = StringCol(default="")
+    miercoles_ho = StringCol(default="")
+    miercoles_cl = StringCol(default="")
+    miercoles_pf = StringCol(default="")
+    jueves_ho = StringCol(default="")
+    jueves_cl = StringCol(default="")
+    jueves_pf = StringCol(default="")
+    viernes_ho = StringCol(default="")
+    viernes_cl = StringCol(default="")
+    viernes_pf = StringCol(default="")
+
+class Curso(SQLObject):
+    nombre = StringCol()
+    examen = StringCol()
+    nivel = StringCol()
+    precio = FloatCol()
+
+class Grupo(SQLObject):
+    nombre = StringCol()
+    horario = ForeignKey('Horario')
+    curso = ForeignKey('Curso')
+    alumnos = RelatedJoin('Confirmacion', joinColumn='grupo', otherColumn='confirmacion',intermediateTable='grupo_confirmacion')
+
+class Confirmacion(SQLObject):
+    grupo = RelatedJoin('Grupo', joinColumn='confirmacion', otherColumn='grupo',intermediateTable='grupo_confirmacion')
+    alumno = ForeignKey('Alumno')
+    confirmado = BoolCol(default=0)
+    
+class Festivo(SQLObject):
+    ano = DecimalCol(size=4,precision=0)
+    mes = DecimalCol(size=2,precision=0)
+    dia = DecimalCol(size=2,precision=0)
+    
+Banco.createTable(ifNotExists=True)
+Alumno.createTable(ifNotExists=True)
+Horario.createTable(ifNotExists=True)
+Curso.createTable(ifNotExists=True)
+Grupo.createTable(ifNotExists=True)
+Confirmacion.createTable(ifNotExists=True)
+Festivo.createTable(ifNotExists=True)

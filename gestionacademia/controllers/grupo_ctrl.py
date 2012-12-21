@@ -1,0 +1,192 @@
+# -*- coding: utf-8 -*-
+### BEGIN LICENSE
+# This file is in the public domain
+### END LICENSE
+
+
+# Standard library imports
+import gobject
+import gtk
+from datetime import date
+
+# Third party libary imports
+from gtkmvc import Controller
+
+# Local library imports
+from gestionacademia.utils._global import *
+
+##Cargamos los subcontroladores
+from seleccionalumnos_ctrl import SeleccionAlumnosCtrl
+from clase_ctrl import ClaseCtrl
+##Cargamos las subvistas
+from gestionacademia.views.seleccionalumnos_view import SeleccionAlumnosView
+from gestionacademia.views.clase_view import ClaseView
+## Cargamos MVC de las asistencua
+from gestionacademia.models.asistencia_model import AsistenciaModel
+from gestionacademia.controllers.asistencia_control import AsistenciaCtrl
+from gestionacademia.views.asistencia_view import AsistenciaView
+
+
+class GrupoCtrl (Controller):
+
+    """Handles signal processing and keeps the model and view aligned for an
+    About MVC-O quadruplet.
+
+    Public methods:
+    register_view(view)
+
+    """
+
+    # Public methods
+
+    def register_view(self, view):
+
+        """Loads the text from the model, then starts a timer to scroll it
+        after 2.1 seconds.
+
+        view: The view managed by this controller.
+
+        """
+
+        ##Formateamos el TreeView de la lista de alumnos
+        tabla_alumnos=[dict(nombre='Numero',dato=1),dict(nombre='Nombre',dato=2),dict(nombre='Apellidos',dato=3),dict(nombre='DNI',dato=4),dict(nombre='Fecha nacim.',dato=5),dict(nombre='Confirmado',dato=6)]
+        tv_init(self.view['tv_alumnos_grupo'],self.model.grupo.lista_alumnos,tabla_alumnos)
+        ##Formateamos el TreeView de la lista de libros
+        tabla_libros=[dict(nombre='Titulo',dato=1),dict(nombre='ISBN',dato=2),dict(nombre='Editorial',dato=3),dict(nombre='Autor',dato=4)]
+        tv_init(self.view['tv_libros_grupo'],self.model.curso.tv_libros,tabla_libros)
+
+        ##Formateamos el TreeView de la lista de clases
+        tabla_clases=[dict(nombre='Día',dato=1),dict(nombre='Aula',dato=2),dict(nombre='Profesor',dato=3),dict(nombre='Horario',dato=4)]
+        tv_init(self.view['tv_clases_grupo'],self.model.grupo.lista_clases,tabla_clases)
+        ##Formateamos el combo de los cursos
+        cb_init(self.view['cb_curso'],self.model.curso.lista,self.model.grupo.cursoID)
+        cb_init(self.view['cb_mes_asistencia'],self.model.lista_meses,'1')
+        cb_init(self.view['cb_mes_notas'],self.model.lista_trimestres,'1')
+        return
+
+    # Non-public methods
+    def lanzar_clase(self,id):
+
+        self.model.clase.cargar(id)
+        self.model.clase.grupo = self.model.grupo.id
+        v = ClaseView(self.view) # pass GestionacademiaView as the parent
+        c = ClaseCtrl(self.model, v)
+        v.run()
+        self.model.grupo.rellenar_lista_clases()
+        return
+    # GTK signals
+    def on_guardar_activate(self,boton):
+        print "Saliendo del grupo guardando"
+        self.model.grupo.guardar()
+        return
+    def on_bt_salir_activate(self,widget):
+        return
+    ##Señales del popup alumnos
+    def anadir_alumno(self,widget):
+        if  self.model.grupo.g.alumnos.__len__() >= self.model.grupo.g.num_max:
+            print "Grupo lleno"
+            mostrar_aviso("Grupo lleno","Grupo lleno")
+        else:
+            v = SeleccionAlumnosView(self.view) # pass GestionacademiaView as the parent
+            c = SeleccionAlumnosCtrl(self.model, v)
+            v.run() # this runs in modal mode
+        return
+    def eliminar_alumno(self,widget):
+        tv_widget = self.view['tv_alumnos_grupo']
+        id= get_tv_selected(tv_widget)
+        asis = AsistenciaModel()
+        asis.cargar(id)
+        a = asis.a.alumno
+        alumno = "%s %s %s"%(a.nombre,a.apellido1,a.apellido2)
+        res = pedir_confirmacion("Desea borrar el alumno %s"%alumno,"Confirme el borrado del alumno")
+        if res == True:
+            self.model.grupo.quitar_alumno(id)
+    def confirmacion_alumno(self,widget):
+        tv_widget = self.view['tv_alumnos_grupo']
+        id= get_tv_selected(tv_widget)
+        self.model.grupo.cambiar_confirmacion(id)
+    ##Señales del popup alumnos
+    def anadir_clase(self,widget):
+        self.lanzar_clase(-1)
+        return
+    def eliminar_clase(self,widget):
+        tv_widget = self.view['tv_clases_grupo']
+        id= get_tv_selected(tv_widget)
+        res = pedir_confirmacion("¡Seguro que desea borrar la clase?","Confirme el borrado de la clase")
+        if res == True:
+            self.model.grupo.quitar_clase(id)
+    def editar_clase(self,widget):
+        tv_widget = self.view['tv_clases_grupo']
+        id = get_tv_selected(tv_widget)
+        self.lanzar_clase(id)
+        return
+    def on_tv_clases_grupo_row_activated(self, treeview,*args):
+        self.lanzar_clase(get_tv_selected(treeview))
+    def on_tv_alumnos_grupo_button_press_event(self, treeview, event):
+        if event.button == 3:
+            x = int(event.x)
+            y = int(event.y)
+            time = event.time
+            pthinfo = treeview.get_path_at_pos(x, y)
+            if pthinfo is not None:
+                path, col, cellx, celly = pthinfo
+                treeview.grab_focus()
+                treeview.set_cursor( path, col, 0)
+            self.view['popup_alumnos'].popup( None, None, None, event.button, time)
+            return True
+    def on_tv_alumnos_grupo_row_activated(self, widget, *args):
+        ##Al hacer dobleclick en una fila lanzamos la edición de la asistencia
+        id=get_tv_selected(widget)
+        v = AsistenciaView(self.view) # pass GestionacademiaView as the parent
+        m = AsistenciaModel()
+        m.cargar(id)
+        c = AsistenciaCtrl(m, v)
+        ##Habilitamos la edición del combo de alumnos
+        v['cb_alumnos'].set_button_sensitivity(gtk.SENSITIVITY_ON)
+        v.run()
+        self.model.grupo.rellenar_lista_alumnos()
+        return
+    def on_tv_clases_grupo_button_press_event(self, treeview, event):
+        if event.button == 3:
+            x = int(event.x)
+            y = int(event.y)
+            time = event.time
+            pthinfo = treeview.get_path_at_pos(x, y)
+            if pthinfo is not None:
+                path, col, cellx, celly = pthinfo
+                treeview.grab_focus()
+                treeview.set_cursor( path, col, 0)
+            self.view['popup_clases'].popup( None, None, None, event.button, time)
+            return True
+    def on_cb_curso_changed(self, widget):
+        ##FIXME estos e puede hacer con un adapt!
+        ##Cambiamos el ID del curso
+        self.model.grupo.cursoID = cb_get_active(widget,self.model.curso.lista)
+        ##Refrescamos la lista de cursos...
+        self.model.curso.cargar(self.model.grupo.cursoID)
+    ##Para la impresio
+    def on_cb_mes_asistencia_changed(self,widget):
+        mes = cb_get_active(self.view['cb_mes_asistencia'])
+        ano = date.today().year
+        self.model.grupo.imprimir_planilla_asistencia(ano,mes)
+        mostrar_aviso("Impresa la planilla de asistencia para el mes %s/%s del grupo %s"%
+            (mes,ano,self.model.grupo.nombre),"Impresion terminada")
+        return
+    def on_cb_mes_notas_changed(self,widget):
+        trimestre = cb_get_active(self.view['cb_mes_notas'])
+        ano = date.today().year
+        self.model.grupo.imprimir_planilla_notas(trimestre)
+        mostrar_aviso("Impresa la planilla de notas para el trimestre %s/%s del grupo %s"%
+            (trimestre,ano,self.model.grupo.nombre),"Impresion terminada")
+
+        return
+    # Observed properties
+    def register_adapters(self):
+        self.adapt('grupo.nombre','nombre')
+        self.adapt('grupo.num_max','num_max')
+        self.adapt('grupo.id','id')
+##        #Conectamos todas las variables del calendario,que estánen un array
+##        for variable in self.model.grupo.lista_variables:
+##            self.adapt('grupo.%s'%variable,variable)
+
+    pass # End of class

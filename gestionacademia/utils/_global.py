@@ -1,0 +1,144 @@
+# -*- coding: utf-8 -*-
+### BEGIN LICENSE
+# This file is in the public domain
+### END LICENSE
+
+import gtk
+import yaml
+import logging
+from gtkmvc import ListStoreModel
+
+def get_subview_widget(view):
+
+    """Return the top widget from a given view.
+
+    The top widget is specified inside view. If none is specified, it will be
+    the first widget in the hierarchy.
+
+    view: An object that is a subclass of View
+
+    """
+
+    widget = view.get_top_widget()
+    widget.unparent()
+    return widget
+
+## FIXME esto hay que sacarlo a otro lado y reutilizar/refactorizar
+## Tres funciones para manejar combos.
+def cb_init(widget,model,id_activo=-1):
+    """Esta funcion inicializa un combo, signandole un modelo
+    y añadiendo entradas de texto.
+    Recibe los parametros: widget (el del cambo), modelo e id_activo(opcional)
+    """
+##        print "Inicializando el combo %s"%widget.get_name()
+    widget.set_model(model)
+    rend = gtk.CellRendererText()
+    widget.pack_start(rend, True)
+    widget.add_attribute(rend, 'text', 1)
+    ##Si el id activo no es -1 pasamos a establecer el valor del combo
+    if id_activo != -1:
+        cb_set_active(widget,model,id_activo)
+##Helpers para combos
+def cb_get_active(widget,model=None,columna=0):
+    if model == None:
+        model = widget.get_model()
+    itt = widget.get_active_iter()
+    id_activo = model.get_value(itt,columna)
+    return id_activo
+
+def cb_set_active(widget,model,id_activo,columna=0):
+    for row in model:
+        if row[columna] == id_activo:
+            widget.set_active_iter(row.iter)
+
+## Helpers para TreeViews
+def tv_init(widget,model,tabla):
+    widget.set_model(model)
+    rend = gtk.CellRendererText()
+
+    for fila in tabla:
+        col = gtk.TreeViewColumn(fila['nombre'],rend,text=fila['dato'])
+        col.set_sort_column_id(fila['dato'])
+        widget.append_column(col)
+    ##Por defecto las busquedas son en base a la primera columna
+    widget.set_enable_search(True)
+    widget.set_search_column(1)
+def get_tv_selected(widget):
+    """Función que devuelve el primer campo de un elemento seleccionado en un treeview"""
+    (model, pathlist) = widget.get_selection().get_selected_rows()
+    for paths in pathlist:
+        treeiter = model.get_iter(paths)
+        id = model.get_value(treeiter, 0)
+    return id
+
+##Para mostar un dialogo de confirmacion
+def pedir_confirmacion(texto,titulo):
+    dialog = gtk.MessageDialog(None, gtk.DIALOG_MODAL,gtk.MESSAGE_INFO, gtk.BUTTONS_YES_NO,texto)
+    dialog.set_title(titulo)
+    response = dialog.run()
+    dialog.destroy()
+    if response == gtk.RESPONSE_YES:
+        print "A respondido que sí!"
+        return True
+    else:
+        print "A respondido que no!"
+        return False
+def mostrar_aviso(texto,titulo):
+    """Función que muestra un dialogo de aviso. Se le pasa el texto y luego el título"""
+    dialog = gtk.MessageDialog(None, gtk.DIALOG_MODAL,gtk.MESSAGE_INFO,gtk.BUTTONS_OK,texto)
+    dialog.set_title(titulo)
+    response = dialog.run()
+    dialog.destroy()
+def confirmar_borrado(texto,modelo):
+    aviso = "¡Atención! Se dispone a borrar %s. ¿Está seguro?"%texto
+    if pedir_confirmacion(aviso,"Atencion!"):
+        modelo.borrar()
+    else:
+        print "Anulado el borrado de %s!"%texto
+##Devuelve el nombre del mes pasandole su número
+def nombre_mes(numero_mes):
+    meses=["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Setiembre", "Octubre", "Noviembre", "Diciembre"]
+    return meses[numero_mes-1]
+
+def limpiar_tildes(texto):
+    return texto.replace('á','a').replace('é','e').replace('í','i').replace('ó','o').replace('ú','u')
+
+##Clase con las provincias
+class Provincias(ListStoreModel):
+    def __init__(self, filename=None):
+        ListStoreModel.__init__(self,int,str)
+        provincias = yaml.load(open('data/config/provincias.yml'))['provincias']
+        num = 0
+        for provincia in provincias:
+##            print "Añadiendo %s"%provincia
+            self.append([num,provincia])
+            num=num+1
+        return
+def debug(mensaje):
+    texto = "(%s) %s"%(__package__,mensaje)
+    logging.debug(texto)
+    return
+
+def ajustar(numero,longitud, num_decimales=0):
+        """Función que ajusta a la derecha el numero añadiendo por la izquierda los "0" que sean necesario"""
+        unidades = str(numero).split('.')[0]
+        if num_decimales == 0:
+            numero = unidades
+        else:
+            try:
+                decimales = str(numero).split('.')[1]
+                decimales = decimales[0:num_decimales]
+                decimales = decimales + '0'*(num_decimales-len(decimales))
+            except:
+                ##print "Añadimos %s 0 como decimales"%num_decimales
+                decimales = '0'*num_decimales
+            numero = unidades + str(decimales[0:num_decimales])
+
+        if len(numero)<longitud:
+##            print "Hacen falta ceros a la izquierda..."
+            numero = '0'*(longitud-len(numero))+numero
+        return numero
+
+def enviar_informe_fallo():
+    """Funcion que recopila información y la envía a los desarrolladores"""
+    mostrar_aviso("Lo siento, esta función está aun sin implementar","Aun sin implementar")

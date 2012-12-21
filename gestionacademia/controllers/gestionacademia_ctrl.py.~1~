@@ -1,0 +1,692 @@
+# -*- coding: utf-8 -*-
+### BEGIN LICENSE
+# This file is in the public domain
+### END LICENSE
+
+
+# Standard library imports
+from datetime import date
+import logging
+# Third party library imports
+from gtkmvc import Controller
+from gtkmvc.adapters import StaticContainerAdapter
+
+import gtk
+# Local library imports
+from gestionacademia.utils._global import *
+
+##Cargamos los subcontroladores
+from about_ctrl import AboutCtrl
+from preferences_ctrl import PreferencesCtrl
+from alumno_ctrl import AlumnoCtrl
+from profesor_ctrl import ProfesorCtrl
+from aula_ctrl import AulaCtrl
+from libro_ctrl import LibroCtrl
+from festivo_ctrl import FestivoCtrl
+from banco_ctrl import BancoCtrl
+from curso_ctrl import CursoCtrl
+from grupo_ctrl import GrupoCtrl
+##Cargamos las subvistas
+from gestionacademia.views.about_view import AboutView
+from gestionacademia.views.preferences_view import PreferencesView
+from gestionacademia.views.alumno_view import AlumnoView
+from gestionacademia.views.profesor_view import ProfesorView
+from gestionacademia.views.aula_view import AulaView
+from gestionacademia.views.libro_view import LibroView
+from gestionacademia.views.festivo_view import FestivoView
+from gestionacademia.views.banco_view import BancoView
+from gestionacademia.views.curso_view import CursoView
+from gestionacademia.views.grupo_view import GrupoView
+
+class GestionacademiaCtrl (Controller):
+
+    """Handles signal processing and keeps the model and view aligned for an
+    Gestionacademia MVC-O quadruplet.
+
+    Public methods:
+    register_view(view)
+
+    """
+    bloqueo_check = True
+
+    def register_view(self, view):
+
+        """Load values from the model and persistent objects to set the
+        initial state of the view, then show it.
+
+        view: The view managed by this controller.
+
+        """
+        self.bloqueo_check = True
+        ##Inicializamos todos los TreeViews
+        tabla_alumnos=[dict(nombre='Número',dato=0),dict(nombre='Apellido1',dato=2),
+            dict(nombre='Apellido2',dato=3),dict(nombre='Nombre',dato=4)]
+        tv_init(self.view['tv_alumnos'],self.model.alumno.lista_alumnos,tabla_alumnos)
+        self.view['tv_alumnos'].set_headers_clickable=True
+        self.view['tv_alumnos'].set_reorderable=True
+        self.view['tv_alumnos'].set_enable_search(True)
+        self.view['tv_alumnos'].set_search_column(0)
+        self.view['tv_alumnos'].set_rules_hint(0)
+
+        tabla_profesores=[dict(nombre='Nombre',dato=4),dict(nombre='Apellido1',dato=2),
+            dict(nombre='Telefono',dato=3)]
+        tv_init(self.view['tv_profesores'],self.model.profesor.lista_profesores,tabla_profesores)
+
+        tabla_grupos=[dict(nombre='ID',dato=0),dict(nombre='Nombre',dato=1)
+            ,dict(nombre='Curso',dato=2),dict(nombre='Al. Conf.',dato=3)
+            ,dict(nombre='Al. SinCon.',dato=4),dict(nombre='Clases',dato=7)
+            ,dict(nombre='Fecha min.',dato=5),dict(nombre='Fecha max.',dato=6)]
+        tv_init(self.view['tv_grupos'],self.model.grupo.lista,tabla_grupos)
+
+        tabla_grupos2=[dict(nombre='ID',dato=0),dict(nombre='Nombre',dato=1)
+            ,dict(nombre='Curso',dato=2),dict(nombre='Al. Conf.',dato=3)
+            ,dict(nombre='Al. SinCon.',dato=4),dict(nombre='Fecha min.',dato=5)
+            ,dict(nombre='Fecha max.',dato=6),dict(nombre='Clases',dato=7)]
+        tv_init(self.view['tv_grupos_facturar'],self.model.grupo.lista,tabla_grupos)
+        self.seleccion_grupos_facturar = self.view['tv_grupos_facturar'].get_selection()
+        self.seleccion_grupos_facturar.set_mode(gtk.SELECTION_MULTIPLE)
+
+        tabla_bancos=[dict(nombre='Codigo',dato=1),dict(nombre='Nombre',dato=2)]
+        tv_init(self.view['tv_bancos'],self.model.banco.tv_bancos,tabla_bancos)
+
+        tabla_cursos=[dict(nombre='Nombre',dato=1),dict(nombre='Examen',dato=2),
+            dict(nombre='Nivel',dato=3),dict(nombre='Precio',dato=4)]
+        tv_init(self.view['tv_cursos'],self.model.curso.lista,tabla_cursos)
+
+        tabla_aulas=[dict(nombre='Numero',dato=1),dict(nombre='Piso',dato=2),
+            dict(nombre='Aforo',dato=3)]
+        tv_init(self.view['tv_aulas'],self.model.aula.tv,tabla_aulas)
+
+        tabla_libros=[dict(nombre='Titulo',dato=1),dict(nombre='ISBN',dato=2),
+            dict(nombre='Editorial',dato=3),dict(nombre='Autor',dato=4)]
+        tv_init(self.view['tv_libros'],self.model.libro.tv,tabla_libros)
+
+        ##Calendario y notas
+        self.calendario_init()
+        self.notas_init()
+        ##Para la parte de facturación
+        self.faturacion_init()
+        ##La parte de faltas
+        self.faltas_init()
+
+        # Show the view.
+        self.view.show()
+        return
+
+    def faltas_init(self):
+        ##Inicializamos los combos
+        self.bloqueo_check=True
+        cb_init(self.view['cb_faltas_alumno'],self.model.grupo.combo_alumnos,'1')
+        cb_init(self.view['cb_faltas_grupo'],self.model.grupo.lista,'1')
+        cb_init(self.view['cb_faltas_mes'],self.model.lista_meses,'2')
+
+
+    def notas_init(self):
+        ##Inicializamos los combos
+        cb_init(self.view['cb_notas_alumnos'],self.model.grupo.combo_alumnos,'-1')
+        cb_init(self.view['cb_notas_grupos'],self.model.grupo.lista,'-1')
+        cb_init(self.view['cb_trimestre'],self.model.lista_trimestres,'-1')
+    def faturacion_init(self):
+        """Inicializamos la parte de facturacion"""
+        hoy=date.today()
+        ##Los combos
+        cb_init(self.view['factura_mes_cargo'],self.model.lista_meses)
+        cb_init(self.view['factura_mes_confeccion'],self.model.lista_meses)
+        ##Cargamos la fecha de hoy en los entrys y combos
+        self.model.facturacion.ano_confeccion = hoy.year
+        self.model.facturacion.mes_confeccion = hoy.month
+        self.model.facturacion.dia_confeccion = hoy.day
+        self.model.facturacion.ano_cargo = hoy.year
+        self.model.facturacion.mes_cargo = hoy.month
+        self.model.facturacion.dia_cargo = hoy.day
+    def calendario_init(self):
+        cal = self.view['calendario']
+        hoy=date.today()
+        cal.select_month(hoy.month,hoy.year)
+        cal.select_day(hoy.day)
+        self.model.festivo.marcar_dias(cal)
+        ##Ahora nos ponemos con el TV
+        tabla_festivos=[dict(nombre='Año',dato=1),dict(nombre='Mes',dato=2),dict(nombre='Día',dato=3),dict(nombre='Inicio',dato=4),dict(nombre='Fin',dato=5),dict(nombre='Observaciones',dato=6)]
+        tv_init(self.view['tv_calendario'],self.model.festivo.lista,tabla_festivos)
+
+    ##Funciones que lanzan las ventanas de edicion/creacion
+    def lanzar_curso(self,id):
+        v = CursoView(self.view) # pass GestionacademiaView as the parent
+        self.model.curso.cargar(id)
+        c = CursoCtrl(self.model, v)
+        v.run()
+    ##Funciones que lanzan las ventanas de edición de lso elementos
+    def lanzar_banco(self,id):
+        v = BancoView(self.view) # pass GestionacademiaView as the parent
+        self.model.banco.set_banco(id)
+        c = BancoCtrl(self.model.banco, v)
+        v.run()
+    def lanzar_alumno(self,id):
+        v = AlumnoView(self.view) # pass GestionacademiaView as the parent
+        self.model.alumno.cargar(id)
+        c = AlumnoCtrl(self.model.alumno, v)
+        v.run()
+    def lanzar_profesor(self,id):
+        v = ProfesorView(self.view) # pass GestionacademiaView as the parent
+        self.model.profesor.cargar(id)
+        c = ProfesorCtrl(self.model.profesor, v)
+        v.run()
+    def lanzar_grupo(self,id):
+        self.model.grupo.cargar(id)
+        if id==-1 or self.model.grupo.cursoID == None:
+            self.model.curso.cargar(-1)
+        else:
+            self.model.curso.cargar(self.model.grupo.cursoID)
+        v = GrupoView(self.view) # pass GestionacademiaView as the parent
+        c = GrupoCtrl(self.model, v)
+        v.run()
+    def lanzar_aula(self,id):
+        self.model.aula.cargar(id)
+        v = AulaView(self.view) # pass GestionacademiaView as the parent
+        c = AulaCtrl(self.model.aula, v)
+        v.run()
+    def lanzar_impresion_asistencias(self,id):
+        v = ImpresionAsistenciaView(self.view) # pass GestionacademiaView as the parent
+        c = ImpresionAsistenciaCtrl(self.model.grupo, v)
+        v.run()
+        pass
+    def lanzar_libro(self,id):
+        self.model.libro.cargar(id)
+        v = LibroView(self.view) # pass GestionacademiaView as the parent
+        c = LibroCtrl(self.model.libro, v)
+        v.run()
+        pass
+
+    def lanzar_festivo(self,id):
+##        self.model.festivo.limpiar()
+##        self.model.festivo.cargar(id)
+        v = FestivoView(self.view) # pass GestionacademiaView as the parent
+        c = FestivoCtrl(self.model.festivo, v)
+        v.run()
+        ##Actualizamos los días marcados
+        cal = self.view['calendario']
+        self.model.festivo.marcar_dias(cal)
+        pass
+    # GTK signals
+    def _quit(self):
+        import gtk
+        gtk.main_quit()
+        return
+
+    def _on_window_delete_event(self, window, event):
+        self._quit()
+        return True
+
+    def _on_menu_quit_clicked(self, button):
+        self._quit()
+
+    def _on_menu_about_clicked(self, button):
+        v = AboutView(self.view) # pass GestionacademiaView as the parent
+        c = AboutCtrl(self.model.about, v)
+        v.run() # this runs in modal mode
+        return
+
+    def on_vertodosalumnos_activate(self, widget):
+        self.model.alumno.rellenar_lista(todos=True)
+    def on_imp_lista_alumnos(self,widget):
+        self.model.alumno.imprimir_lista()
+
+    def _on_menu_preferences_clicked(self, button):
+        v = PreferencesView(self.view) # pass GestionacademiaView as the parent
+        c = PreferencesCtrl(self.model.preferences, v)
+        v.run() # this runs in modal mode
+        return
+    ##Funciones conectadas a crear, editar y borrar elementos
+    def on_nuevo_alumno(self,widget):
+        self.lanzar_alumno(-1)
+    def on_editar_alumno(self,widget):
+        ##Obtenemos el alumno seleccionado en el listado
+        id = get_tv_selected(self.view['tv_alumnos'])
+        self.lanzar_alumno(id)
+    def on_borrar_alumno(self,widget):
+        ##Obtenemos el alumno seleccionado en el listado
+        id = get_tv_selected(self.view['tv_alumnos'])
+
+    def on_nuevo_grupo(self,widget):
+        self.lanzar_grupo(-1)
+    def on_editar_grupo(self,widget):
+        ##Obtenemos el grupo seleccionado en el listado
+        id = get_tv_selected(self.view['tv_grupos'])
+        self.lanzar_grupo(id)
+    def on_borrar_grupo(self,widget):
+        ##Obtenemos el grupo seleccionado en el listado
+        id = get_tv_selected(self.view['tv_grupos'])
+        self.model.grupo.cargar(id)
+        texto="Grupo %s"%(self.model.grupo.nombre)
+        confirmar_borrado(texto,self.model.grupo)
+
+
+    def on_nuevo_banco(self,widget):
+        self.lanzar_banco(-1)
+    def on_editar_banco(self,widget):
+        ##Obtenemos el banco seleccionado en el listado
+        id = get_tv_selected(self.view['tv_bancos'])
+        self.lanzar_banco(id)
+    def on_borrar_banco(self,widget):
+        ##Obtenemos el banco seleccionado en el listado
+        id = get_tv_selected(self.view['tv_bancos'])
+        self.model.banco.cargar(id)
+        texto="Banco %s"%(self.model.banco.nombre)
+        confirmar_borrado(texto,self.model.banco)
+
+    def on_nuevo_curso(self,widget):
+        self.lanzar_curso(-1)
+    def on_editar_curso(self,widget):
+        ##Obtenemos el curso seleccionado en el listado
+        id = get_tv_selected(self.view['tv_cursos'])
+        self.lanzar_curso(id)
+    def on_borrar_curso(self,widget):
+        ##Obtenemos el curso seleccionado en el listado
+        id = get_tv_selected(self.view['tv_cursos'])
+        self.model.curso.cargar(id)
+        texto="Curso %s"%(self.model.curso.nombre)
+        confirmar_borrado(texto,self.model.curso)
+
+    def on_nuevo_libro(self,widget):
+        self.lanzar_libro(-1)
+    def on_editar_libro(self,widget):
+        ##Obtenemos el libro seleccionado en el listado
+        id = get_tv_selected(self.view['tv_libros'])
+        self.lanzar_libro(id)
+    def on_borrar_libro(self,widget):
+        ##Obtenemos el libro seleccionado en el listado
+        id = get_tv_selected(self.view['tv_libros'])
+        self.model.libro.cargar(id)
+        texto="Libro %s"%(self.model.libro.titulo)
+        confirmar_borrado(texto,self.model.libro)
+
+    def on_nueva_aula(self,widget):
+        self.lanzar_aula(-1)
+    def on_editar_aula(self,widget):
+        ##Obtenemos el aula seleccionado en el listado
+        id = get_tv_selected(self.view['tv_aulas'])
+        self.lanzar_aula(id)
+    def on_borrar_aula(self,widget):
+        ##Obtenemos el aula seleccionado en el listado
+        id = get_tv_selected(self.view['tv_aulas'])
+        self.model.aula.cargar(id)
+        texto="Aula %s-%s"%(self.model.aula.numero,self.model.aula.piso)
+        confirmar_borrado(texto,self.model.aula)
+
+
+    def on_nuevo_profesor(self,widget):
+        self.lanzar_profesor(-1)
+    def on_editar_profesor(self,widget):
+        ##Obtenemos el profesor seleecionado en el listado
+        id = get_tv_selected(self.view['tv_profesores'])
+        self.lanzar_profesor(id)
+    def on_borrar_profesor(self,widget):
+        ##Obtenemos el profesor seleecionado en el listado
+        id = get_tv_selected(self.view['tv_profesores'])
+        self.model.profesor.cargar(id)
+        texto="Probesor %s,%s %s"%(self.model.profesor.nombre,self.model.profesor.apellido1,self.model.profesor.apellido2)
+        confirmar_borrado(texto,self.model.profesor)
+
+    def on_nuevo_festivo(self,widget):
+        self.lanzar_festivo(-1)
+    def on_editar_festivo(self,widget):
+        ##Obtenemos el profesor seleecionado en el listado
+        id = get_tv_selected(self.view['tv_calendario'])
+        self.lanzar_festivo(id)
+    def on_borrar_festivo(self,widget):
+        ##Obtenemos el profesor seleecionado en el listado
+        id = get_tv_selected(self.view['tv_calendario'])
+        self.model.festivo.cargar(id)
+        texto="Festivo %s-%s-%s"%(self.model.festivo.ano,self.model.festivo.mes,self.model.festivo.dia)
+        confirmar_borrado(texto,self.model.festivo)
+
+    ##Funciones conectadas a los treeviews
+    def on_tv_alumnos_row_activated(self, widget, *args):
+        self.lanzar_alumno(get_tv_selected(widget))
+    def on_tv_profesores_row_activated(self, widget, *args):
+        self.lanzar_profesor(get_tv_selected(widget))
+    def on_tv_bancos_row_activated(self, widget, *args):
+        self.lanzar_banco(get_tv_selected(widget))
+    def on_tv_cursos_row_activated(self, widget, *args):
+        self.lanzar_curso(get_tv_selected(widget))
+    def on_tv_grupos_row_activated(self, widget, *args):
+        self.lanzar_grupo(get_tv_selected(widget))
+    def on_tv_libros_row_activated(self, widget, *args):
+        self.lanzar_libro(get_tv_selected(widget))
+    def on_tv_aulas_row_activated(self, widget, *args):
+        self.lanzar_aula(get_tv_selected(widget))
+    def on_tv_calendario_row_activated(self, widget, *args):
+        id = get_tv_selected(widget)
+        self.model.festivo.cargar(id)
+        self.lanzar_festivo(id)
+
+    ##Para la parte de las notas
+    def on_cb_notas_grupos_changed(self,widget):
+        try:
+            id = cb_get_active(widget,widget.get_model())
+        except:
+            return -1
+        ##Cargamos el grupo para que se rellene la lista de alumnos
+        self.model.grupo.cargar(id)
+        return
+    def on_cb_notas_alumnos_changed(self,widget):
+        self.cargar_nota()
+        return
+    def on_alumn_anterior_clicked(self,widget):
+        debug("Anterior alumnno")
+        self.view['cb_notas_alumnos'].set_active(self.view['cb_notas_alumnos'].get_active()-1)
+        return
+    def on_alumn_siguiente_clicked(self,widget):
+        debug("Siguiente alumnno")
+        self.view['cb_notas_alumnos'].set_active(self.view['cb_notas_alumnos'].get_active()+1)
+        return
+    def on_cb_trimestre_changed(self,widget):
+        self.cargar_nota()
+        return
+    def on_guarda_nota_clicked(self,widget):
+        self.model.nota.guardar()
+
+    def cargar_nota(self):
+        self.model.nota.clear()
+        try:
+            trimestre = cb_get_active(self.view['cb_trimestre'])
+            id = cb_get_active(self.view['cb_notas_alumnos'])
+            self.model.asistencia.cargar(id)
+            alumno = self.model.asistencia.alumnoID
+            grupo = cb_get_active(self.view['cb_notas_grupos'])
+            logging.debug("Cargar nota: tenemos el mes %s, grupo %s y el alumno %s"%(trimestre,grupo,alumno))
+            self.model.nota.trimestre=trimestre
+            self.model.nota.alumnoID=alumno
+            self.model.nota.grupoID=grupo
+            self.model.nota.cargar()
+        except:
+            return -1
+    def imp_notas_grupo(self,widget):
+        trimestre = cb_get_active(self.view['cb_trimestre'])
+        grupo = cb_get_active(self.view['cb_notas_grupos'])
+        logging.debug("Intentando imprimir las notas del grupo %s del trimeste %s"%(grupo,trimestre))
+        self.model.grupo.cargar(grupo)
+        print self.model.grupo.g
+        self.model.grupo.imprimir_notas(trimestre)
+    ##Para la parte de faltas:
+    def on_cb_faltas_alumno_changed(self,widget):
+        ##debug "Cambiando alumno"
+        ##Buscamos los grupos y rellenamos el combo
+        self.cargar_falta()
+    def on_cb_faltas_grupo_changed(self,widget):
+        try:
+            id = cb_get_active(widget)
+        except:
+            ##debug "Error al cambiar al combo"
+            return -1
+        self.model.grupo.cargar(id)
+        self.cargar_falta()
+    def on_cb_faltas_mes_changed(self,widget):
+        self.cargar_falta()
+    def cargar_falta(self):
+        debug "Intentamos cargar una falta, pero primero limpiamos"
+        self.model.falta.clear()
+        try:
+            mes = cb_get_active(self.view['cb_faltas_mes'],self.view['cb_faltas_mes'].get_model())
+            id = cb_get_active(self.view['cb_faltas_alumno'],self.view['cb_faltas_alumno'].get_model())
+            self.model.asistencia.cargar(id)
+            alumno = self.model.asistencia.alumnoID
+            grupo = cb_get_active(self.view['cb_faltas_grupo'],self.view['cb_faltas_grupo'].get_model())
+            debug "tenemos el mes %s, grupo %s y el alumno %s"%(mes,grupo,alumno)
+            self.model.falta.mes=mes
+            self.model.falta.alumnoID=alumno
+            self.model.falta.grupoID=grupo
+            self.model.falta.cargar()
+        except:
+            debug "aun no estamos listos"
+            return -1
+    def on_guardar_faltas_clicked(self,widget):
+        debug "Guardando las faltas"
+        res = self.model.falta.guardar()
+        if res == 2:
+            mostrar_aviso("Se ha imprimido la carta de faltas","Faltas")
+    ##Función que se lanza al editar las faltas para comprobar que se ha seleccionado el mes, grupo, etc
+    def check_combos_asistencia(self,widget):
+        try:
+            id_mes = cb_get_active(self.view['cb_faltas_mes'],self.view['cb_faltas_mes'].get_model())
+            id_alumno = cb_get_active(self.view['cb_faltas_alumno'],self.view['cb_faltas_alumno'].get_model())
+            id_grupo = cb_get_active(self.view['cb_faltas_grupo'],self.view['cb_faltas_grupo'].get_model())
+
+        except:
+            ##print self.bloqueo_check
+            if not self.bloqueo_check:
+                mostrar_aviso("Atención antes de introducir faltas seleccione Grupo, Alumno y Mes","Faltas Asistencia")
+    def focus_faltas(self,widget,args):
+        ##debug "hooola"
+        logging.debug("Desbloqueamos el check de la parte de faltas")
+        self.bloqueo_check=False
+    def imprimir_notas_1(self,widget):
+        res = self.model.nota.imprimir(1)
+        if res == 0:
+            mostrar_aviso("No hay notas para su impresion en el primer trimeste","Notas")
+        else:
+            mostrar_aviso("Impresas %s notas del primer trimeste"%res,"Notas")
+    def imprimir_notas_2(self,widget):
+        res = self.model.nota.imprimir(2)
+        if res == 0:
+            mostrar_aviso("No hay notas para su impresion en el segundo trimeste","Notas")
+        else:
+            mostrar_aviso("Impresas %s notas del segundo trimeste"%res,"Notas")
+    def imprimir_notas_3(self,widget):
+        res = self.model.nota.imprimir(3)
+        if res == 0:
+            mostrar_aviso("No hay notas para su impresion en el tercer trimeste","Notas")
+        else:
+            mostrar_aviso("Impresas %s notas del tercer trimeste"%res,"Notas")
+    def on_imp_planilla_notas_1(self,widget):
+        res = self.model.grupo.todas_planillas_notas(1)
+        mostrar_aviso("Impresas %s fichas de notas del primer trimeste"%res,"Hoja Notas")
+        return
+    def on_imp_planilla_notas_2(self,widget):
+        self.model.grupo.todas_planillas_notas(2)
+        mostrar_aviso("Impresas %s fichas de notas del segundo trimeste"%res,"Hoja Notas")
+        return
+    def on_imp_planilla_notas_3(self,widget):
+        res = self.model.grupo.todas_planillas_notas(3)
+        mostrar_aviso("Impresas %s fichas de notas del tercer trimeste"%res,"Hoja Notas")
+        return
+    ##Funciones de impresion de planillas de asistencia de cada mes
+    def on_imp_planilla_asistencia_1(self,widget):
+        self.imp_planilla_asistencia(1)
+    def on_imp_planilla_asistencia_2(self,widget):
+        self.imp_planilla_asistencia(2)
+    def on_imp_planilla_asistencia_3(self,widget):
+        self.imp_planilla_asistencia(3)
+    def on_imp_planilla_asistencia_4(self,widget):
+        self.imp_planilla_asistencia(4)
+    def on_imp_planilla_asistencia_5(self,widget):
+        self.imp_planilla_asistencia(5)
+    def on_imp_planilla_asistencia_6(self,widget):
+        self.imp_planilla_asistencia(6)
+    def on_imp_planilla_asistencia_7(self,widget):
+        self.imp_planilla_asistencia(7)
+    def on_imp_planilla_asistencia_8(self,widget):
+        self.imp_planilla_asistencia(8)
+    def on_imp_planilla_asistencia_9(self,widget):
+        self.imp_planilla_asistencia(9)
+    def on_imp_planilla_asistencia_10(self,widget):
+        self.imp_planilla_asistencia(10)
+    def on_imp_planilla_asistencia_10(self,widget):
+        self.imp_planilla_asistencia(10)
+    def on_imp_planilla_asistencia_11(self,widget):
+        self.imp_planilla_asistencia(11)
+    def on_imp_planilla_asistencia_12(self,widget):
+        self.imp_planilla_asistencia(12)
+    ##Funciones de impresion de planillas generica que recibe el mes como parametro
+    def imp_planilla_asistencia(self,mes):
+        res = self.model.grupo.todas_planillas_asistencia(mes)
+        if res == 0:
+            mostrar_aviso("No se han imprimido fihchas de asistencia. ¡Algo ha fallado!","Asistencia")
+        else:
+            mostrar_aviso("Impresas %s fichas de control de asistencia."%res,"Asistencia")
+    ##Para imprimir la lista de de faltas de asistencia de un mes
+    def on_imp_lista_asis_1_activate(self,widget):
+        self.imprimir_lista_asistencia(1)
+    def on_imp_lista_asis_2_activate(self,widget):
+        self.imprimir_lista_asistencia(2)
+    def on_imp_lista_asis_3_activate(self,widget):
+        self.imprimir_lista_asistencia(3)
+    def on_imp_lista_asis_4_activate(self,widget):
+        self.imprimir_lista_asistencia(4)
+    def on_imp_lista_asis_5_activate(self,widget):
+        self.imprimir_lista_asistencia(5)
+    def on_imp_lista_asis_6_activate(self,widget):
+        self.imprimir_lista_asistencia(6)
+    def on_imp_lista_asis_7_activate(self,widget):
+        self.imprimir_lista_asistencia(7)
+    def on_imp_lista_asis_8_activate(self,widget):
+        self.imprimir_lista_asistencia(8)
+    def on_imp_lista_asis_9_activate(self,widget):
+        self.imprimir_lista_asistencia(9)
+    def on_imp_lista_asis_10_activate(self,widget):
+        self.imprimir_lista_asistencia(10)
+    def on_imp_lista_asis_11_activate(self,widget):
+        self.imprimir_lista_asistencia(11)
+    def on_imp_lista_asis_12_activate(self,widget):
+        self.imprimir_lista_asistencia(12)
+    def on_imp_carta_asis_1_activate(self,widget):
+        self.imprimir_cartas_asistencia(1)
+    def on_imp_carta_asis_2_activate(self,widget):
+        self.imprimir_cartas_asistencia(2)
+    def on_imp_carta_asis_3_activate(self,widget):
+        self.imprimir_cartas_asistencia(3)
+    def on_imp_carta_asis_4_activate(self,widget):
+        self.imprimir_cartas_asistencia(4)
+    def on_imp_carta_asis_5_activate(self,widget):
+        self.imprimir_cartas_asistencia(5)
+    def on_imp_carta_asis_6_activate(self,widget):
+        self.imprimir_cartas_asistencia(6)
+    def on_imp_carta_asis_7_activate(self,widget):
+        self.imprimir_cartas_asistencia(7)
+    def on_imp_carta_asis_8_activate(self,widget):
+        self.imprimir_cartas_asistencia(8)
+    def on_imp_carta_asis_9_activate(self,widget):
+        self.imprimir_cartas_asistencia(9)
+    def on_imp_carta_asis_10_activate(self,widget):
+        self.imprimir_cartas_asistencia(10)
+    def on_imp_carta_asis_11_activate(self,widget):
+        self.imprimir_cartas_asistencia(11)
+    def on_imp_carta_asis_12_activate(self,widget):
+        self.imprimir_cartas_asistencia(12)
+    def imprimir_cartas_asistencia(self,mes):
+        num = self.model.falta.imprimir_cartas_mes(mes)
+        mostrar_aviso("Impresas %s cartas de faltas de asistencia del mes %s"%(num,mes),"Cartas")
+    def imprimir_lista_asistencia(self,mes):
+        num = self.model.falta.imprimir_lista_mes(mes)
+        mostrar_aviso("Impresa la lista de faltas de asistencia del mes %s"%(nombre_mes(mes)),"Lista")
+
+
+    def imp_lista_grupos(self,widget):
+        res = self.model.grupo.imprimir_lista()
+        mostrar_aviso("Se ha imprimido la lista de %s grupos"%res,"Impresion listado grupos")
+    def on_etiquetas_alta_activate(self,widget):
+        res = self.model.alumno.imprimir_etiquetas()
+        mostrar_aviso("Se han impreso %s etiquetas"%res,"Etiquetas impresas")
+        return
+    def on_etiquetas_todos_activate(self,widget):
+        res = self.model.alumno.imprimir_etiquetas(True)
+        mostrar_aviso("Se han impreso %s etiquetas"%res,"Etiquetas impresas")
+        return
+    ##Para la parte de facturar
+    def on_factura_generar(self,widget):
+        ##FIXME estos checks habría que pasarlos al modelo, adaptando el valor de los toggles a variables del model
+        if self.view['facturar_medio_mes'].get_active():
+            logging.debug("Vamos a facturar solo medio mes")
+            medio=True
+        else:
+            logging.debug("Cobramos el mes completo")
+            medio = False
+        lista = []
+
+        if self.view['facturar_grupos_sueltos'].get_active():
+            logging.debug( "Vamos a facturar grupos sueltos")
+            (model,pathlist) = self.seleccion_grupos_facturar.get_selected_rows()
+            for path in pathlist:
+                treeiter = model.get_iter(path)
+                id = model.get_value(treeiter, 0)
+                lista.append(id)
+            logging.debug("Elegidos los grupos")
+            logging.debug(lista)
+        texto = self.model.facturar(lista,medio)
+        logging.debug(texto)
+        mostrar_aviso(texto,"Facturacion")
+        pass
+    def on_lista_factura(self,widget):
+        self.model.listar_factura()
+        pass
+    def on_lista_metalico(self,widget):
+        self.model.listar_metalico()
+        pass
+    def on_facturar_grupos_sueltos_toggled(self,widget):
+        """Des/Habilitar el treeview de grupos"""
+        self.view['tv_grupos_facturar'].set_sensitive(widget.get_active())
+        pass
+    def on_tv_aulas_button_press_event(self, treeview, event):
+        pass
+    def on_tv_libros_button_press_event(self, treeview, event):
+        pass
+    def on_tv_cursos_button_press_event(self, treeview, event):
+        pass
+    def on_tv_profesores_button_press_event(self, treeview, event):
+        ##debug "Boton en profesores"
+        pass
+    def on_tv_alumnos_button_press_event(self, treeview, event):
+##        debug "Intentamos mostrar el pop-up"
+        if event.button == 3:
+            x = int(event.x)
+            y = int(event.y)
+            time = event.time
+            pthinfo = treeview.get_path_at_pos(x, y)
+            if pthinfo is not None:
+                path, col, cellx, celly = pthinfo
+                treeview.grab_focus()
+                treeview.set_cursor( path, col, 0)
+                self.view['popup_alumnos'].popup( None, None, None, event.button, time)
+            return True
+    ##Señales del widget calendario
+    def on_calendario_day_selected_double_click(self,widget):
+        fecha = widget.get_date()
+        #FIXME el widget nos devuelve el mes anterior!
+        fecha_buena=(fecha[0],fecha[1]+1,fecha[1])
+        id = self.model.festivo.es_festivo(fecha_buena)
+        self.lanzar_festivo(id)
+    def on_calendario_month_changed(self,cal):
+        cal.clear_marks()
+        self.model.festivo.marcar_dias(cal)
+    def reiniciar_curso(self,widget):
+        texto = """ATENCION! Se va a reiniciar el curso. Se llavará a cabo las siguienets acciones
+        1- Se borraran todas las notas
+        2- Se borraran todas las faltas de asistencia
+        3- Se pasaran todas las asistencias de alumnos a grupos a no confirmadas
+
+Este proceso es irreversible. Realice una copia de seguridad antes.
+
+Este proceso puede durar unos minutos. Por favor espere a que desaparezca esta ventana y no cierre la aplicación
+        """
+        titulo="Reiniciar curso"
+        if pedir_confirmacion(texto,titulo):
+            self.model.limpiar_curso()
+    # Observed properties
+    def register_adapters(self):
+        ##Para la tabla de notas
+        for variable in self.model.nota.__observables__:
+            self.adapt("nota.%s"%variable,variable)
+        ##Para facturacion
+        self.register_adapters_facturacion()
+        self.adapt("falta.justificadas","justificadas")
+        self.adapt("falta.faltas","faltas")
+
+    def register_adapters_facturacion(self):
+        self.adapt("facturacion.dia_confeccion","factura_dia_confeccion")
+        self.adapt("facturacion.mes_confeccion","factura_mes_confeccion")
+        self.adapt("facturacion.ano_confeccion","factura_ano_confeccion")
+        self.adapt("facturacion.ano_cargo","factura_ano_cargo")
+        self.adapt("facturacion.mes_cargo","factura_mes_cargo")
+        self.adapt("facturacion.dia_cargo","factura_dia_cargo")
+
+    pass # End of class

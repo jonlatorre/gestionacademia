@@ -1,0 +1,17 @@
+- Cambios el los campos de grupos al importas datos:
+  - El campo actual de nombre es realmente el campo texto (libro) HECHO
+  - El nivel es el nombre HECHO
+* Añadir opción de generar listado de alumnos para el cobro en métalico y para el cobro con factura (añadido, falta formatear el listado elegante)
+* Añadir la opción de facturar solo a ciertos grupos y solo medio mes (para setiembre)
+- En la venta de grupo listar los libros asociados HECHO
+* Avisos al facturar (si todo a ido OK, confirmación, etc)
+* Cambiar el formato de mpresión del horario (Pasar a A5, mantener logo y mejorar maquetación)
+* En la impresión de las notas: dejar el logo, mejorar maquetación, asegurarse de que se ve correctamente la la dirección en la ventanilla
+* Añadir el botón para imprimir las planillas de asistencia que se entregan al profesorado (menu impresión)
+* En la impresión de la planillas de asistencia añadir libros y revisar la maquetación y nombre de los campos
+- Volver a cambiar el nombre Nivel por Curso HECHO (revisar)
+- Ajustar el tamaño de la pantalla principal para que se adecue a la del monitor HECHO (comprobar)
+* Configurar la impresora y comprobar la correcta impresión
+* Listado de grupos para impresión
+* Listado de grupos de un mismo curso, con horario, etc para entregar impreso a gente interesada. FALTA ORGANIZAR CURSOS
+* Revisar la parte calendario

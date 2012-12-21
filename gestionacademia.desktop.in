@@ -1,0 +1,8 @@
+[Desktop Entry]
+_Name=Gestionacademia
+_Comment=Gestionacademia application
+Categories=GNOME;Utility;
+Exec=/home/eide/gestionacademia/Dropbox/bin/gestionacademia
+Icon=gestionacademia
+Terminal=false
+Type=Application

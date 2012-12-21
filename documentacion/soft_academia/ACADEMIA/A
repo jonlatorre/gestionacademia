@@ -1,0 +1,505 @@
+10 '                       PEMPETIQ.BAS
+20 '                      --------------
+30 '                   PROGRAMA DE ETIQUETAS
+40 '         ----------------------------------------
+42 '
+50 ON ERROR GOTO 9100
+52 '
+54 CLS
+56 GOSUB 33000 'COGER DATOS DE LA EMPRESA.
+60 WIDTH "LPT1:",132:OPEN "LPT1:" FOR OUTPUT AS #9
+62 LPRINT CHR$(27) "C" CHR$(72);:LPRINT CHR$(15)
+64 '
+70 '
+80 KEY 1,CHR$(14):KEY 7,CHR$(7):KEY 8,CHR$(9):KEY 10,CHR$(10)
+82 KEY 2,CHR$(15):KEY 3,CHR$(16):KEY 4,CHR$(17)
+90 CERO$=STRING$(15,"0"):BLANCO$=STRING$(20," ")
+92 FECHA$=MID$(DATE$,4,2)+"/"+LEFT$(DATE$,2)+"/"+RIGHT$(DATE$,2)
+94 '
+100 ENTER$=CHR$(17)+CHR$(196)+CHR$(217)
+132 '
+134 '
+140 DEFSTR C
+150 '
+160 '
+170 OPTION BASE 1
+180 DIM TABNOM$(3),TABDIR$(3),TABPLA$(3)
+190 '
+200 '
+210 '
+220 '
+230 '
+240 '
+250 '
+260 GOSUB 15000  'CARGA TABLA DE PROVINCIAS
+270 '
+280 '
+282 '
+290 '
+300 '**********************************
+310 '***PRESENTAMOS MENU EN PANTALLA***
+320 '**********************************
+330 TIT$="- LISTADO ETIQUETAS DE EMPRESAS-"
+340 X%=80-LEN(TIT$)
+350 X%=INT(X%/2)
+360 GOSUB 8000
+370 LOCATE 5,X%:PRINT TIT$
+380 LOCATE 6,X%:PRINT STRING$(LEN(TIT$),205)
+390 LOCATE 8,23:PRINT "1.- LISTADO DE TODAS LAS EMPRESAS."
+400 LOCATE 10,23:PRINT "2.- LISTADO ENTRE EMPRESAS."
+405 LOCATE 12,23:PRINT "3.- NO SIRVE."
+410 LOCATE 14,23:PRINT "4.- FIN DE PROGRAMA."
+420 LOCATE 16,28:PRINT "Seleccione Opci¢n : < >"
+430 'LOCATE 16,19:PRINT "DESDE EL : <     >   HASTA EL : <     >"
+432 LOCATE 18,29:COLOR 12:PRINT " ESC ";:COLOR 15:PRINT " Terminar listado"
+440 '
+450 LOCATE 16,49,1,0,6:OPC$=INPUT$(1)
+460 IF OPC$<"1" OR OPC$>"4" THEN BEEP:GOTO 450
+462 LOCATE 16,49:PRINT OPC$
+470 IF OPC$="4" THEN CLOSE:RUN "PACACLIE"
+480 IF OPC$="1" THEN DESDE$="00001":HASTA$="99999":GOTO 550  'PEDIR CONFORMIDAD A LOS DATOS.
+490 IF OPC$="2" THEN LOCATE 20,19:PRINT "DESDE LA : <     >   HASTA LA : <     >":GOTO 510
+500 LOCATE 20,19:PRINT "TECLEA EL NUMERO DE GRUPO ... : <     >":GOTO 532
+510 F.C1%=20:C.C1%=31:L.E%=5:BO%=5:ESC%=1:GOSUB 63000
+520 IF I.T%<>0 THEN BEEP:GOTO 510
+530 DESDE$=D.E$:LOCATE 20,31:PRINT DESDE$
+532 F.C1%=20:C.C1%=52:L.E%=5:BO%=5:ESC%=1:GOSUB 63000
+534 IF I.T%<>0 THEN BEEP:GOTO 532
+536 HASTA$=D.E$:LOCATE 20,52:PRINT HASTA$
+538 IF DESDE$>HASTA$ THEN 510
+540 '
+550 GOSUB 8500:MEN$="DATOS CORRECTOS "+ENTER$+" , DATOS ERRONEOS -F1-":GOSUB 8500
+560 A$=INPUT$(1)
+570 IF ASC(A$)<13 OR ASC(A$)>14 THEN BEEP:GOTO 560
+580 IF ASC(A$)=13 THEN 650   'CONTINUAR.
+590 LOCATE 14,49:PRINT SPC(1)
+600 LOCATE 16,46:PRINT SPC(5)
+610 GOSUB 8500
+620 GOTO 310
+630 '
+640 '*****************
+650 '***TRATAMIENTO***
+660 '*****************
+730 GOSUB 8500:MEN$="-- COLOQUE ETIQUETAS Y PULSE UNA TECLA --":GOSUB 8500
+740 A$=INPUT$(1)
+745 FALUDAT$="FEMPCLIE.DAT"
+750 GOSUB 8500:MEN$="Espere por favor...":GOSUB 8500
+760 GOSUB 30010   'apertura del P.C.
+770 FF$="":I.T%=0:REG%=1
+780 IF OPC$="3" THEN GOSUB 4000:GOTO 800
+790 GOSUB 3000    'LECTURA DEL PLAN CONTABLE
+800 GOSUB 1160    'BORRAR TABLAS
+810 '
+820 IF FF$="FF" THEN GOSUB 8500:MEN$="NO HAY DATOS, PULSE UNA TECLA":GOSUB 8500:A$=INPUT$(1):CLOSE:GOTO 310
+830 '
+840 WHILE FF$<>"FF"
+850   I.T%=I.T%+1
+860   IF I.T%>2 THEN GOSUB 1010:I.T%=1   'SACAR LINEA
+862  'NOM$=CNOMBRE:APE1$=CAPELL1:APE2$=CAPELL2
+864   GOSUB 40000
+870   TABNOM$(I.T%)=CNOMBRE
+880   TABDIR$(I.T%)=CDIREC
+890   CODPRO%=VAL(LEFT$(CCOPOS,2))
+900   IF CODPRO%=0 OR CODPRO%>50 THEN TABPLA$(I.T%)=CPOBLA:GOTO 920
+910   POBLA$=CCOPOS+" "+CPOBLA:TABPLA$(I.T%)=POBLA$
+920   IF OPC$="3" THEN GOSUB 4000:GOTO 940
+930   GOSUB 3000    'LECTURA DEL SIGUIENTE
+940 '
+950 WEND
+960 GOSUB 1010  'SACAR LINEA
+970 '
+980 CLOSE
+990 GOTO 310
+992 '
+1000 '*****************
+1010 '***SACAR LINEA***
+1020 '*****************
+1030 LPRINT
+1040 LPRINT TAB(3) TABNOM$(1);
+1050 LPRINT TAB(77) TABNOM$(2)
+1060 'LPRINT TAB(76) TABNOM$(3)
+1070 '
+1080 LPRINT TAB(3) TABDIR$(1);
+1090 LPRINT TAB(77) TABDIR$(2)
+1100 'LPRINT TAB(76) TABDIR$(3)
+1110 '
+1120 LPRINT TAB(3) TABPLA$(1);
+1130 LPRINT TAB(77) TABPLA$(2)
+1140 'LPRINT TAB(76) TABPLA$(3)
+1150 '
+1152 LPRINT:LPRINT
+1154 '
+1160 FOR I%=1 TO 3
+1170    TABNOM$(I%)=""
+1180    TABDIR$(I%)=""
+1190    TABPLA$(I%)=""
+1200 NEXT I%
+1210 '
+1220 RETURN
+1230 '
+3000 '********************************
+3010 '***LECTURA DE INDICES Y DATOS***
+3020 '********************************
+3030 REG%=REG%+1
+3032 TECLA$=INKEY$:IF TECLA$="" THEN 3040
+3034 IF ASC(TECLA$)=27 THEN FF$="FF":RETURN
+3040 IF REG%>ULTIMO% THEN FF$="FF":RETURN
+3050 'GET #2,REG%
+3060 IF REG%<VAL(DESDE$) THEN 3030
+3070 IF REG%>VAL(HASTA$) THEN FF$="FF":RETURN
+3080 'IF DSTATUS$<>"O" THEN 3030
+3090 'NORDEN%=CVI(DNORDEN$)
+3100 'IF NORDEN%=0 THEN 3030
+3110 GET #2,REG%
+3120 IF CSTATUS<>"O" THEN 3030
+3130 IF CMARCA= "L" THEN 3030
+3140 RETURN
+3150 '
+3160 '
+4000 '********************************
+4010 '***LECTURA DE INDICES Y DATOS***
+4020 '********************************
+4030 REG%=REG%+1
+4032 TECLA$=INKEY$:IF TECLA$="" THEN 4040
+4034 IF ASC(TECLA$)=27 THEN FF$="FF":RETURN
+4040 IF REG%>ULTIMO% THEN FF$="FF":RETURN
+4110 GET #2,REG%
+4120 IF CSTATUS<>"O" THEN 4030
+4130 IF CMARCA= "L" THEN 4030
+4135 IF CGRUPO<>RIGHT$(HASTA$,3) THEN 4030
+4140 RETURN
+4150 '
+4160 '
+8000 '***********************************************
+8010 '***  RUTINA PARA SACAR CARATULA EN PANTALLA ***
+8020 '***********************************************
+8030 '
+8040 CLS:COLOR 10:LOCATE 1,1:PRINT CHR$(201)+STRING$(78,205)+CHR$(187)
+8050 LOCATE 2,1:PRINT CHR$(186):COLOR 11:LOCATE 2,3:PRINT" " EMPRESA$" ":COLOR 10:LOCATE 2,34:PRINT "Aplicaci¢n : ACADEMIAS ":COLOR 11:LOCATE 2,63:PRINT "FECHA : "FECHA$" ":COLOR 10 : LOCATE 2,80 :PRINT CHR$(186)
+8060 LOCATE 3,1:PRINT CHR$(204)+STRING$(78,205)+CHR$(185)
+8070 FOR J%=4 TO 21 :LOCATE J%,1:PRINT CHR$(186):LOCATE J%,80 :PRINT CHR$(186):NEXT
+8080 LOCATE 21,1:PRINT CHR$(204)+STRING$(78,205)+CHR$(185)
+8090 LOCATE 22,1:PRINT CHR$(186):COLOR 11:LOCATE 22,3:PRINT "Mensajes: ":COLOR 10:LOCATE 22,80:PRINT CHR$(186)
+8100 LOCATE 23,1:PRINT CHR$(200)+STRING$(78,205)+CHR$(188);
+8110 COLOR 11:RETURN
+8120 '
+8250 '
+8500 '***************************
+8510 '***IMPRESION DE MENSAJES***
+8520 '***************************
+8530 L.L$=""+MEN$+"":LOCATE 22,15:PRINT L.L$;
+8550 MEN$=SPACE$(65)
+8560 RETURN
+8570 '
+9000 '*********************
+9010 '***FIN DE PROGRAMA***
+9020 '*********************
+9030 CLOSE
+9040 CLS
+9050 RUN "PACACLIE"
+9060 '
+9070 '
+9080 END
+9090 '
+9100 '*******************************
+9110 '***RUTINA CONTROL DE ERRORES***
+9120 '*******************************
+9130 IF ERR=34 OR ERR=25 OR ERR=27 THEN GOSUB 8500:MEN$="COMPRUEBE LA IMPRESORA Y PULSE UNA TECLA":GOSUB 8500:A$=INPUT$(1):GOSUB 8500:RESUME
+9140 '
+9150 '
+9160 '
+9170 '
+9180 '
+9190 ON ERROR GOTO 0
+9200 '
+15000 '***************************************
+15010 '***CARGAMOS LAS TABLAS DE PROVINCIAS***
+15020 '***************************************
+15030 DIM TPRO$(50)
+15040 DATA "ALAVA","ALBACETE","ALICANTE","ALMERIA","AVILA","BADAJOZ","BALEARES","BARCELONA","BURGOS","CACERES","CADIZ","CASTELLON","CIUDAD REAL","CORDOBA","LA CORU•A","CUENCA","GERONA","GRANADA","GUADALAJARA","GUIPUZCOA","HUELVA"
+15050 DATA "HUESCA","JAEN","LEON","LERIDA","RIOJA","LUGO","MADRID","MALAGA","MURCIA","NAVARRA","ORENSE","ASTURIAS","PALENCIA","LAS PALMAS","PONTEVEDRA","SALAMANCA","STA. CRUZ TENERIFE","CANTABRIA","SEGOVIA","SEVILLA","SORIA","TARRAGONA"
+15060 DATA "TERUEL","TOLEDO","VALENCIA","VALLADOLID","VIZCAYA","ZAMORA","ZARAGOZA"
+15070 FOR I%=1 TO 50
+15080    READ TPRO$(I%)
+15090 NEXT I%
+15100 '
+15110 RETURN
+15120 '
+30000 '*******************************
+30010 '***APERTURA FICHERO ALUMNOS ***
+30020 '*******************************
+30025 '
+30052 'OPEN "R",#1,FALUDIR$,45
+30054 'FIELD #1,2 AS FULTI,40 AS FLLAMA,2 AS FILER,1 AS FSTA
+30056 'GET #1,1
+30058 'ULTIAL%=CVI(FULTI)
+30090 ' Apertura del fichero de datos   FACAALUM.DAT
+30100 OPEN "R",#2,FALUDAT$,250
+30110 FIELD #2,5 AS CCUENTA,1 AS CSTATUS,40 AS CNOMBRE,40 AS CONTACTO,40 AS CDIREC,20 AS CPOBLA,15 AS CPROVI,5 AS CCOPOS,7 AS CTELEFO,7 AS CTELEFA
+30112 FIELD #2,180 AS TODO1$,4 AS CBANCO,20 AS CSUCUR,17 AS CCUBAN,6 AS CFALTA,6 AS CFBAJA,1 AS CCUESP,4 AS CIMPOR,1 AS CMARCA,1 AS CCONFI,4 AS CFACT,6 AS CFILL
+30114 FIELD #2,5 AS CCUEN1,1 AS CSTAT,2 AS CULTI,2 AS CULTACT,1 AS CSWA,230 AS REST1$,4 AS CFEFAC,5 AS REST2$
+30115 GET #2,1
+30117 ULTIMO%=CVI(CULTI)
+30118 ULTACT%=CVI(CULTACT):N.R%=ULTACT%
+30120 '
+30128 RETURN
+30130 '
+30140 '
+33000 '**********************************
+33010 '***APERTURA FICHERO DATOS FIJOS***
+33020 '**********************************
+33030 OPEN "R",#1,"FDATFIJ.DAT",100
+33040 FIELD #1,2 AS NRO$,8 AS NDIRE$,30 AS NEMPRESA$,15 AS NNIF$,8 AS NPROG$,37 AS NFILLER$
+33050 GET #1,1
+33052 NROEM$=NRO$
+33060 DIRE$=NDIRE$
+33070 EMPRESA$=NEMPRESA$
+33080 NIF$=NNIF$
+33082 PROGRAMA$=NPROG$
+33090 CLOSE
+33100 '
+33110 '
+33120 RETURN
+33130 '
+40000 '
+40010 NOMBRE$=""
+40020 'Bucle del Nombre.
+40030 LONG%=LEN(NOM$)
+40040 FOR I%=LONG% TO 1 STEP -1
+40050    IF MID$(NOM$,I%,1)<>" " THEN LNOMBRE%=I%:I%=0
+40060 NEXT I%
+40070 '
+40080 'Bucle del Apellido 1.
+40090 LONG%=LEN(APE1$)
+40100 FOR I%=LONG% TO 1 STEP -1
+40110    IF MID$(APE1$,I%,1)<>" " THEN LAPELL1%=I%:I%=0
+40120 NEXT I%
+40130 '
+40140 'Bucle del Apellido 2.
+40150 LONG%=LEN(APE2$)
+40160 FOR I%=LONG% TO 1 STEP -1
+40170    IF MID$(APE2$,I%,1)<>" " THEN LAPELL2%=I%:I%=0
+40180 NEXT I%
+40190 NOMBRE$=LEFT$(NOM$,LNOMBRE%)+" "+LEFT$(APE1$,LAPELL1%)+" "+LEFT$(APE2$,LAPELL2%)
+40200 NOMBRE$=LEFT$(NOMBRE$,50)
+40210 RETURN
+40220 '
+44444 '********************************************
+44454 '***RUTINA PARA EDITAR CAMPOS EN CRISTIANO***
+44464 '********************************************
+44466 IF GUAPRI#>0 AND GUAPRI#<1 THEN GUAPRI$="0":RETURN
+44468 IF GUAPRI#<0 AND GUAPRI#>-1 THEN GUAPRI$="0":RETURN
+44474 IF GUAPRI#<0 AND GUAPRI#>-1 THEN GUAPRI$=" 0":RETURN
+44484 IF GUAPRI#>0 AND GUAPRI#<1 THEN GUAPRI$=" 0":RETURN
+44494 GUAPRI$=STR$(GUAPRI#)
+44504 SIGNO$=LEFT$(GUAPRI$,1)
+44514 GUAPRI$=RIGHT$(GUAPRI$,LEN(GUAPRI$)-1)
+44524 'BUSCAMOS SI TIENE DECIMALES.
+44534 PUNTO%=0
+44544 FOR CRIS%=LEN(GUAPRI$) TO 1 STEP -1
+44554  IF MID$(GUAPRI$,CRIS%,1)="." THEN PUNTO%=CRIS%:CRIS%=0
+44564 NEXT CRIS%
+44574 'DIVIDIMOS EN ENTEROS Y DECIMALES.
+44584 IF PUNTO%=0 THEN ENTERO$=GUAPRI$:L.EN%=LEN(ENTERO$):DECIMAL$="":L.DE%=0:GOTO 44624
+44594 ENTERO$=LEFT$(GUAPRI$,PUNTO%-1):L.EN%=LEN(ENTERO$):ENTERO#=VAL(ENTERO$)
+44604 DECIMAL$=RIGHT$(GUAPRI$,LEN(GUAPRI$)-PUNTO%):L.DE%=LEN(DECIMAL$)
+44614 IF LEN(DECIMAL$)<2 THEN DECIMAL$=DECIMAL$+"0":L.DE%=LEN(DECIMAL$)
+44624 'REDONDEAMOS LOS DECIMALES
+44634 IF DECIMAL$="" THEN 44764  'CONTINUAR
+44644 DECA$=LEFT$(DECIMAL$,2)+"."+RIGHT$(DECIMAL$,L.DE%-2)
+44654 DECA#=VAL(DECA$)
+44664 DECA#=INT(DECA#+.5)
+44674 IF DECA#>99 THEN 44734   'SUMAR 1 A ENTERO Y DECIMALES = '00'
+44684 DECA$=STR$(DECA#):DECA$=RIGHT$(DECA$,2)
+44694 IF LEN(DECA$)<>2 THEN DECA$="0"+DECA$
+44704 IF LEFT$(DECA$,1)=" " THEN DECA$="0"+RIGHT$(DECA$,1)
+44714 DECIMAL$=DECA$
+44724 GOTO 44764  'CONTINUAR
+44734 ENTERO#=ENTERO#+1
+44744 ENTERO$=STR$(ENTERO#):ENTERO$=RIGHT$(ENTERO$,LEN(ENTERO$)-1):L.EN%=LEN(ENTERO$)
+44754 DECIMAL$="00":L.DE%=2
+44764 'CONTINUAMOS
+44774 CAMPO$="":X%=0
+44784 FOR CRIS%=L.EN% TO 1 STEP -1
+44794  X%=X%+1
+44804  IF X%=4 THEN CAMPO$=CAMPO$+".":X%=1
+44814  CAMPO$=CAMPO$+MID$(ENTERO$,CRIS%,1)
+44824 NEXT CRIS%
+44834 GUAPRI$=""
+44844 FOR CRIS%=LEN(CAMPO$) TO 1 STEP -1
+44854  GUAPRI$=GUAPRI$+MID$(CAMPO$,CRIS%,1)
+44864 NEXT CRIS%
+44874 IF GUAPRI$="" THEN GUAPRI$="0"
+44884 'GUAPRI$=SIGNO$+GUAPRI$
+44894 IF DECIMAL$<>"" THEN GUAPRI$=GUAPRI$+","+LEFT$(DECIMAL$,2)
+44904 RETURN
+63000 '********************************
+63010 '***RUTINA DE ENTRADA NUMERICA***
+63020 '********************************
+63030 W.LE%=L.E%
+63040 D.E$="":I.T%=0
+63050 LOCATE F.C1%,C.C1%:PRINT SPC(BO%)
+63060 LOCATE F.C1%,C.C1%,1,0,6
+63070 L.E%=W.LE%+NEG%
+63080 FOR JMG%=1 TO L.E%
+63090  D.R$=INPUT$(1)
+63100  IF ASC(D.R$)=13 AND JMG%=1 THEN I.T%=1:JMG%=L.E%:L.D%=0:D.E$="":GOTO 63270
+63110  IF ASC(D.R$)=13 AND L.D%<>0 THEN JMG%=L.E%:D.R$=".":D.E$=D.E$+D.R$:PRINT D.R$;:GOTO 63270'AL NEXT
+63120  IF ASC(D.R$)=13 THEN JMG%=L.E%:GOTO 63270  'AL NEXT
+63130  IF ASC(D.R$)=10 THEN I.T%=2:JMG%=L.E%:L.D%=0:D.E$="":GOTO 63270 'AL NEXT
+63140  IF ASC(D.R$)=9 THEN I.T%=3:JMG%=L.E%:L.D%=0:D.E$="":GOTO 63270  'AL NEXT
+63150  IF ASC(D.R$)=7 OR ASC(D.R$)=27 THEN I.T%=4:JMG%=L.E%:L.D%=0:D.E$="":GOTO 63270  'AL NEXT
+63160  IF D.R$<"0" OR D.R$>"9" THEN 63200 'MIRAR EL POSIBLE ERROR.
+63170  IF JMG%=1 AND NEG%=1 THEN D.E$=D.E$+" ":PRINT " ";:JMG%=2
+63180  D.E$=D.E$+D.R$:PRINT D.R$;
+63190  GOTO 63270 'AL NEXT
+63200  'MIRAR POSIBLE ERROR.
+63210  IF D.R$="-" AND NEG%=1 AND JMG%=1 THEN D.E$=D.E$+D.R$:PRINT D.R$;:GOTO 63270 'AL NEXT
+63220  IF ASC(D.R$)=46 OR ASC(D.R$)=44 AND L.D%=0 THEN D.R$=".":D.E$=D.E$+D.R$:PRINT D.R$;:JMG%=L.E%:GOTO 63270 'AL NEXT
+63230  IF ASC(D.R$)<>8 THEN 63090
+63240  IF JMG%=1 THEN 63090
+63250  LOCATE F.C1%,C.C1%+LEN(D.E$)-1:PRINT " ":LOCATE F.C1%,C.C1%+LEN(D.E$)-1:D.E$=LEFT$(D.E$,LEN(D.E$)-1):JMG%=JMG%-2
+63260  '
+63270 NEXT JMG%
+63280 IF L.D%=0 THEN 63500
+63290 IF RIGHT$(D.E$,1)="." THEN 63310 'CONTINUAR
+63300 D.E$=D.E$+".":PRINT ".";
+63310 LOCATE F.C1%,C.C1%+LEN(D.E$)
+63320 WJMG%=JMG%
+63330 FOR JMG2%=1 TO L.D%
+63340  D.R$=INPUT$(1)
+63350  IF ASC(D.R$)=13 AND JMG2%=1 AND I.T%=1 THEN I.T%=1:JMG2%=L.D%:GOTO 63490
+63360  IF ASC(D.R$)=13 AND JMG2%=1 AND I.T%=0 THEN I.T%=0:JMG2%=L.D%:GOTO 63490
+63370  IF ASC(D.R$)=13 THEN JMG2%=L.D%:GOTO 63490  'AL NEXT
+63380  IF ASC(D.R$)=10 THEN I.T%=2:JMG2%=L.D%:D.E$="":GOTO 63490 'AL NEXT
+63390  IF ASC(D.R$)=9 THEN I.T%=3:JMG2%=L.D%:D.E$="":GOTO 63490  'AL NEXT
+63400  IF ASC(D.R$)=7 OR ASC(D.R$)=27 THEN I.T%=4:JMG2%=L.D%:D.E$="":GOTO 63490  'AL NEXT
+63410  IF D.R$<"0" OR D.R$>"9" THEN 63440 'MIRAR EL POSIBLE ERROR.
+63420  D.E$=D.E$+D.R$:PRINT D.R$;
+63430  GOTO 63490 'AL NEXT
+63440  'MIRAR POSIBLE ERROR
+63450  IF ASC(D.R$)<>8 THEN 63340
+63460  IF JMG2%=1 THEN 63040 'AL PRINCIPIO
+63470  LOCATE F.C1%,C.C1%+LEN(D.E$)-1:PRINT " ":LOCATE F.C1%,C.C1%+LEN(D.E$)-1:D.E$=LEFT$(D.E$,LEN(D.E$)-1):JMG2%=JMG2%-2
+63480  '
+63490 NEXT JMG2%
+63500 IF I.T%<>0 THEN RETURN
+63510 IF LEFT$(D.E$,1)="-" THEN RETURN
+63520 IF L.D%<>0 THEN RETURN
+63530 '
+63540 IF LEN(D.E$)<>L.E% THEN D.E$=LEFT$(CERO$,L.E%-LEN(D.E$))+D.E$
+63550 RETURN
+63560 '
+64000 '*************************************
+64010 '***RUTINA DE ENTRADA ALFA/NUMERICA***
+64020 '*************************************
+64030 '
+64040 D.E$="":I.T%=0
+64050 LOCATE F.C1%,C.C1%,1,0,6
+64060 FOR JMG%=1 TO L.E%
+64070  D.R$=INPUT$(1)
+64080  IF ASC(D.R$)=13 AND JMG%=1 THEN JMG%=L.E%:I.T%=1:GOTO 64200  '===>AL NEXT
+64090  IF ASC(D.R$)=13 THEN JMG%=L.E%:GOTO 64200  '===>AL NEXT
+64100  IF ASC(D.R$)=10 THEN JMG%=L.E%:I.T%=2:GOTO 64200  '===>AL NEXT
+64110  IF ASC(D.R$)=9 THEN JMG%=L.E%:I.T%=3:GOTO 64200   '===>AL NEXT
+64120  IF ASC(D.R$)=7 OR ASC(D.R$)=27 THEN JMG%=L.E%:I.T%=4:GOTO 64200   '===>AL NEXT
+64130  IF JMG%=1 THEN LOCATE F.C1%,C.C1%:PRINT STRING$(BO%," "):LOCATE F.C1%,C.C1%
+64135  IF ASC(D.R$)=34 THEN 64170
+64140  IF ASC(D.R$)<32 OR ASC(D.R$)>126 THEN 64170               'Error
+64150  D.E$=D.E$+D.R$:PRINT D.R$;
+64160  GOTO 64200 'AL NEXT
+64170  'Error.
+64175  IF ASC(D.R$)=8 AND JMG%=1 THEN 64190
+64180  IF ASC(D.R$)=8 THEN LOCATE F.C1%,C.C1%+LEN(D.E$)-1:PRINT " ":LOCATE F.C1%,C.C1%+LEN(D.E$)-1:D.E$=LEFT$(D.E$,LEN(D.E$)-1):JMG%=JMG%-1
+64190  JMG%=JMG%-1
+64200 NEXT JMG%
+64210 IF I.T%<>0 THEN 64230
+64220 LOCATE F.C1%,C.C1%:PRINT SPC(L.E%)
+64225 LOCATE F.C1%,C.C1%:PRINT D.E$
+64230 RETURN
+64240 '
+MZ«     ﬁˇˇ™ }0                3   8   Ü [ ∑∑∑∑2∑=∑                                                                                                                                                                                                                                                                                                                                                                                                                                                  bmPEMPETIQ‰≤@úe∑Ì@  @@∞         ˇˇ‡ö  ∑öw [∫Õ?ªˇˇÕ>2Õ?X˚ª∞∫Ñ Õ>*ª Õ> ª	 ∫∞3…Õ>Õ?¿ª Õ=Õ?jª∫Õ?jªH Õ=Õ?jÕ>yÕ?¿ª Õ=Õ?nÕ>yª Õ=ã”ª Õ>=ª ã”Õ=á”Õ>=ª	 Õ=ã”ª Õ>=ª
+ ã”Õ=á”Õ>=ª Õ=ã”ª Õ>=ª Õ=ã”ª Õ>=ª Õ=ã”ª Õ>=ª ∫¿Õ=∫FÕ?aª ∫∆Õ=∫JÕ?aÕ=#∫ π Õ=
+ìªÃã”Õ?Uã√Õ=#á—Õ=Õ?UáŸëÕ?UãÀÕ=#Õ=ëÕ?U∫NÕ?aª Õ=ã”ªƒ Õ=íÕ?Uã”ªŸ Õ=íÕ?U∫RÕ?aÕ?Xzª“∫zÕ?aªzÕ?∫∏P +√£~ã~Õ?WøˆÕ?ëª Õ=Õ?wì£~Õ?Xèª Õ>Bã~Õ>DÕ?ºªzÕ?nÕ>yª Õ>Bã~Õ>DÕ?ºªzÕ?∫∫Õ Õ=Õ?nÕ>yª Õ>Bª Õ>DÕ?ºª˙Õ?nÕ>yª
+ Õ>Bª Õ>DÕ?ºª Õ?nÕ>yª Õ>Bª Õ>DÕ?ºª@Õ?nÕ>yª Õ>Bª Õ>DÕ?ºªRÕ?nÕ>yª Õ>Bª Õ>DÕ?ºªjÕ?nÕ>yª Õ>Bª Õ>Dª Õ>5Õ?ºªÜÕ?jÕ>yª Õ>5Õ?ºªêÕ?nÕ>yª Õ>Bª1 Õ>Bª Õ>B3€Õ>Bª Õ>Dª ∫ˇÕ=∫ÄÕ?aª¶∏ÄÕ?b∫  sJª¨Õ?bπ  vI #…uÈ Õ>+Î´ª Õ>Bª1 Õ>DÕ?ºªÄÕ?nÕ>yª¨∏ÄÕ?btÈ	 Õ>"ª≤Õ>ª¶∏ÄÕ?btÈ ªæ∫ÑÕ?aª»∫àÕ?aÈ¯ ª“∏ÄÕ?btÈ ª Õ>Bª Õ>DÕ?ºªÿÕ?nÕ>yÈ ª Õ>Bª Õ>DÕ?ºªÕ?nÕ>yÈS «å «é «ê «í «î Õ?XcÉ>ñ uÈ Õ>+ÎŒªò∫ÑÕ?aª Õ>Bª Õ>DÕ?ºªÑÕ?nÕ>y«å «é4 «ê «í «î Õ?XcÉ>ñ uÈ Õ>+ÎŒªò∫àÕ?aª Õ>Bª4 Õ>DÕ?ºªàÕ?nÕ>yªà∏ÑÕ?bvÈLˇÕ?X–
+ªR∏0Õ?UìªDÕ?U∫úÕ?aÕ?X–
+ª ∫ˇÕ=∫†Õ?aª†ã”Õ?ªÉ˚π  }Iã⁄Õ?ªÉ˚∫  ~J—#“uÈ Õ>+Îƒª†Õ?ªÉ˚uÈ8 ª Õ>Bª1 Õ>DÕ?ºª Õ?5Õ>yª Õ>Bª. Õ>DÕ?ºª Õ?5Õ>yÕ?X–
+È¶¸Õ?X–
+ª^∫úÕ?aÕ?X–
+ª ∫ˇÕ=∫†Õ?aªå∫§Õ?aÕ?X–
+ªú∫úÕ?aÕ?X–
+Õ?X£ª¥∫®Õ?a«ñ  «¨ ª∏∏ÄÕ?btÈ Õ?XÈ Õ?XQÕ?X˛ªæ∏®Õ?btÈ( Õ?X–
+ªƒ∫úÕ?aÕ?X–
+ª ∫ˇÕ=∫†Õ?aÕ>"È¯˚ªæ∏®Õ?buÈ⁄ °ñ@£ñÉ>ñÈ Õ?Xn«ñ Õ?XÖãñ—„—„Å√Rã”ªÆÕ?aãñ—„—„Å√^ã”ª≤Õ?aª∂∫ Õ=Õ=Õ?xì£∫É>∫ ª  uKÉ>∫2∫  ~J”#“uÈ ãñ—„—„Å√jã”ªºÕ?aÈ* ª∆∏∂Õ?UìªºÕ?U∫¿Õ?aãñ—„—„Å√jã”ª¿Õ?aª∏∏ÄÕ?btÈ Õ?XÈ Õ?XQÈˇÕ?XnÕ>"È˚Õ?¿ª¥Õ?nÕ>yÕ?¿ª Õ?7ªVÕ?jÕ>yÕ?¿ªM Õ?7ªZÕ?nÕ>yÕ?¿ª Õ?7ªbÕ?jÕ>yÕ?¿ªM Õ?7ªfÕ?nÕ>yÕ?¿ª Õ?7ªnÕ?jÕ>yÕ?¿ªM Õ?7ªrÕ?nÕ>yÕ?¿ª¥Õ?nÕ>yÕ?¿ª¥Õ?nÕ>y∏ È@ ãƒ—„—„Å√Rã”ª¥Õ?aãƒ—„—„Å√^ã”ª¥Õ?aãƒ—„—„Å√jã”ª¥Õ?a°ƒ@£ƒÉ>ƒ~∂Õ?`°¨@£¨Õ=∫∆Õ?aª¥∏∆Õ?buÈ ª∆Õ?ªÉ˚tÈ ªæ∫®Õ?aÕ?`° ;¨|È ªæ∫®Õ?aÕ?`ã¨Õ?VªÑÕ?rÄÕ=Õ?¶Ärôã¨Õ?VªàÕ?rÄÕ=Õ?¶ÄwÈ ªæ∫®Õ?aÕ?`ª ã¨Õ>&ªÊ∏ÃÕ?btÈ[ˇªÏ∏–Õ?buÈMˇÕ?`°¨@£¨Õ=∫∆Õ?aª¥∏∆Õ?buÈ ª∆Õ?ªÉ˚tÈ ªæ∫®Õ?aÕ?`° ;¨|È ªæ∫®Õ?aÕ?`ª ã¨Õ>&ªÊ∏ÃÕ?buõªÏ∏–Õ?btêªà∫ Õ=ìª‘Õ?btÈ{ˇÕ?`ªˇˇÕ>2ª
+ Õ>5ª Õ>Bª Õ>DÕ?ºª… Õ=ãÀªN ∫Õ Õ=ëÕ?Uã”ªª Õ=íÕ?UÕ?nÕ>yª Õ>Bª Õ>DÕ?ºª∫ Õ=Õ?nÕ>yª Õ>5ª Õ>Bª Õ>DÕ?ºª∆Õ?jªÿÕ?jª∆Õ?nÕ>yª
+ Õ>5ª Õ>Bª" Õ>DÕ?ºªÚÕ?nÕ>yª Õ>5ª Õ>Bª? Õ>DÕ?ºªÕ?jªNÕ?jª∆Õ?nÕ>yª
+ Õ>5ª Õ>BªP Õ>DÕ?ºª∫ Õ=Õ?nÕ>yª Õ>Bª Õ>DÕ?ºªÃ Õ=ãÀªN ∫Õ Õ=ëÕ?Uã”ªπ Õ=íÕ?UÕ?nÕ>y∏ È< ã‹Õ>Bª Õ>DÕ?ºª∫ Õ=Õ?nÕ>yã‹Õ>BªP Õ>DÕ?ºª∫ Õ=Õ?nÕ>y°‹@£‹É>‹~∫ª Õ>Bª Õ>DÕ?ºªÃ Õ=ãÀªN ∫Õ Õ=ëÕ?Uã”ªπ Õ=íÕ?UÕ?nÕ>yª Õ>Bª Õ>DÕ?ºª∫ Õ=Õ?nÕ>yª Õ>5ª Õ>Bª Õ>DÕ?ºªÕ?nÕ>yª
+ Õ>5ª Õ>BªP Õ>DÕ?ºª∫ Õ=Õ?nÕ>yª Õ>Bª Õ>DÕ?ºª» Õ=ãÀªN ∫Õ Õ=ëÕ?Uã”ªº Õ=íÕ?UÕ?jÕ>yª Õ>5Õ?`ªú∏¥Õ?UìÕ?U∫ﬁÕ?aª Õ>Bª Õ>DÕ?ºªﬁÕ?jÕ>yªA Õ=∫úÕ?aÕ?`Õ>"ªˇˇÕ>2ª≤Õ>Õ>Õ=É˚"∫  uJÕ=É˚π  uI Õ=É˚∫  uJ—#“uÈ* Õ?X–
+ª(∫úÕ?aÕ?X–
+ª ∫ˇÕ=∫†Õ?aÕ?X–
+Õ>3“Õ?êêê∏ È ãƒ—„—„Å√ﬁÕ?°ƒ@£ƒÉ>ƒ2~„Õ?`ªTÕ>ª ∫§π˙ Õ>ª Õ?≥ª™∫ Õ?¥ªÃ∫ Õ?¥ªÆ∫( Õ?¥ªÆ∫( Õ?¥ª≤∫( Õ?¥ªº∫ Õ?¥ª≤∫ Õ?¥ª∂∫ Õ?¥ª∂∫ Õ?¥ª∫∫ Õ?¥ª Õ?≥ªæ∫¥ Õ?¥ª¬∫ Õ?¥ª∆∫ Õ?¥ª ∫ Õ?¥ªŒ∫ Õ?¥ª“∫ Õ?¥ª÷∫ Õ?¥ª⁄∫ Õ?¥ª–∫ Õ?¥ªﬁ∫ Õ?¥ª‚∫ Õ?¥ªÊ∫ Õ?¥ª Õ?≥ªÍ∫ Õ?¥ªÓ∫ Õ?¥ªÚ∫ Õ?¥ªˆ∫ Õ?¥ª˙∫ Õ?¥ª˛∫Ê Õ?¥ª∫ Õ?¥ª∫ Õ?¥ª ∫ Õ>&ªÚÕ=ì£ ªˆÕ=ì£
+°
+£Õ?`ªTÕ>ª ∫Zπd Õ>ª Õ?≥ª∫ Õ?¥ª∫ Õ?¥ª∫ Õ?¥ª∫ Õ?¥ª∫ Õ?¥ª"∫% Õ?¥ª ∫ Õ>&ª∫&Õ?aª∫*Õ?aª∫ÿÕ?aª∫.Õ?aª∫2Õ?aÕ>"Õ?`ª¥∫6Õ?aª:Õ?∫ì£>°>È) ª:ãƒπ Õ=
+ìª∆Õ?buÈ °ƒ£@«ƒ  °ƒH£ƒÉ>ƒ}ÕªBÕ?∫ì£>°>È) ªBãƒπ Õ=
+ìª∆Õ?buÈ °ƒ£F«ƒ  °ƒH£ƒÉ>ƒ}ÕªHÕ?∫ì£>°>È) ªHãƒπ Õ=
+ìª∆Õ?buÈ °ƒ£L«ƒ  °ƒH£ƒÉ>ƒ}Õª:ã@Õ=ìª∆ã”Õ?UãÀªBã¬ãFÕ=ëÕ?UáŸëÕ?UãÀªHãLÕ=ëÕ?U∫6Õ?aª6∫2 ãÀÕ=ã—Õ?aÕ?`æNÕ?®ª  vKøjÕ?†∫  sJ#”#“uÈ ª¿∫VÕ?aÕ?`æNÕ?®ª  sKørÕ?†∫  vJ#”#“uÈ ª¿∫VÕ?aÕ?`æNÕ?®ª  sKørÕ?†∫  vJ#”#“uÈ ªz∫VÕ?aÕ?`æNÕ?®ª  vKøjÕ?†∫  sJ#”#“uÈ ªz∫VÕ?aÕ?`ªNÕ=∫VÕ?aªV∫ Õ=∫ZÕ?aªVã”Õ?∫Ká”ãÀÕ=ã—Õ?a«^  ªVÕ?∫ìÈ) ªVã`π Õ=
+ìªÄÕ?btÈ °`£^«`  °`H£`É>`}ÕÉ>^ tÈ% ªV∫bÕ?aªbÕ?∫ì£fª¥∫hÕ?a«l  Èm ã^JªVÕ=∫bÕ?aªbÕ?∫ì£fªbÕ=ønÕ?~ªVã”Õ?∫+^á”Õ=∫hÕ?aªhÕ?∫ì£lªhÕ?∫É˚|È ª¿∏hÕ?UíÕ?aªhÕ?∫ì£lª¥∏hÕ?buÈªh∫ ãÀÕ=ìªÄÕ?UãlJJáŸÕ=ëÕ?U∫vÕ?aªvÕ=øzÕ?~øÜæzÕ?Äª Õ=ã˛Õ?~øéæzÕ?†vÈo ªzÕ=∫vÕ?aªv∫ ãÀÕ=ã—Õ?aªvÕ?∫É˚uÈ ªv∏¿ã”Õ?UÕ?aªv∫ Õ=ìª∆Õ?btÈ ªv∫ ãÀÕ=∏¿Õ?Uã—Õ?aªv∫hÕ?aÈH øjænÕ?Äã˛Õ?~ªnÕ=∫bÕ?aªbã”Õ?∫Ká”ãÀÕ=ã—Õ?aªbÕ?∫ì£fªñ∫hÕ?a«l ª¥∫ÇÕ?a«~  °fÈ? °~@£~É>~tÈ ªÄ∏ÇÕ?UíÕ?a«~ ªbã`π Õ=
+∏ÇÕ?UíÕ?a°`H£`É>`}∑ª¥∫VÕ?aªÇÕ?∫ìÈ ªÇã`π Õ=
+∏VÕ?UíÕ?a°`H£`É>`}€ª¥∏VÕ?btÈ	 ª¿∫VÕ?aª¥∏hÕ?buÈ ªú∏VÕ?UãÀªh∫ Õ=ëÕ?Uã—Õ?aÕ?`°ê£Üª¥∫òÕ?a«ñ  ãåÕ>BãéÕ>DÕ?ºãíÕ?5Õ>yãåÕ>BãéÕ>Bª Õ>B3€Õ>Bª Õ>D°àÜ£ê°ê£ä∏ ÈÏª ∫ˇÕ=∫åÕ?aªåÕ?ªÉ˚∫  uJÉ>êª  uK#⁄#€uÈ «ñ °ê£ê«í  ª¥∫òÕ?aÈòªåÕ?ªÉ˚∫  uJÉ>í ª  tK#⁄#€uÈ+ °ê£êªÄ∫åÕ?aªå∏òÕ?UíÕ?aÕ?ºªåÕ?jÕ>yÈJªåÕ?ªÉ˚tÈ	 °ê£êÈ3ªåÕ?ªÉ˚
+tÈ «ñ °ê£ê«í  ª¥∫òÕ?aÈªåÕ?ªÉ˚	tÈ «ñ °ê£ê«í  ª¥∫òÕ?aÈ€ªåã”Õ?ªÉ˚π  uIã⁄Õ?ªÉ˚∫  uJ—#“uÈ «ñ °ê£ê«í  ª¥∫òÕ?aÈïª¿∏åÕ?b∫  sJª¢Õ?bπ  vI #…tÈZ É>êª  uKÉ>à∫  uJ#”#“uÈ ª∆∏òÕ?UíÕ?aÕ?ºª∆Õ?jÕ>y«ê ªå∏òÕ?UíÕ?aÕ?ºªåÕ?jÕ>yÈª®∏åÕ?b∫  uJÉ>àª  uK#⁄É>ê∫  uJ#”#“uÈ ªå∏òÕ?UíÕ?aÕ?ºªåÕ?jÕ>yÈÀ ªåã”Õ?ªÉ˚.π  uIã⁄Õ?ªÉ˚,∫  uJÉ>í ª  uK#⁄Ÿ#€uÈ+ ªÄ∫åÕ?aªå∏òÕ?UíÕ?aÕ?ºªåÕ?jÕ>y°ê£êÈk ªåÕ?ªÉ˚tÈu˝É>êuÈk˝ãåÕ>BªòÕ?∫éKÕ>DÕ?ºª∆Õ?nÕ>yãåÕ>BªòÕ?∫éKÕ>Dªòã”Õ?∫Ká”ãÀÕ=ã—Õ?a°êHH£ê°ê@£ê°ä;ê|È˝É>í uÈBªò∫ Õ=ìªÄÕ?buÈ ªÄ∏òÕ?UíÕ?aÕ?ºªÄÕ?jÕ>yãåÕ>BªòÕ?∫éÕ>D°ê£î°í£ñ∏ Èﬂª ∫ˇÕ=∫åÕ?aªåÕ?ªÉ˚∫  uJÉ>òª  uK#⁄É>ñ∫  uJ#”#“uÈ «ñ °í£òÈçªåÕ?ªÉ˚∫  uJÉ>òª  uK#⁄É>ñ ∫  uJ#”#“uÈ «ñ  °í£òÈNªåÕ?ªÉ˚tÈ	 °í£òÈ7ªåÕ?ªÉ˚
+tÈ «ñ °í£òª¥∫òÕ?aÈªåÕ?ªÉ˚	tÈ «ñ °í£òª¥∫òÕ?aÈÎ ªåã”Õ?ªÉ˚π  uIã⁄Õ?ªÉ˚∫  uJ—#“uÈ «ñ °í£òª¥∫òÕ?aÈ´ ª¿∏åÕ?b∫  sJª¢Õ?bπ  vI #…tÈ ªå∏òÕ?UíÕ?aÕ?ºªåÕ?jÕ>yÈk ªåÕ?ªÉ˚tÈÇ˛É>òuÈ¿˙ãåÕ>BªòÕ?∫éKÕ>DÕ?ºª∆Õ?nÕ>yãåÕ>BªòÕ?∫éKÕ>Dªòã”Õ?∫Ká”ãÀÕ=ã—Õ?a°òHH£ò°ò@£ò°ñ;ò|È˛É>ñ uÈ Õ?`ªò∫ Õ=ìª®Õ?btÈ Õ?`É>í uÈ Õ?`ªòÕ?∫;êuÈ! ªòã”Õ?∫ãê+Àá—ªFÕ=áŸëã”Õ?UÕ?aÕ?`ª¥∫òÕ?a«ñ  ãåÕ>BãéÕ>Bª Õ>B3€Õ>Bª Õ>D°ê£ö∏ È‚ª ∫ˇÕ=∫åÕ?aªåÕ?ªÉ˚∫  uJÉ>êª  uK#⁄#€uÈ °ê£ê«ñ ÈùªåÕ?ªÉ˚tÈ	 °ê£êÈÜªåÕ?ªÉ˚
+tÈ °ê£ê«ñ ÈiªåÕ?ªÉ˚	tÈ °ê£ê«ñ ÈLªåã”Õ?ªÉ˚π  uIã⁄Õ?ªÉ˚∫  uJ—#“uÈ °ê£ê«ñ ÈÉ>êtÈ/ ãåÕ>BãéÕ>DÕ?ºãí∫∆Õ=Õ?nÕ>yãåÕ>BãéÕ>DªåÕ?ªÉ˚"uÈD ªåã”Õ?ªÉ˚ π  }Iã⁄Õ?ªÉ˚~∫  ~J—#“tÈ ªå∏òÕ?UíÕ?aÕ?ºªåÕ?jÕ>yÈä ªåÕ?ªÉ˚∫  uJÉ>êª  uK#⁄#€tÈ` ªåÕ?ªÉ˚tÈR ãåÕ>BªòÕ?∫éKÕ>DÕ?ºª∆Õ?nÕ>yãåÕ>BªòÕ?∫éKÕ>Dªòã”Õ?∫Ká”ãÀÕ=ã—Õ?a°êH£ê°êH£ê°ê@£ê°ö;ê|È˛É>ñ tÈ5 ãåÕ>BãéÕ>DÕ?ºãêÕ?5Õ>yãåÕ>BãéÕ>DÕ?ºªòÕ?nÕ>yÕ?`Õ>: 
+ :  :  : ( : * : 2 å#@ 4 @ 6 F 8 ˚ËÄK < T < e > É > í @ í F í P † P ≠ P ª P » R ÷ R ‰ R Ú Z Z \ J^ Jd nÑ nÜ nå nñ n† n™ n¥ næ n» n“ n‹ nÊ n n˙ nzò:ssss"s,s6s@sJ|Tä^§hè@©r∂r¬|œ|‰ÜÜ¸êêï ï,ö8öD§P§\Æ\∞h∞n∞z∞Ä∞å∏å¬©¬∏Ã‹ÃﬂÃ·ŒÌŒ˘÷÷
+÷‡‡'‡0‡+&3ÍAÍMÍYÍw˛\ÙhÙtÙ }˛É˛â˛è˛ï˛cˆö§ß©≤æ–÷‹‚ËÌ˜˙¸+–
+4!0&F&K0Z:Ç:Ö:áDÕäïN°N≠XπX≈b lÕvÕÄÕîÕ⁄“⁄€⁄‡‰ÔÈ¯Ó˝ÓÓ¯£:u%3†8@ ;Q∏˛àE*E4S4X4a4f4u4x4{>{HâRê\ö\nÚü\•^•`Ö@ú™fæp“zÂÑÑÑEòé1éSòXò`¨[¢`∂c¿h h‘kﬁn‡nËn¸nzåû$û.û8∞B¬L¬V¬`‘jÊtÊ~ÊÄÚÄ˛Çíú,¶@∞N∫NƒQŒQ¬QÃQ÷Xÿaÿâ‡o⁄}⁄Ü⁄ï‡û‡°Í°Ù∏˛“˛€˛ﬁﬁﬁﬁ&Ë0ˆ:DNX™¥æ¿¿?»%¬3¬<¬K»T»Wal"w'å,è6è@èJèTè^èhïhõhßh—r›rÏrÚr˛r	r	r(	r4	r:	rF	r^	rd	rp	r	|ã	|µ	Üª	Ü»	Ü◊	Ü‰	ÜÛ	Ü
+ê
+ê7
+öC
+öR
+öX
+öd
+öp
+öv
+öÇ
+öë
+§ù
+§«
+ÆÕ
+Æ–
+∏–
+: –
+>!–
+H!–
+R!„
+R!Ô
+R!˚
+f!p!
+z!
+(#
+2#
+<#
+F#P#Z#d#n#x#Ç#ñ#†#™#K™#P™#Y™#^™#m™#r™#u¥#uæ#u»#u“#u‹#uÊ#z#z¢:z¨:z∂:z¿:{ :|‘:}ﬁ:ÉË:íÚ:†¸:†;£;£0u£Du£Iu£du£fu£hu£ju£äu£îuµûu†uá¢u’£uﬁ•uË¶uÚ¶u¯®u¯∞u˚≤u˚ºu˚ÚÄ˚¸Ä˚ÅÅIÅRÅ[$Åd.Åm8Åv:ÅBÅÇLÅÇVÅÇ`ÅÖjÅÖJúéTúé^úòhúûrú∑rúΩrú√|ú—Üú—êú—öú€§ú·Æú˙Æú Æú∏ú¬úÃú÷ú‡ú$Íú=ÍúCÍúIÙúW˛úòù®ù´ù´ú≠´¶≠´∞≠´≤≠Ã≤≠’≤≠ÿ¥≠˘¥≠¥≠∫≠&∫≠/∫≠2ƒ≠Sƒ≠\ƒ≠_Œ≠kÿ≠z‚≠èÏ≠èˆ≠ï Æü
+Æ∏
+Ææ
+ÆƒÆ“Æ“(Æ‹(ÆÂ(ÆÔ(Æ¯(Æ˛(ÆnPÆ2Æ2Æ2Æ(<Æ?<ÆIFÆWFÆdFÆnZÆà‹Æ|dÆ£nÆØxÆ√ÇÆ@æÆ—åÆ›åÆÌñÆ˚ñÆ	†Æ†Æ4™Æ=¥ÆN»ÆZ»Æo»Æy“ÆÇ“ÆàÊÆëÊÆóÆù˙Æ§ØÆØªØ¡ØÿØÊ"ØÔ,Ø˘6Ø@ØJØ,JØ5TØ5^ØC^Ø`hØc"ˆc,ˆc6ˆi@ˆr@ˆxJˆÜJˆìTˆ≤^ˆºhˆ»rˆ◊|ˆ˙|ˆ |ˆ|ˆ|ˆ|ˆ∞&˜Üˆ;ÜˆAÜˆJÜˆWÜˆcÜˆfêˆtêˆzêˆ}öˆãöˆëöˆóöˆùöˆ¶öˆ©§ˆ∑§ˆΩ§ˆ√§ˆ…§ˆ“§ˆ’Æˆ˝ÆˆÆˆ	ÆˆÆˆÆˆ∏ˆô‡ˆ?¬ˆ^¬ˆk¬ˆw¬ˆ}ÃˆäÃˆñ÷ˆôÍˆ…Íˆ÷Íˆ‚ÍˆÂÙˆÙˆ#Ùˆ0Ùˆ<ÙˆBÙˆE˛ˆS˜]˜r˜~˜ì˜®˜∞˜√0˜¯Õ:˜˚N˜‚D˜ÔD˜X˜b˜!l˜0v˜`v˜fv˜lv˜¸¯oÄ˜üÄ˜•Ä˜´Ä˜Æä˜ºä˜¬ä˜≈î˜”î˜Ÿî˜ﬂî˜Ëî˜Îû˜˘û˜ˇû˜û˜û˜®˜9®˜?®˜E®˜N®˜Q≤˜ë–˜uº˜Çº˜é∆˜ë⁄˜ü‰˜©Ó˜æÓ˜ Ó˜ﬂÓ˜ÙÓ˜¸¯˜¯¯1¯4 ¯> ¯A*¯A4¯P4¯q>¯tH¯t ˙t
+˙t˙t˙t(˙}(˙É2˙¢<˙ÆF˙ΩP˙‡P˙ÊP˙ÏP˙å»˙ÔZ˙˝Z˙Z˙d˙d˙d˙ d˙#n˙1n˙7n˙=n˙@x˙hx˙nx˙tx˙wÇ˙ÅÇ˙èÇ˙¢Ç˙∞á˙™˙æå˙Êñ˙Ûñ˙ˇ†˙Ø˙Öæ˙%¥˙3¥˙H¥˙T¥˙i¥˙~¥˙ü“˙ﬁÊ˙©‹˙∑‹˙ƒ·˙“·˙·˙    Õ?ˇÀÕ?˛ÀÕ?˝ÀÕ?¸ÀQÛ•Y—·é⁄ã.∆ã≈+¬= r∏ ã—Å¬ r±”‡¿t(;¬s$∫J ¥	Õ!S3¿PÀ
+Program too large
+$^_ã‚WVã íÉƒˇ.ƒ∞ø∞¢ «5 â «7 [ÀÀ_^[VWˇ6  ˇ7À           ¥LPT1:û æC- ƒ0      –/   ÷- LISTADO ETIQUETAS DE EMPRESAS-   Ä" ˛1.- LISTADO DE TODAS LAS EMPRESAS. $2.- LISTADO ENTRE EMPRESAS.  D3.- NO SIRVE.  V4.- FIN DE PROGRAMA. nSeleccione Opci¢n : < >  ä ESC   î Terminar listado  ™1 ∞4  ∂PACACLIE ¬00001¡ Ã99999 ÷2Ú' ‹DESDE LA : <     >   HASTA LA : <     > ' TECLEA EL NUMERO DE GRUPO ... : <     >  4DATOS CORRECTOS  H , DATOS ERRONEOS -F1-) b-- COLOQUE ETIQUETAS Y PULSE UNA TECLA --  êFEMPCLIE.DAT †Espere por favor...   ∏ º3  ¬FF »NO HAY DATOS, PULSE UNA TECLA  ÍO  L  ˆAplicaci¢n : ACADEMIAS   FECHA : 
+ Mensajes: ( ,COMPRUEBE LA IMPRESORA Y PULSE UNA TECLA XR´ ^FDATFIJ.DATÛ       Å      ÄÅ ~ 0 Ñ.        Ä      Fá ö00 †,  ¶9  ¨-   z "ALAVA","ALBACETE","ALICANTE","ALMERIA","AVILA","BADAJOZ","BALEARES","BARCELONA","BURGOS","CACERES","CADIZ","CASTELLON","CIUDAD REAL","CORDOBA","LA CORU•A","CUENCA","GERONA","GRANADA","GUADALAJARA","GUIPUZCOA","HUELVA" { "HUESCA","JAEN","LEON","LERIDA","RIOJA","LUGO","MADRID","MALAGA","MURCIA","NAVARRA","ORENSE","ASTURIAS","PALENCIA","LAS PALMAS","PONTEVEDRA","SALAMANCA","STA. CRUZ TENERIFE","CANTABRIA","SEGOVIA","SEVILLA","SORIA","TARRAGONA" | "TERUEL","TOLEDO","VALENCIA","VALLADOLID","VIZCAYA","ZAMORA","ZARAGOZA" ˇˇ               Y† Q<mtÈ@¥0Õ!<sÈ:∫Ìé⁄&ã> &ã., é¬W∞ ∫E¥=Õ!rÈÿ é≈3ˇπ æRÛ¶t&äG
+¿u¯&Ä= u‰ÎWêé›ã˜Å<  tHø ã◊é›¨<;t< t™ÎÙãÿÅˇ tÄ}ˇ:t	Ä}ˇ\t∞\™VæEπ êÛ§^∞ ¥=Õ!sbÄ˚;t∏∫¥	Õ!∆ @∫ ¥
+Õ!∫¥	Õ!∑ äÀÄøÀ:tÄøÀ\t∆áÃ\C∫ÃçøÃæEπ êÛ§∞ ¥=Õ!sÎ¶È/_ãÿ∫∞π ¥?Õ!rÓÅ>∞MZuÊã∏É¬Å‚‡ˇãÍ±”‚3…∞ ¥BÕ!rÀã¥J±”‚+’°≤ ±”Ë–â¥+˙ÉÔå÷ã‘É¬±”ÍÚ;˛sÈŒ ãÔéﬂπˇˇ3“¥?Õ!rÜã»A∞ ¥BÕ!r;∂t#∫∞π ¥?Õ!sÈñ ã>∞°≤≈é¿&-ˇ∂u„¥>Õ!sÎzê.∆°∆ãƒé¿&Äu_&ÄuX&Ä rQ[é›πÿ	3ˆã˛¸Û•∏eéÿπ∑+»—·—·—·∏Xé¿3ˆ3ˇÛ•å—åÿ+»Å˘ vπ —·—·—·∫eé¬3ˆã˛Í [[∫ºÎ∫‡Î∫¶Î∫ÜÎ∫a¥	Õ!3¿PÀ
+Must run under DOS 2.00 or later
+$
+Must link with BASCOM20.LIB
+$
+Program too large
+$
+Wrong version of runtime module
+$
+Error in EXE file
+$
+Cannot find 
+$
+Cannot find BASRUN20.EXE
+Enter new path specification: $
+$BASRUN20.EXE PATH=

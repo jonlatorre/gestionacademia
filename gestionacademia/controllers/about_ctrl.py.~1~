@@ -1,0 +1,89 @@
+# -*- coding: utf-8 -*-
+### BEGIN LICENSE
+# This file is in the public domain
+### END LICENSE
+
+
+# Standard library imports
+import gobject
+
+# Third party libary imports
+from gtkmvc import Controller
+
+# Local library imports
+from gestionacademia.utils._global import *
+
+
+class AboutCtrl (Controller):
+
+    """Handles signal processing and keeps the model and view aligned for an
+    About MVC-O quadruplet.
+
+    Public methods:
+    register_view(view)
+
+    """
+
+    # Public methods
+
+    def register_view(self, view):
+
+        """Loads the text from the model, then starts a timer to scroll it
+        after 2.1 seconds.
+
+        view: The view managed by this controller.
+
+        """
+
+        self.view.set_text(self.model.credits)
+        gobject.timeout_add(1500, self._on_begin_scroll)
+        return
+
+    # Non-public methods
+
+    def _on_begin_scroll(self):
+        # Call on_scroll until it returns False
+
+        gobject.timeout_add(50, self._on_scroll)
+        return False
+
+    def _on_scroll(self):
+        # Scroll to the bottom, then display a scrollbar and return False.
+
+        sw = self.view['sw_scroller']
+        vadj = sw.get_vadjustment()
+        if vadj is None: return False # destroyed!
+        val = vadj.get_value()
+
+        # Show a scrollbar when scrolling finishes.
+        if val >= vadj.upper - vadj.page_size:
+            self.view.show_vscrollbar()
+            return False
+
+        vadj.set_value(val + 0.5)
+        return True
+
+    # GTK signals
+
+    # Observed properties
+
+    def property_credits_value_change(self, model, old, new):
+
+        """Changes the text displayed in the About dialog.
+
+        Calls set_text(new) in the controller's view.
+
+        This method is notified when credits changes.
+
+        model: The model that credits belongs to
+        old: The old value of credits
+        new: The new value of credits
+
+        """
+
+        self.view.set_text(new)
+        return
+    def register_adapters(self):
+        self.adapt('num_alumnos_alta')
+        self.adapt('num_alumnos_total')
+    pass # End of class

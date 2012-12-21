@@ -1,0 +1,5 @@
+dependencias:
+
+python-sqlite
+python-sqlobject
+python-yaml

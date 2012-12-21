@@ -1,0 +1,3 @@
+cd academia
+pbibliot
+exit

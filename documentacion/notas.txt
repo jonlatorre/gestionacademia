@@ -1,0 +1,39 @@
+BUGS
+Al guarda el formulario de profesor falla si no está la fecha o el telefono (validar que están antes de guardar!)
+Al crear el profe peta por el campo fecha
+
+PENDIENTE:
+- Falta borrado alumno, grupo, notas,....
+- Faltan las acciones de borrar profesor,aula,nivel,banco,....
+- Al importar marcar los asistencias que se pagan en metálico y las que llevan factura (está funcionando?)
+- En la ficha del alumno al mostrar las asistencia mostrar el resumen del horario
+
+- Cambios el los campos de grupos al importas datos:
+  - El campo actual de nombre es realmente el campo texto (libro) HECHO
+  - El nivel es el nombre HECHO
+- Añadir opción de generar listado de alumnos para el cobro en métalico y para el cobro con factura (añadido, falta formatear el listado elegante)
+- Añadir la opción de facturar solo a ciertos grupos y solo medio mes (para setiembre)(HECHO)
+- En la venta de grupo listar los libros asociados HECHO
+- Avisos al facturar (si todo a ido OK, confirmación, etc)(HECHO)
+- Añadir el botón para imprimir las planillas de asistencia que se entregan al profesorado (menu impresión)
+- Volver a cambiar el nombre Nivel por Curso HECHO (revisar)
+- Ajustar el tamaño de la pantalla principal para que se adecue a la del monitor HECHO (comprobar)
+- Al importar intentar arreglar las Ñs! (HECHO)
+- Listado de grupos para impresión
+- Revisar la parte calendario
+* En la impresión de la planillas de asistencia añadir libros y revisar la maquetación y nombre de los campos
+* Configurar la impresora y comprobar la correcta impresión
+* Listado de grupos de un mismo curso, con horario, etc para entregar impreso a gente interesada. FALTA ORGANIZAR CURSOS
+* En la parte de notas cambiar el orden de tabulador de los 2 últimos elementos (ahora es Guardar->Falta sin J. ponerlo al reves)
+* Revisar los listados de facturar
+* Formatear los PDF correctamente, sobre todo el de notas. FALTA LOGO
+* Cambiar el formato de impresión del horario (Pasar a A5 HECHO, mantener logo HECHO y mejorar maquetación PENDIENTE)
+* En la impresión de las notas: dejar el logo, mejorar maquetación, asegurarse de que se ve correctamente la la dirección en la ventanilla
+* En los festivos no se guarda el campo observaciones
+- Validar el DC de la CCC
+- En grupo ver el resumen de alumnos (número máximo editable, cuantos ahora,...)
+* Notas mensuales
+* VAlidacion al crear alumno: CP obligatorio, Telefono Obligatorio, Telefno2 hay que rellenarlo si no está,...
+
+DEPENDENCIAS
+python-sql-object python-reportlab python-yaml

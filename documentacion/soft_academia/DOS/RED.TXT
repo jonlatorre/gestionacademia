@@ -1,0 +1,479 @@
+
+NETWORKS.TXT
+
+Este archivo contiene informaci¢n acerca de c¢mo hacer
+que su red sea compatible con MS-DOS 6.
+
+Este archivo contiene las siguientes secciones:
+
+1.  MS-DOS Shell y redes
+2.  Sistemas Arcnet
+3.  Artisoft LANtastic
+4.  AT&T StarGroup (diferente de LAN Manager)
+5.  Banyan VINES
+6.  DEC Pathworks y PCSA
+7.  IBM PC LAN
+8.  IBM DOS LAN Requester versi¢n 1.30 o anterior
+9.  Microsoft LAN Manager y redes 100% compatibles
+10. Microsoft MS-Net y redes 100% compatibles
+11. Net/One PC
+12. Redes Novell
+13. PC-NFS 3.0
+14. TCS 10Net o DCA 10Net
+
+
+1. MS-DOS Shell y redes
+-----------------------
+La mayor¡a de software para red no funcionar  correctamente
+si lo inicia desde una l¡nea de comandos de MS-DOS Shell.
+Inicie la ejecuci¢n de su red antes de iniciar MS-DOS Shell.
+
+2. Sistemas Arcnet
+------------------
+Si su red utiliza hardware de Arcnet, puede que sea
+necesario que ejecute MSD con el modificador /I. Si
+tiene que usar dicho modificador, no elija la opci¢n
+"Redes" en MSD.
+
+3. Artisoft LANtastic
+---------------------
+Las versiones 3.02 y posteriores de Artisoft LANtastic son
+compatibles con MS-DOS 6.
+
+Si est  usando una versi¢n de LANtastic anterior a la 2.5,
+p¢ngase en contacto con su proveedor de red para obtener
+una actualizaci¢n.
+
+Si est  usando las versiones 2.5 hasta 3.01 de LANtastic,
+siga este procedimiento:
+
+1. Escriba el siguiente comando a continuaci¢n del s¡mbolo
+   del sistema:
+
+   SETVER SERVER.EXE 4.00
+
+2. Reinicie su PC.
+
+Si est  usando EMM386, es posible que tenga que excluir el
+ rea de memoria utilizada por la tarjeta adaptadora de la
+red. Para ello, use el modificador x con el comando DEVICE
+para EMM386.EXE en su archivo CONFIG.SYS. Si est  usando los
+valores predeterminados de f brica para el adaptador LANtastic
+2Mbps, incluya el modificador x=d800-dfff con el comando DEVICE
+para EMM386.EXE. Si no se excluye esta regi¢n de la memoria,
+podr¡a tener dificultades con programas que usan memoria expandida.
+
+NOTA
+El programa Microsoft Defragmentar no es compatible con el
+software de red LANtastic cuando se ha cargado el servicio
+del servidor. Si s¢lo est  cargado el redirector, el programa
+ser  compatible con el software de la red LANtastic.
+
+
+4. AT&T StarGroup (diferente de LAN Manager)
+--------------------------------------------
+Si el software de su red es AT&T StarGroup, deber  ejecutar
+el programa Instalar de nuevo, elegir "Continuar" cuando Instalar
+muestre la pantalla "Ha especificado que su equipo est  conectado
+a una red" y seguir las instrucciones que aparezcan en su pantalla.
+Si no puede ejecutar el software de su red despu‚s de la instalaci¢n,
+siga el siguiente procedimiento:
+
+1.  Escriba los siguientes comandos:
+
+    SETVER SETUP.EXE 4.00
+    SETVER ATTSTART.EXE 4.00
+
+2.  Reinicie su PC.
+
+3.  Use los disquetes de su programa Instalar de StarGroup
+    para retirar el software de red existente en su PC.
+
+4.  Vuelva a instalar StarGroup. Cuando el programa Instalar de
+    StarGroup le pida que indique qu‚ versi¢n de MS-DOS est 
+    usando, elija MS-DOS versi¢n 4.0.
+
+5. Banyan VINES
+---------------
+Las versiones 4.1 y posteriores de Banyan VINES son compatibles
+con MS-DOS 6. Si tiene el archivo REDIRALL.EXE o REDIR4.EXE
+en el directorio BANYAN de su disco duro, podr  usar la versi¢n
+4.0x de Banyan VINES con MS-DOS 6.
+
+Si no tiene ninguno de estos archivos en su disco duro,
+pero tiene los disquetes de instalaci¢n de VINES que tienen
+alguno de estos archivos, copie el archivo en el directorio
+de su disco duro donde se encuentran los archivos de la red.
+
+Si los archivos no se encuentran ni en su disco duro ni 
+en los disquetes de instalaci¢n, p¢ngase en contacto con
+su proveedor de redes Banyan VINES.
+
+Si tiene una versi¢n de VINES anterior a la 4.0, p¢ngase
+en contacto con su proveedor de redes para obtener una
+actualizaci¢n.
+
+NOTA
+En algunos casos Banyan VINES no es compatible con MemMaker.
+Por ejemplo, si el software de su red est  cargando m£ltiples 
+componentes en diferentes regiones de los bloques de memoria
+superior (UMB), es posible que MemMaker no funcione correctamente
+con su PC.
+
+6. DEC Pathworks y PCSA
+-----------------------
+Si tiene la versi¢n 4.1 de DEC PATHWORKS para DOS,
+siga el siguiente procedimiento:
+
+o  Si est  actualizando de la versi¢n 3.3 o anterior de MS-DOS,
+   tendr  que actualizar el archivo redirector REDIR.EXE.
+   Obtenga el archivo REDIR.400 de los disquetes PATHWORKS o
+   del servicio de su sistema y cambie su nombre a REDIR.EXE y
+   col¢quelo en su directorio DECNET.
+
+La versi¢n 4.0 de PATHWORKS para DOS es compatible con MS-DOS 6.
+Sin embargo, tendr  que ejecutar varios pasos para conseguir
+esta compatibilidad.
+
+Para actualizar la versi¢n 4.0 de PATHWORKS:
+
+1. Si est  actualizando desde la versi¢n 3.3 o anterior de MS-DOS,
+   tendr  que actualizar su archivo redirector, REDIR.EXE.
+   Obtenga el archivo REDIR.400 de los disquetes PATHWORKS o
+   del servicio de su sistema y cambie su nombre a REDIR.EXE y
+   col¢quelo en su directorio DECNET.
+
+2. Reinicie su PC, pero no ejecute STARTNET.BAT todav¡a,
+   pues ‚ste inicia la ejecuci¢n de la red.
+
+3. Escriba cada uno de los siguientes comandos a continuaci¢n
+   del s¡mbolo del sistema:
+
+   setver use.exe 4.00
+
+   setver memman.exe 4.00
+
+   setver lad.exe 4.00
+
+   setver show.exe 4.00
+
+   setver netsetup.exe 4.00
+
+4. Reinicie su PC y ejecute STARTNET.BAT.
+
+   NOTA
+   Si actualiza a PATHWORKS 4.1 desde PATHWORKS 4.0,
+   tendr  que inhabilitar los comandos SETVER que escribi¢
+   en este procedimiento. Para hacerlo despu‚s de instalar
+   PATHWORKS 4.1, escriba los mismos comandos, pero
+   en lugar de escribir 4.00 en cada comando, escriba /d.
+
+Si est  usando una versi¢n de PATHWORKS o PCSA anterior
+a la versi¢n 4.0, p¢ngase en contacto con su proveedor de
+redes para obtener una actualizaci¢n. Mientras tanto, si
+est  usando la versi¢n 3.x de PATHWORKS o PCSA, puede
+comenzar a usar MS-DOS 6 siguiendo el siguiente procedimiento.
+
+     NOTA
+     Para poder usar el conmutador de tareas de MS-DOS,
+     use la versi¢n 4.1 o posterior de PATHWORKS para DOS.
+
+Para actualizar provisionalmente la versi¢n 3.x de PATHWORKS o
+PCSA:
+
+1. Si est  actualizando desde la versi¢n 3.3 o anterior de
+   MS-DOS, tendr  que actualizar su archivo redirector REDIR.EXE.
+   Obtenga el archivo REDIR.400 de los disquetes PATHWORKS o
+   del servicio de su sistema, cambie su nombre a REDIR.EXE y
+   col¢quelo en su directorio DECNET.
+
+2. Escriba cada uno de los siguientes comandos continuaci¢n del
+   s¡mbolo del sistema:
+
+   SETVER use.exe 4.00
+   SETVER emsload.exe 4.00
+   SETVER sch.exe 4.00
+   SETVER netsetup.exe 4.00
+   SETVER ncp.exe 4.00
+   SETVER dnnethat.exe 4.00
+   SETVER lad.exe 4.00
+   SETVER dll.dxe 4.00
+   SETVER memman.exe 4.00
+   SETVER dnnethld.exe 4.00
+   SETVER show.exe 4.00
+
+3. Reinicie su PC.
+
+7. IBM PC LAN
+-------------
+Si usa IBM PC LAN 1.34 y tiene problemas con las aplicaciones
+que usan bloqueo de registros o bloqueo de archivos, es 
+posible que necesite un archivo REDIR50.EXE actualizado
+incluido en ICO 3039. P¢ngase en contacto con IBM Support
+Channel.
+
+Versi¢n 1.33 o anterior de IBM PC LAN Program
+
+Para usar MS-DOS 6 con IBM PC LAN Program (PCLP), necesita
+uno de los siguientes:
+
+o IBM PCLP versi¢n 1.34 instalado.
+
+o IBM PCLP versi¢n 1.3x que haya sido actualizado a la
+  versi¢n 1.34 mediante la aplicaci¢n apropiada de los
+  discos de servicio correctivo de IBM (IBM Corrective
+  Service Disks). P¢ngase en contacto con el servicio de
+  soporte de IBM para obtener el software necesario.
+
+Si est  ejecutando una versi¢n de IBM PCLP anterior a la
+1.30, p¢ngase en contacto con IBM para obtener el software
+e instrucciones necesarios.
+
+Para actualizar las versiones 1.30 hasta 1.34 de IBM PCLP:
+
+1. Si est  actualizando desde la versi¢n 1.34, ignore los
+   pasos 1 y 2. De lo contrario, instale el software de IBM
+   PCLP necesario de acuerdo a las instrucciones incluidas
+   en los disquetes de servicio correctivo suministrados por
+   IBM.
+
+2. Reinicie su PC y aseg£rese que que se inicia la red.
+
+   Si la red no se inicia, salga de este procedimiento y
+   p¢ngase en contacto con IBM para obtener ayuda.
+
+   El siguiente mensaje aparecer  en su pantalla:
+
+   ¨Iniciar PC LAN Program 1.3 (S/N)?
+
+3. Escriba N y presione la tecla ENTRAR.
+
+4. Escriba lo siguiente a continuaci¢n del s¡mbolo del sistema:
+
+   SETVER net.com /d
+
+5. Reinicie su PC.
+
+   El siguiente mensaje aparecer  en su pantalla:
+
+   ¨Iniciar PC LAN Program 1.3 (S/N)?
+
+6. Escriba S y presione la tecla ENTRAR.
+
+   Nota: el programa Defrag de Microsoft no puede ejecutarse en
+          un servidor PCLP.
+
+8. IBM DOS LAN Requester versi¢n 1.30 o anterior
+------------------------------------------------
+Para usar MS-DOS 6 con IBM DOS LAN Requester, necesitar  uno
+de los siguientes:
+
+o Los archivos de DOS LAN Requester que se incluyen con OS/2 
+  LAN Server versi¢n 1.30.1.
+
+o Los archivos de DOS LAN Requester que se incluyen con OS/2 
+  LAN Server versi¢n 1.30, al que se ha aplicado el Disquete
+  de servicio correctivo n£mero 5015 de IBM. P¢ngase en contacto
+  con el servicio de soporte de IBM para obtener el software
+  que necesita.
+
+Si est  ejecutando una versi¢n de DOS LAN Requester
+anterior a la versi¢n 1.30, p¢ngase en contacto con
+IBM para obtener el software e instrucciones necesarios.
+
+Para actualizar la versi¢n 1.30 de IBM DOS LAN Requester:
+
+1. Actualice su software de DOS LAN Requester a la versi¢n
+   1.30 de acuerdo a las instrucciones incluidas con el
+   Disquete de servicio correctivo n£mero 5015 de IBM.
+
+2. Reinicie su PC y aseg£rese de que puede iniciar la red.
+
+   Si la red no se inicia, salga de este procedimiento y
+   p¢ngase en contacto con IBM para obtener ayuda.
+
+   El siguiente mensaje aparecer  en su pantalla:
+
+   ¨Iniciar DOS LAN Requester (S/N)?
+
+3. Escriba N y presione la tecla ENTRAR.
+
+4. Escriba lo siguiente a continuaci¢n del s¡mbolo
+   del sistema:
+ 
+   SETVER net.com /d
+
+5. Reinicie su PC.
+
+   El siguiente mensaje aparecer  en su pantalla:
+
+   ¨Iniciar DOS LAN Requester (S/N)?
+
+6. Escriba S y presione la tecla ENTRAR.
+
+9. Microsoft LAN Manager y redes 100% compatibles
+-------------------------------------------------
+Si est  ejecutando cualquier versi¢n de Microsoft LAN Manager
+o una red 100% compatible e Instalar le refiri¢ a este archivo,
+p¢ngase en contacto con Microsoft para obtener archivos de red
+actualizados.
+
+10. Microsoft MS-Net y redes 100% compatibles
+---------------------------------------------
+Si est  ejecutando cualquier versi¢n de Microsoft MS-Net
+o una red 100% compatible e Instalar le refiri¢ a este
+archivo, p¢ngase en contacto con Microsoft para obtener
+archivos de red actualizados.
+
+11. Net/One PC
+--------------
+Si Ungermann-Bass Net/One PC no se carga con MS-DOS 6,
+siga uno de los siguientes pasos:
+                              
+*    P¢ngase en contacto con su proveedor para obtener
+     un archivo LOADNIU.EXE actualizado.
+*    Coloque un comando UBPAUSE entre las l¡neas LOADNIU 
+     y XNSBIOS del archivo MSNET.INI.
+*    Genere comandos de red desde un archivo de procesamiento
+     por lotes que incluyan un comando PAUSE entre las l¡neas
+     LOADNIU y XNSBIOS.
+     
+12. Redes Novell
+----------------
+En el momento de publicarse este archivo, la
+versi¢n m s actual de la interfaz de la estaci¢n
+de trabajo era 3.31. Deber¡a obtener la versi¢n
+3.31 o posterior para uso con MS-DOS 6.
+
+Si tiene una versi¢n de NetWare anterior a la 2.1
+o si el software de su red usa alguno de los siguientes
+archivos, p¢ngase en contacto con su proveedor de redes:
+
+NET3.COM
+NET4.COM
+XMSNET3.EXE
+XMSNET4.EXE
+EMSNET3.EXE
+EMSNET4.EXE
+
+Si no puede usar el conmutador de tareas en MS-DOS Shell
+cuando ejecuta una red de Novell, p¢ngase en contacto con
+su proveedor de redes.
+
+Si no puede cargar MS-DOS 6 en su estaci¢n de trabajo de 
+inicio remoto, p¢ngase en contacto con Novell para obtener
+el archivo RPLFIX.COM.
+
+Si ejecuta LOGIN.EXE, MAP.EXE y SESSION.EXE desde MS-DOS
+Shell o durante la ejecuci¢n de MS-DOS Shell, no se agregar 
+una ruta de b£squeda a la ruta existente. Use estos programas
+antes de iniciar MS-DOS Shell.
+
+Si usa el programa de inicio de sesi¢n de Novell para 
+establecer la variable COMSPEC despu‚s de iniciar MS-DOS 6
+y no puede volver a cargar el archivo COMMAND.COM, edite
+la l¡nea del comando SHELL en su archivo CONFIG.SYS. 
+Aseg£rese de que la ruta para COMMAND.COM se¤ala
+hacia el directorio ra¡z y, si existe, elimine el par metro
+c:\dos\ que aparece despu‚s de la ruta.
+
+Por ejemplo, supongamos que su comando SHELL es
+parecido a lo siguiente:
+
+    SHELL=C:\DOS\COMMAND.COM  C:\DOS\  /P  /E:512
+
+C mbielo para que aparezca as¡:
+
+    SHELL=C:\COMMAND.COM  /P  /E:512
+
+O bien, p¢ngase en contacto con su proveedor de
+Novell para obtener un nuevo programa de inicio
+de sesi¢n.
+
+Si tiene problemas con el uso de Microsoft Restablecer
+(Undelete) en una red de Novell, use el comando MAP ROOT
+junto con el m‚todo de protecci¢n Centinela de eliminaci¢n.
+(Si tiene la versi¢n 2.15c o anterior de Novell Netware,
+obtenga el archivo MAP.EXE m s reciente de su proveedor de
+redes.) Por ejemplo, usar¡a la siguiente sintaxis de MAP
+ROOT (normalmente especificada en el programa de inicio de
+sesi¢n del servidor):
+
+MAP ROOT F:=COUNT/SYS:USUARIOS/JOSE
+
+donde F es la letra de la unidad de la red, COUNT es
+un nombre de servidor de archivos, SYS es el nombre
+del volumen, USUARIOS es un subdirectorio del volumen
+SYS y JOSE es el directorio ra¡z de un usuario de la
+red. En el equipo de JOSE, el archivo AUTOEXEC.BAT
+contendr¡a la siguiente sintaxis:
+
+UNDELETE /SF
+
+donde /S especifica el m‚todo de protecci¢n Centinela
+de eliminaci¢n y F especifica una unidad de red a proteger.
+El archivo AUTOEXEC.BAT debe especificar /S[unidad] para
+cada unidad que se desee proteger.
+
+NOTA
+Si crea copias de seguridad en una red y el software de su
+red es NetWare 286, el cursor en Microsoft Copia de
+seguridad para MS-DOS y Windows se mover  muy lentamente al
+principio. Esto se debe a la manera en que NetWare 286 gestiona
+la escritura de archivos en la red.
+
+NOTA
+El par metro %OS_VERSION usado en los programas de inicio de
+sesi¢n devolver  v5.00 si est  usando cualquier interfaz
+versi¢n 3.31, inclusive. Hasta que Novell produzca una interfaz
+actualizada, deber¡a evitar el uso del par metro %OS_VERSION o
+deber¡a proyectar una unidad v6.00 sobre la unidad v5.00
+existente en el programa de inicio de sesi¢n de un usuario.
+
+
+13. PC-NFS 3.0
+--------------
+Si usa SETVER para informar a MS-DOS de una versi¢n diferente 
+de un programa, es posible que PC-NFS 3.x indique la versi¢n
+incorrecta del programa. Si tiene este problema, p¢ngase en
+contacto con su proveedor de redes para obtener el software
+actualizado de la red.
+
+Si usa PC-NFS 3.0 con MS-DOS Shell, es posible que ‚ste
+muestre m s unidades de las que tenga habilitadas realmente.
+Para evitar este problema, use el modificador /d de PC-NFS para
+especificar el n£mero de unidades que est  usando. Para 
+obtener m s informaci¢n, consulte su documentaci¢n de PC-NFS.
+
+Si no puede usar el comando COPY o XCOPY en PC-NFS 3.01,
+p¢ngase en contacto con su proveedor para obtener una
+versi¢n actualizada del controlador de dispositivos PCNFS.SYS.
+
+Si usa software de red PC-NFS, siga el siguiente procedimiento
+antes de ejecutar MemMaker:
+
+1. Use cualquier editor de textos para abrir su archivo
+   MEMMAKER.INF. Este archivo se encuentra en el directorio
+   que contiene sus archivos de MS-DOS.
+
+2. Agregue la siguiente l¡nea al archivo:
+
+   *NET
+
+3. Guarde el archivo y despu‚s ejecute MemMaker.
+
+
+14. TCS 10Net o DCA 10Net
+-------------------------
+Las versiones 4.20 (20) y posteriores de DCA 10Net Plus 
+y las versiones 3.3 (41) y posteriores de DCA 10Net son
+compatibles con MS-DOS 6. Si tiene una versi¢n anterior,
+p¢ngase en contacto con su proveedor de redes para obtener
+una actualizaci¢n.
+
+NOTA
+El programa Microsoft Defragmentar no es compatible con
+el software de red 10Net si se ha cargado el servicio
+del servidor. Si s¢lo se ha cargado el redirector, el
+programa s¡ es compatible con el software para redes 10Net.
+

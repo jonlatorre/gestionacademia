@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.0 r9654"
+   width="800"
+   height="150"
+   sodipodi:docname="banner_eide.svg"
+   inkscape:export-filename="/home/patataman/Escritorio/banner_eide.png"
+   inkscape:export-xdpi="45"
+   inkscape:export-ydpi="45">
+  <metadata
+     id="metadata8">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs6" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1280"
+     inkscape:window-height="751"
+     id="namedview4"
+     showgrid="false"
+     inkscape:zoom="0.68786578"
+     inkscape:cx="176.83633"
+     inkscape:cy="323.85827"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2" />
+  <g
+     id="g3773"
+     transform="matrix(1.171203,0,0,1.171203,596.25505,8.0518646)">
+    <path
+       sodipodi:nodetypes="ccsccsc"
+       inkscape:connector-curvature="0"
+       id="path2987"
+       d="M 75.298951,0.51398599 75.041958,9.765734 c 0,0 -27.560357,5.182711 -27.498252,31.353147 0.05057,21.311223 25.956299,18.503497 25.956299,18.503497 l 0.256993,10.27972 c 0,0 -35.064848,2.341302 -35.208047,-30.325175 -0.150993,-34.4444766 36.75,-39.06293701 36.75,-39.06293701 z"
+       style="fill:#1debff;fill-opacity:1;stroke:none" />
+    <path
+       style="fill:#7ded15;fill-opacity:1;stroke:none"
+       d="m 72.985552,93.582257 0.256993,-9.251748 c 0,0 27.560355,-5.182711 27.498255,-31.353147 C 100.69023,31.666139 74.784498,34.473865 74.784498,34.473865 l -0.256993,-10.27972 c 0,0 35.064845,-2.341302 35.208045,30.325175 0.15099,34.444477 -36.749998,39.062937 -36.749998,39.062937 z"
+       id="path3763"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccsccsc" />
+    <path
+       sodipodi:nodetypes="ccsccsc"
+       inkscape:connector-curvature="0"
+       id="path3765"
+       d="m 26.837137,45.120443 9.251748,0.256993 c 0,0 5.182711,27.560357 31.353147,27.498252 21.311223,-0.05057 18.503497,-25.956299 18.503497,-25.956299 l 10.27972,-0.256993 c 0,0 2.341302,35.064848 -30.325175,35.208047 -34.444477,0.150993 -39.062937,-36.75 -39.062937,-36.75 z"
+       style="fill:#f5ca1b;fill-opacity:1;stroke:none" />
+    <path
+       style="fill:#ff1008;fill-opacity:1;stroke:none"
+       d="M 119.90541,49.232793 110.65366,48.9758 c 0,0 -5.18271,-27.560357 -31.353147,-27.498252 -21.311223,0.05057 -18.503497,25.956299 -18.503497,25.956299 l -10.27972,0.256993 c 0,0 -2.341302,-35.064848 30.325175,-35.208047 34.444479,-0.150993 39.062939,36.75 39.062939,36.75 z"
+       id="path3767"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccsccsc" />
+  </g>
+  <text
+     xml:space="preserve"
+     style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+     x="518.35492"
+     y="79.840927"
+     id="text3769"
+     sodipodi:linespacing="125%"><tspan
+       sodipodi:role="line"
+       id="tspan3771"
+       x="518.35492"
+       y="79.840927">EIDE</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:17.12937546px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Andale Mono;-inkscape-font-specification:Andale Mono"
+     x="320.35907"
+     y="117.30551"
+     id="text3779"
+     sodipodi:linespacing="125%"><tspan
+       sodipodi:role="line"
+       id="tspan3785"
+       x="320.35907"
+       y="117.30551">ESCUELAS INTERNACIONALES PARA LA EDUCACIÓN Y EL DESARROLLO</tspan></text>
+  <path
+     style="opacity:0.7962963;fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1"
+     d="m 732.4533,16.854388 c 12.37075,12.370753 20.02222,29.460789 20.02222,48.337919 0,18.877131 -7.65147,35.967163 -20.02222,48.337913 -12.37076,12.37076 -29.46079,20.02222 -48.33792,20.02222 -18.87713,0 -35.96716,-7.65146 -48.33792,-20.02222 -6.18538,-6.18538 -11.19093,-13.909805 -14.65014,-22.267915 0,0 -171.38629,0.126573 -236.68902,0.120059"
+     id="path3787"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="csssscc" />
+</svg>

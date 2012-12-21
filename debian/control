@@ -1,0 +1,17 @@
+Source: gestionacademia
+Section: utils
+Priority: optional
+Maintainer: Juan Nadie <juan.nadie@loquesea.es>
+Build-Depends: debhelper (>= 5.0.38)
+Build-Depends-Indep: cdbs (>= 0.4.43), python-all-dev (>= 2.3.5-11), python-central (>= 0.5.6)
+Standards-Version: 3.7.2
+XS-Python-Version: all
+
+
+Package: gestionacademia
+Architecture: all
+Depends: ${python:Depends},python-yaml, python-sqlobject
+XB-Python-Version: ${python:Versions}
+Description: Ejemplo básico de script Python empaquetado en Debian GNU/Linux
+ Un script "hola mundo" que sirve únicamente para explicar cómo se
+ empaquetan scripts Python en GNU/Linux de forma adecuada.
