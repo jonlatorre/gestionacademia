@@ -423,11 +423,14 @@ class AlumnoModel (Model):
                         if a.banco.codigo != 2095:
                             pendientes.append([a.id,"sucursal a 0"])
                         else:
-                            debug("Pero es BBK y nos da igual")
+                            debug("BBK y nos da igual que no valide la sucursal")
                     elif a.cuenta == 0:
                         pendientes.append([a.id,"cuenta a 0"])
                     elif banco_model.validaCuenta(a.banco.codigo,a.sucursal,a.dc,a.cuenta)!=0:
-                        pendientes.append([a.id,"no valida el DC"])
+                        if a.banco.codigo != 2095:
+                            pendientes.append([a.id,"no valida el DC"])
+                        else:
+                            debug("Es BBK y nos da igual que no valide el DC")
                     else:
                         pass
                 else:
