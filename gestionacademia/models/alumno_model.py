@@ -255,7 +255,7 @@ class AlumnoModel (Model):
         story.append(Paragraph(cadena, estilo))
         story.append(Spacer(0,10))
 
-        tabla =[['ID','Apellido1','Apellido2','Nombre','Notal Final','Faltas']]
+        tabla =[['ID','Apellido1','Apellido2','Nombre','Notal Final','Faltas','Justificadas']]
         if todos:
             consulta = Alumno.select(orderBy=Alumno.q.apellido1)
         else:
@@ -277,14 +277,16 @@ class AlumnoModel (Model):
                     else:
                         nota_final = "%s / %s"%(nota.grama,nota.grama_baremo)
             total_faltas = 0
+            total_faltas_j = 0
             for falta in Falta.select(Falta.q.asistenciaID==persona.grupos[0].id):
                 total_faltas = total_faltas + falta.faltas
+                total_faltas_j = total_faltas_j + falta.justificadas
             #except:
             #    print "Uo :( algún error"
             #    nota_final = "--"
             #    faltas = "--"
             tabla.append([persona.id,persona.apellido1,persona.apellido2,persona.nombre,\
-                nota_final,total_faltas])
+                nota_final,total_faltas,total_faltas_j])
         t = Table(tabla)
         t.setStyle([('FONTSIZE',(0,0),(-1,-1),8),('FONTSIZE',(-1,0),(-1,-1),6),('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green)])
         t.setStyle([('LINEABOVE', (0,0), (-1,0), 2, colors.black),('LINEBEFORE', (0,0), (0,-1), 2, colors.black),('LINEABOVE', (0,1), (-1,-1), 0.25, colors.black),('LINEAFTER', (0,0), (-1,-1), 0.25, colors.black),('LINEBELOW', (0,-1), (-1,-1), 2, colors.black),('LINEAFTER', (-1,0), (-1,-1), 2, colors.black),('ALIGN', (1,1), (-1,-1), 'RIGHT')])
