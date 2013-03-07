@@ -21,7 +21,7 @@ from sqlobject.inheritance import InheritableSQLObject
 import new
 
 # Local library imports
-from database_model import Alumno, Banco, Asistencia
+from database_model import Alumno, Banco, Asistencia, Nota, Falta
 from gestionacademia.utils import _config
 from gestionacademia.utils._global import *
 from gestionacademia.models.banco_model import BancoModel
@@ -238,6 +238,62 @@ class AlumnoModel (Model):
         doc.build(story)
         send_to_printer(fichero)
         return
+    
+    def imprimir_lista_notas_asistencia(self,todos=False):
+        """Pensado para una vez terminado el curso sacar un listado alfabetico 
+        con las notas finales y el totald e faltas"""
+        fichero = get_print_path('Alumnos')+"/Listado_Alumnos_Notas_Asistenacia.pdf"
+        estiloHoja = getSampleStyleSheet()
+        story = []
+        ##Vamos con la cabecera
+        ##banner = os.path.join(_config.get_data_path(), 'media', 'banner_eide.png')
+        ##img=Image(banner)
+        ##story.append(img)
+
+        estilo = estiloHoja['BodyText']
+        cadena = "<para alignment=center><b>LISTADO DE ALUMNOS</b></para>"
+        story.append(Paragraph(cadena, estilo))
+        story.append(Spacer(0,10))
+
+        tabla =[['ID','Apellido1','Apellido2','Nombre','Notal Final','Faltas']]
+        if todos:
+            consulta = Alumno.select(orderBy=Alumno.q.apellido1)
+        else:
+            consulta = Alumno.select(Alumno.q.activo==True,orderBy=Alumno.q.apellido1)
+        for persona in consulta:
+            print "Estamos con la persona %s (%s) "%(persona.nombre,persona.id)
+            asis = persona.grupos[0]
+            #print "La asistencia es:",asis.id
+            notas = Nota.select(Nota.q.asistencia==asis)
+            for nota in notas:
+                if nota.trimestre==3:
+                    #print "Estamos con la nota", nota.id
+                    print nota
+                    ### Buscamos la nota de grama, si es 0 cojemos el control3 si es 999 (no presentado ponemos un NP)
+                    if nota.grama == 0:
+                        nota_final = "%s / %s"%(nota.control3,nota.control3_baremo)
+                    elif nota.grama == 999:
+                        nota_final = "NP"
+                    else:
+                        nota_final = "%s / %s"%(nota.grama,nota.grama_baremo)
+            total_faltas = 0
+            for falta in Falta.select(Falta.q.asistenciaID==persona.grupos[0].id):
+                total_faltas = total_faltas + falta.faltas
+            #except:
+            #    print "Uo :( algún error"
+            #    nota_final = "--"
+            #    faltas = "--"
+            tabla.append([persona.id,persona.apellido1,persona.apellido2,persona.nombre,\
+                nota_final,total_faltas])
+        t = Table(tabla)
+        t.setStyle([('FONTSIZE',(0,0),(-1,-1),8),('FONTSIZE',(-1,0),(-1,-1),6),('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green)])
+        t.setStyle([('LINEABOVE', (0,0), (-1,0), 2, colors.black),('LINEBEFORE', (0,0), (0,-1), 2, colors.black),('LINEABOVE', (0,1), (-1,-1), 0.25, colors.black),('LINEAFTER', (0,0), (-1,-1), 0.25, colors.black),('LINEBELOW', (0,-1), (-1,-1), 2, colors.black),('LINEAFTER', (-1,0), (-1,-1), 2, colors.black),('ALIGN', (1,1), (-1,-1), 'RIGHT')])
+        story.append(t)
+        doc=SimpleDocTemplate(fichero,pagesize=A4,showBoundary=0)
+        doc.build(story)
+        send_to_printer(fichero)
+        return
+
 
     def cargar(self,id):
         if id == -1:
