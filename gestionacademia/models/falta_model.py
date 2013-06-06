@@ -124,7 +124,11 @@ class FaltaModel(Model):
         for f in Falta.select(AND(Falta.q.mes==mes,Falta.q.faltas>3)):
             self.id = f.id
             self.cargar()
-            if date.today().year - self.f.asistencia.alumno.fecha_nacimiento.year < 20 :
+            if (not f.asistenciaID):
+                logging.debug("No ha asistencia asociada a la falta, nos la saltamos")
+                continue
+            if date.today().year - self.f.asistencia.alumno.fecha_nacimiento.year < 19 :
+                logging.debug("Es menor de edad porque ha nacido el %s, imprimimos carta"%self.f.asistencia.alumno.fecha_nacimiento.year)
                 self.imprimir_carta_faltas()
                 num += 1
         return num
@@ -205,6 +209,9 @@ class FaltaModel(Model):
             if (f.justificadas>3 or f.faltas>3):
                 ##print f.id
                 logging.debug( "Tenemos la falta %s"%(f.id))
+                if (not f.asistenciaID):
+                    logging.debug("No ha asistencia asociada a la falta, nos la saltamos")
+                    continue
                 logging.debug( "relacionada con la asistencia %s"%(f.asistencia.id) )
                 tabla_faltas.append([f.asistencia.alumno.id,"%s %s, %s"%(f.asistencia.alumno.apellido1,
                     f.asistencia.alumno.apellido2,f.asistencia.alumno.nombre,),f.asistencia.grupo.nombre,f.faltas,f.justificadas])
