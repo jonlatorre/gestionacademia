@@ -2,7 +2,7 @@
 <interface>
   <requires lib="gtk+" version="2.16"/>
   <!-- interface-naming-policy project-wide -->
-  <object class="GtkDialog" id="seleccion">
+  <object class="GtkDialog" id="seleccion_libros">
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Eliga los libros</property>
     <property name="default_width">400</property>

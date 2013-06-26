@@ -54,8 +54,8 @@ class SeleccionLibrosView(View):
         
         """Display the BancoDialog window."""
         
-        res = self['seleccion'].run()
-        self['seleccion'].destroy()
+        res = self['seleccion_libros'].run()
+        self['seleccion_libros'].destroy()
         return res
 
 
