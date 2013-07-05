@@ -175,6 +175,10 @@ class AlumnoCtrl (Controller):
     def on_bt_salir_pressed(self,widget):
         self.view['alumno_dialog'].destroy()
         return -1
+    ##señal para imprimir la matrícula
+    def on_imp_matricula_clicked(self,widget):
+		debug("Vamos a imprimir la matícula")
+		self.model.imprimir_matricula()
     # Observed properties
 
     def register_adapters(self):

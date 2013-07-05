@@ -296,6 +296,146 @@ class AlumnoModel (Model):
         send_to_printer(fichero)
         return
 
+    def imprimir_matricula(self):
+        from reportlab.platypus import ListFlowable, ListItem
+        fichero = get_print_path('Alumnos')+"/Matricula_%s.pdf"%self.a.id
+        print "Imprimiendo la matricula %i en el fichero %s"%(self.a.id,fichero)
+        estiloHoja = getSampleStyleSheet()
+        estiloHoja.add(ParagraphStyle(name='pie',
+                              parent=estiloHoja['Normal'],
+                              fontName = 'dejavu',
+                              fontSize=6,
+                              leading=6,
+                              spaceAfter=2),
+               alias='pie')
+        estiloHoja.add(ParagraphStyle(name='normas',
+                              parent=estiloHoja['Normal'],
+                              fontName = 'dejavu',
+                              fontSize=8,
+                              leading=8,
+                              spaceAfter=6),
+               alias='normas')
+        story = []
+        ##Vamos con la cabecera
+        ##banner = os.path.join(_config.get_data_path(), 'media', 'banner_eide_pequeno.png')
+        ##img=Image(banner)
+        ##story.append(img)
+        ##Intro
+        estilo = estiloHoja['BodyText']
+        story.append(Spacer(0,30))
+        cadena = "<para alignment=center><b>Escuelas Internacioles Para la Educacióin y el Desarrollo EIDE</b></para>"
+        story.append(Paragraph(cadena, estiloHoja['Heading2']))
+        cadena = "<para alignment=center>Departamentos de Idiomas</para>"
+        story.append(Paragraph(cadena, estiloHoja['Heading3']))
+        story.append(Spacer(0,20))
+        
+        ##Datos del alumno
+        #cadena = "Nombre del alumno: <b>%s</b> Apellidos:<b> %s %s</b>"%(self.nombre,self.apellido1,self.apellido2)
+        #story.append(Paragraph(cadena, estilo))
+        #cadena = "Fecha nacimiento: <b>%s</b> Telefonos: <b> %s - %s </b>"%(self.fecha_nacimiento,self.telefono1,self.telefono2)
+        #story.append(Paragraph(cadena, estilo))
+        #cadena = "Domicilio: %s"%self.direccion
+        #story.append(Paragraph(cadena, estilo))
+        #cadena = "Poblacion: <b>%s</b> CP: <b> %s </b> DNI: <b> %s </b>"%(self.ciudad ,self.cp ,self.dni)
+        #story.append(Paragraph(cadena, estilo))
+        if self.observaciones == None:
+            texto = "_____________________________"
+        else:
+            texto = self.observaciones
+        #Comprobamos si el email es correcto, es una compracion minima
+        email = self.email
+        if len(email) < 4:
+            email = "                            "
+        #cadena = "Como nos conocio: <b>%s</b> email: <b> %s </b>"%(texto ,email)
+        #story.append(Paragraph(cadena, estilo))
+        #story.append(Spacer(0,10))
+        
+        tabla =[['Nombre',self.nombre,"Apellidos","%s %s"%(self.apellido1,self.apellido2)]]
+        tabla.append(['fecha nacimiento',self.fecha_nacimiento,'Telefonos',"%s - %s"%(self.telefono1,self.telefono2)])
+        tabla.append(["Domicilio:",self.direccion])
+        tabla.append(["Poblacion:",self.ciudad,"CP:",self.cp,"DNI:",self.dni])
+        tabla.append(["Como nos conocio:",texto, "email:",email])
+        t = Table(tabla)
+        story.append(t)
+        story.append(Spacer(0,10))
+        
+        ##Normas
+        cadena = "<para alignment=center>NORMAS DEL CENTRO</para>"
+        story.append(Paragraph(cadena, estiloHoja['Heading2']))
+        estilo = estiloHoja['normas']
+        normas = ListFlowable( [
+        ListItem(Paragraph("""El alumno al formalizar la presente matrícula acepta las 
+        condiciones siguientes:""", estilo)),
+        ListItem(Paragraph("""La duración del curso es la estipulada 
+        por la Dirección del Centro recogida en el calendario escolar que 
+        se entrega a principios de curso.""",estilo)),
+        ListItem(Paragraph("""En concepto de inscripción, y SOLO POR 
+        UNA VEZ, se cobra una cantidad que no es susceptible de devolución 
+        una vez entregada. Aquellos alumnos que causen baja en el Centro 
+        antes de las fecha s fijadas como fin de curso en el Calendario 
+        Escolar, serán considerados como Alumnos Nuevos si desean 
+        reincorporarse al centro de nuevo, por lo que deberán abonar la 
+        cuota de inscripción.""",estilo)),
+        
+        ListItem(Paragraph("""El curso se abonará por meses naturales 
+        por adelantado (del 1 al 10 de cada mes) a través de domiciliación 
+        bancaria.""",estilo)),
+        
+        ListItem(Paragraph("""La dirección del Centro se reserva el 
+        derecho de cancelar las matrículas de aquellos alumnos cuya conducta 
+        afecte desfavorablemente la marcha de las actividades del centro.""",estilo)),
+        
+        ListItem(Paragraph("""El Centro se reserva el derecho de cancelar 
+        las clases de los grupos, cuyo número sea inferior a 4 alumnos.""",estilo)),
+        
+        ListItem(Paragraph("""No se reembolsará ninguna cantidad cuando 
+        el alumno deje de asistir al curso o haya abonado algún importe del 
+        mismo antes de su comienzo. El alumno tendrá que notificar su baja 
+        en el centro antes del día 1 de cada mes, en caso contrario se cobrará 
+        el recibo íntegro.""",estilo)),
+        
+        ListItem(Paragraph("""En el caso de devolución de recibo bancario, 
+        el alumno abonará en caja el importe relativo a su curso más los 
+        gastos que se hayan producido. No se admitirán devoluciones de 
+        recibos una vez pasada una semana.""",estilo)),
+        
+        ListItem(Paragraph("""Tanto el equipamiento como el material 
+        pedagógico de uso general de los alumnos es propiedad de EIDE, 
+        y no deben, en ningún caso, ser retirados del centro.""",estilo)),
+        
+        ListItem(Paragraph("""La vigencia de la matrícula será para el 
+        curso escolar contratado.""",estilo)),
+        
+        ListItem(Paragraph("""La matrícula quedará renovada si el alumno 
+        entrega en Secretaría el documento de “renovación de matrícula” 
+        que se distribuye en el mes de Mayo de cada año, siendo el coste 
+        del curso el establecido en el listado de precios que corresponda 
+        al nuevo curso escolar.""",estilo)),
+        ])
+        story.append(normas)
+        ##Para firmar
+        tabla =[['Conforme del Alumno','EIDE - Departamento de Idiomas'],['','']]
+        
+        t = Table(tabla)
+        #t.setStyle([('FONTSIZE',(0,0),(-1,-1),8),('FONTSIZE',(-1,0),(-1,-1),6),('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green)])
+        #t.setStyle([('LINEABOVE', (0,0), (-1,0), 2, colors.black),('LINEBEFORE', (0,0), (0,-1), 2, colors.black),('LINEABOVE', (0,1), (-1,-1), 0.25, colors.black),('LINEAFTER', (0,0), (-1,-1), 0.25, colors.black),('LINEBELOW', (0,-1), (-1,-1), 2, colors.black),('LINEAFTER', (-1,0), (-1,-1), 2, colors.black),('ALIGN', (1,1), (-1,-1), 'RIGHT')])
+        story.append(t)
+        story.append(Spacer(0,20))
+        ##Pie de página
+        pie = """Conforme a la L.O. 15/1999 de Protección de datos de carácter personal y su R.D. 1720/2007, los datos recabados serán incluidos en un fichero denominado clientes, inscrito en la Agencia de Protección de Datos, siendo su Responsable la empresa ESCUELAS INTERNACIONALES  PARA LA EDUCACION Y EL DESARROLLO EIDE , S.L. La finalidad de la obtención de los datos citados será exclusivamente la gestión de las actuaciones necesarias para la relación contractual. Vd., como titular de los datos, autoriza y consiente la inclusión de los mismos en el citado fichero. 
+Los derechos de acceso, rectificación, cancelación y oposición serán ejercitables de manera gratuita dirigiéndose a ESCUELAS INTERNACIONALES  PARA LA EDUCACION Y EL DESARROLLO EIDE , S.L., con dirección: C/ Genaro Oraa nº6, C.P. 48980, Santurtzi, Bizkaia, indicando en la comunicación decisión referida a los derechos anteriormente mencionados.
+"""
+        story.append(Paragraph(pie, estiloHoja['pie']))
+        cadena="<para alignment=center><b>Genaro Oraá,6 - 48980 SANTURTZI (Spain)- Tlf. + 34 944 937 005 - FAX +34 944 615 723</b></para>"
+        story.append(Paragraph(cadena, estilo))
+        cadena="<para alignment=center><b><a href=\"http:\\www.eide.es\">www.eide.es</a> - e-mail: eide@eide.es</b></para>"
+        story.append(Paragraph(cadena, estilo))
+        story.append(Spacer(0,20))
+        doc=SimpleDocTemplate(fichero,pagesize=A4)
+        doc.build(story)
+        ##Lo mandamos a imprimir
+        send_to_printer(fichero)
+        return
 
     def cargar(self,id):
         if id == -1:
