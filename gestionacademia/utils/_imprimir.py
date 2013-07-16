@@ -83,7 +83,7 @@ def get_print_path(modulo):
 def send_to_printer(fichero):
     #logging.debug("Vamos a mandar a la impresora %s"%fichero)
     logging.debug("No lo mandamos a la impresora %s"%fichero)
-    #os.system("lpr %s"%fichero)
+    os.system("lpr %s"%fichero)
 def myFirstPage(canvas, doc):
     canvas.saveState()
 

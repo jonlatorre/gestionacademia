@@ -134,7 +134,6 @@ class AlumnoModel (Model):
         debug("Hemos listado %s alumnos"%count)
         return
 
-
     def crear_pag_etiquetas(self,c,lista):
         sep_ancho = 110
         sep_alto = 37
@@ -322,42 +321,23 @@ class AlumnoModel (Model):
         ##story.append(img)
         ##Intro
         estilo = estiloHoja['BodyText']
-        story.append(Spacer(0,30))
-        cadena = "<para alignment=center><b>Escuelas Internacioles Para la Educacióin y el Desarrollo EIDE</b></para>"
-        story.append(Paragraph(cadena, estiloHoja['Heading2']))
+        story.append(Spacer(0,10))
+        cadena = "Escuelas Internacinales Para la Educación y el Desarrollo"
+        story.append(Paragraph(cadena, estiloHoja['Heading1']))
         cadena = "<para alignment=center>Departamentos de Idiomas</para>"
-        story.append(Paragraph(cadena, estiloHoja['Heading3']))
+        story.append(Paragraph(cadena, estiloHoja['Heading2']))
         story.append(Spacer(0,20))
         
         ##Datos del alumno
-        #cadena = "Nombre del alumno: <b>%s</b> Apellidos:<b> %s %s</b>"%(self.nombre,self.apellido1,self.apellido2)
-        #story.append(Paragraph(cadena, estilo))
-        #cadena = "Fecha nacimiento: <b>%s</b> Telefonos: <b> %s - %s </b>"%(self.fecha_nacimiento,self.telefono1,self.telefono2)
-        #story.append(Paragraph(cadena, estilo))
-        #cadena = "Domicilio: %s"%self.direccion
-        #story.append(Paragraph(cadena, estilo))
-        #cadena = "Poblacion: <b>%s</b> CP: <b> %s </b> DNI: <b> %s </b>"%(self.ciudad ,self.cp ,self.dni)
-        #story.append(Paragraph(cadena, estilo))
-        if self.observaciones == None:
-            texto = "_____________________________"
-        else:
-            texto = self.observaciones
-        #Comprobamos si el email es correcto, es una compracion minima
-        email = self.email
-        if len(email) < 4:
-            email = "                            "
-        #cadena = "Como nos conocio: <b>%s</b> email: <b> %s </b>"%(texto ,email)
-        #story.append(Paragraph(cadena, estilo))
-        #story.append(Spacer(0,10))
         
         tabla =[['Nombre',self.nombre,"Apellidos","%s %s"%(self.apellido1,self.apellido2)]]
         tabla.append(['fecha nacimiento',self.fecha_nacimiento,'Telefonos',"%s - %s"%(self.telefono1,self.telefono2)])
         tabla.append(["Domicilio:",self.direccion])
         tabla.append(["Poblacion:",self.ciudad,"CP:",self.cp,"DNI:",self.dni])
-        tabla.append(["Como nos conocio:",texto, "email:",email])
+        tabla.append(["Como nos conocio:",self.observaciones, "email:",self.email])
         t = Table(tabla)
         story.append(t)
-        story.append(Spacer(0,10))
+        story.append(Spacer(0,15))
         
         ##Normas
         cadena = "<para alignment=center>NORMAS DEL CENTRO</para>"
@@ -417,22 +397,21 @@ class AlumnoModel (Model):
         tabla =[['Conforme del Alumno','EIDE - Departamento de Idiomas'],['','']]
         
         t = Table(tabla)
-        #t.setStyle([('FONTSIZE',(0,0),(-1,-1),8),('FONTSIZE',(-1,0),(-1,-1),6),('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green)])
-        #t.setStyle([('LINEABOVE', (0,0), (-1,0), 2, colors.black),('LINEBEFORE', (0,0), (0,-1), 2, colors.black),('LINEABOVE', (0,1), (-1,-1), 0.25, colors.black),('LINEAFTER', (0,0), (-1,-1), 0.25, colors.black),('LINEBELOW', (0,-1), (-1,-1), 2, colors.black),('LINEAFTER', (-1,0), (-1,-1), 2, colors.black),('ALIGN', (1,1), (-1,-1), 'RIGHT')])
+        
         story.append(t)
-        story.append(Spacer(0,20))
-        ##Pie de página
-        pie = """Conforme a la L.O. 15/1999 de Protección de datos de carácter personal y su R.D. 1720/2007, los datos recabados serán incluidos en un fichero denominado clientes, inscrito en la Agencia de Protección de Datos, siendo su Responsable la empresa ESCUELAS INTERNACIONALES  PARA LA EDUCACION Y EL DESARROLLO EIDE , S.L. La finalidad de la obtención de los datos citados será exclusivamente la gestión de las actuaciones necesarias para la relación contractual. Vd., como titular de los datos, autoriza y consiente la inclusión de los mismos en el citado fichero. 
+        story.append(Spacer(0,40))
+        ##LOPD Pie de página
+        lopd = """Conforme a la L.O. 15/1999 de Protección de datos de carácter personal y su R.D. 1720/2007, los datos recabados serán incluidos en un fichero denominado clientes, inscrito en la Agencia de Protección de Datos, siendo su Responsable la empresa ESCUELAS INTERNACIONALES  PARA LA EDUCACION Y EL DESARROLLO EIDE , S.L. La finalidad de la obtención de los datos citados será exclusivamente la gestión de las actuaciones necesarias para la relación contractual. Vd., como titular de los datos, autoriza y consiente la inclusión de los mismos en el citado fichero. 
 Los derechos de acceso, rectificación, cancelación y oposición serán ejercitables de manera gratuita dirigiéndose a ESCUELAS INTERNACIONALES  PARA LA EDUCACION Y EL DESARROLLO EIDE , S.L., con dirección: C/ Genaro Oraa nº6, C.P. 48980, Santurtzi, Bizkaia, indicando en la comunicación decisión referida a los derechos anteriormente mencionados.
 """
-        story.append(Paragraph(pie, estiloHoja['pie']))
+        story.append(Paragraph(lopd, estiloHoja['pie']))
         cadena="<para alignment=center><b>Genaro Oraá,6 - 48980 SANTURTZI (Spain)- Tlf. + 34 944 937 005 - FAX +34 944 615 723</b></para>"
         story.append(Paragraph(cadena, estilo))
         cadena="<para alignment=center><b><a href=\"http:\\www.eide.es\">www.eide.es</a> - e-mail: eide@eide.es</b></para>"
         story.append(Paragraph(cadena, estilo))
-        story.append(Spacer(0,20))
+
         doc=SimpleDocTemplate(fichero,pagesize=A4)
-        doc.build(story)
+        doc.build(story) 
         ##Lo mandamos a imprimir
         send_to_printer(fichero)
         return
