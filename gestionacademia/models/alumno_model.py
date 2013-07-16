@@ -320,10 +320,18 @@ class AlumnoModel (Model):
         ##img=Image(banner)
         ##story.append(img)
         ##Intro
+        cadena = "<para alignment=right> Numero Alumno: <b>%s</b> </para>"%self.id
+        story.append(Paragraph(cadena,estiloHoja['Normal']))
         estilo = estiloHoja['BodyText']
+<<<<<<< HEAD
         story.append(Spacer(0,10))
         cadena = "Escuelas Internacinales Para la Educación y el Desarrollo"
         story.append(Paragraph(cadena, estiloHoja['Heading1']))
+=======
+        #story.append(Spacer(0,30))
+        cadena = "<para alignment=center><b>Escuelas Internacioles Para la Educacióin y el Desarrollo EIDE</b></para>"
+        story.append(Paragraph(cadena, estiloHoja['Heading2']))
+>>>>>>> 304a906d3b0781560233ded4733ec9a64ae5ee01
         cadena = "<para alignment=center>Departamentos de Idiomas</para>"
         story.append(Paragraph(cadena, estiloHoja['Heading2']))
         story.append(Spacer(0,20))
