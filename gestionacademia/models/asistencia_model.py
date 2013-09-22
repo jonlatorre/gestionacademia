@@ -214,6 +214,7 @@ class AsistenciaModel(Model):
                 asistencias.append(a)
         ##Si hay lista solo las asistencias de los grupos listados
         else:
+            debug("Vamos a facturar a grupos sueltos: %s"%lista)
             for grupo in lista:
                 for a in Asistencia.select(AND(Asistencia.q.confirmado==True,Asistencia.q.metalico==False,Asistencia.q.factura==False,Asistencia.q.grupoID==grupo)):
                     asistencias.append(a)
@@ -221,18 +222,20 @@ class AsistenciaModel(Model):
         listado_alumnos_problemas = []
         ##Convertimos las asistecias en cargos
         for a in asistencias:
-            #debug("generando el cargo al alumno %s"%a.alumno.id)
+            debug("generando el cargo al alumno %s"%a.alumno.id)
             ##Si no tiene precio especial, cogemos el del curso/nivel
             if a.precio=="" or a.precio==None:
                 ##Algunos cursos tiene el precio a 0 (porque se les cobra por trimestre o por lo que sea
                 #debug("No tiene descuento")
                 if a.grupo.curso.precio == 0:
-                    ##Saltamos al siguiente, no generamos cargo si el precio es 0
+                    debug("Saltamos al siguiente, no generamos cargo si el precio del grupo es 0")
                     continue
                 else:
+                    debug("Paga el precio normal %s"%a.grupo.curso.precio)
                     precio = a.grupo.curso.precio
             else:
                 ##Cogemos el precio especial
+                debug("Tiene descuento y paga %s"%a.precio)
                 precio = a.precio
             #print "Comprobamos si es medio mes",medio
             if medio:
@@ -252,11 +255,23 @@ class AsistenciaModel(Model):
         debug("Cargos Ok")
         return cargos
 
-    def lista_facturar(self,medio=False):
+    def lista_facturar(self,medio=False,lista=[]):
         """Generamos el listado de cargos a cobrar con factura"""
+        asistencias = []
         cargos = []
+        #Si la lista dde grupos está vacia listamos todos
+        if len(lista)==0:
+            debug("No tenemos una lista así que buscamos todas las asistencias que necesitan factura")
+            for a in Asistencia.select(AND(Asistencia.q.confirmado==True,Asistencia.q.metalico==False,Asistencia.q.factura==True)):
+                asistencias.append(a)
+        ##Si hay lista solo las asistencias de los grupos listados
+        else:
+            debug("Vamos a facturar a grupos sueltos: %s"%lista)
+            for grupo in lista:
+                for a in Asistencia.select(AND(Asistencia.q.confirmado==True,Asistencia.q.metalico==False,Asistencia.q.factura==True,Asistencia.q.grupoID==grupo)):
+                    asistencias.append(a)
         ##Convertimos las asistecias en cargos
-        for a in Asistencia.select(AND(Asistencia.q.confirmado==True,Asistencia.q.factura==True)):
+        for a in asistencias:
             ##Si no tiene precio especial, cogemos el del curso/nivel
             if a.precio=="" or a.precio==None:
                 precio = a.grupo.curso.precio
@@ -266,10 +281,22 @@ class AsistenciaModel(Model):
                 precio = precio / 2
             cargos.append(("%s, %s %s"%(a.alumno.nombre,a.alumno.apellido1,a.alumno.apellido2),precio))
         return cargos
-    def lista_metalico(self,medio=False):
+    def lista_metalico(self,medio=False,lista=[]):
         """Generamos el listado de cargos a cobrar en metalico"""
         cargos = []
-        for a in Asistencia.select(AND(Asistencia.q.confirmado==True,Asistencia.q.metalico==True)):
+        asistencias = []
+        #Si la lista dde grupos está vacia listamos todos
+        if len(lista)==0:
+            debug("No tenemos una lista así que buscamos todas las asistencias que necesitan factura")
+            for a in Asistencia.select(AND(Asistencia.q.confirmado==True,Asistencia.q.metalico==True,Asistencia.q.factura==False)):
+                asistencias.append(a)
+        ##Si hay lista solo las asistencias de los grupos listados
+        else:
+            debug("Vamos a facturar a grupos sueltos: %s"%lista)
+            for grupo in lista:
+                for a in Asistencia.select(AND(Asistencia.q.confirmado==True,Asistencia.q.metalico==True,Asistencia.q.factura==False,Asistencia.q.grupoID==grupo)):
+                    asistencias.append(a)
+        for a in asistencias:
             ##Si no tiene precio especial, cogemos el del curso/nivel
             if a.precio=="" or a.precio==None:
                 precio = a.grupo.curso.precio

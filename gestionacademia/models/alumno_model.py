@@ -615,6 +615,7 @@ Los derechos de acceso, rectificación, cancelación y oposición serán ejercit
             query = Alumno.select(Alumno.q.activo==True)
         for a in query:
             try:
+                debug("Vamos a añadir al alumno %s - %s,%s"%(a.id,a.nombre,a.apellido1))
                 if not a.grupos[0].metalico and not a.grupos[0].factura:
                     #debug("Intentando comprobar la cuenta del alumno %s"%a.id)
                     if a.sucursal == 0:

@@ -80,6 +80,7 @@ class GestionacademiaModel (Model):
     def facturar(self,lista=[],medio=False):
         ## "Buscamos las asistencia confirmadas, que no paguen en etalico ni necesiten factura"
         ##Pasamos los cobros...
+        #debug("Somos gestionacademia_model.facturar Tenemos la lista %s"%lista)
         self.facturacion.nif = self.preferences.NIF
         for variable in ['banco','oficina','dc','cuenta']:
             setattr(self.facturacion,variable,getattr(self.preferences,variable))
@@ -102,8 +103,8 @@ class GestionacademiaModel (Model):
         self.facturacion.crear_fichero_19(fichero)
         debug("llamamos a la generacion de los listados")
         texto+= self.facturacion.listado_bancos()
-        texto+= self.facturacion.listado_metalico(self.asistencia.lista_metalico(medio))
-        texto+= self.facturacion.listado_facturar(self.asistencia.lista_facturar(medio))
+        texto+= self.facturacion.listado_metalico(self.asistencia.lista_metalico(medio,lista))
+        texto+= self.facturacion.listado_facturar(self.asistencia.lista_facturar(medio,lista))
         error = False
         return texto,error
     def limpiar_curso(self):
