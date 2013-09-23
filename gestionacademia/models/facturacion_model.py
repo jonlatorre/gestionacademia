@@ -213,14 +213,19 @@ class FacturacionModel (Model):
             self.crear_individual(cobro)
         #Y para terminar los Totales
         self.crear_totales()
-        logging.debug("Contenido creado, Escribiendo fichero %s"%fichero)
-        #Primero borramos el ficheros
+        
+        logging.debug("Primero borramos el ficheros")
         try:
             os.unlink(fichero)
-        except:
+            logging.debug("Borrado")
+        except e:
             #Es posible que no exista, asi que pasamo
+            logging.debug("Parece que no está")
+            logging.debug(e)
             pass
+        logging.debug("Abrimos el fichero")
         f = open(fichero,'w')
+        logging.debug("Contenido creado, Escribiendo fichero %s"%fichero)
         f.write(self.contenido)
         f.close()
         ##imprimimos las lista completa
