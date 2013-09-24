@@ -65,7 +65,7 @@ class GrupoModel (Model):
 
     def rellenar_lista(self):
         self.lista.clear()
-        for grupo in Grupo.select(orderBy='nombre'):
+        for grupo in Grupo.select(orderBy=Grupo.q.nombre):
             ##Primero sacamos la lista de alumnos para calcular los confirmados, sin confirmar y edades...
             confirmados=0
             sinconfirmar=0
