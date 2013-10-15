@@ -228,6 +228,8 @@ class FacturacionModel (Model):
         logging.debug("Contenido creado, Escribiendo fichero %s"%fichero)
         f.write(self.contenido)
         f.close()
+        #Vaciamos el buffer del fichero
+        self.contenido = ""
         ##imprimimos las lista completa
         ##FIXME
         texto = "Se han creado %s recibos que suman un importe total de %s €"%(self.numero_recibos,self.importe_recibos)
