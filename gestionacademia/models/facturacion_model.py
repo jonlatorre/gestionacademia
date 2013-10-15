@@ -218,9 +218,9 @@ class FacturacionModel (Model):
         try:
             os.unlink(fichero)
             logging.debug("Borrado")
-        except e:
+        except Exception as e:
             #Es posible que no exista, asi que pasamo
-            logging.debug("Parece que no está")
+            logging.debug("Problema al borrar")
             logging.debug(e)
             pass
         logging.debug("Abrimos el fichero")
