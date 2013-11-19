@@ -254,7 +254,7 @@ class AlumnoModel (Model):
         story.append(Paragraph(cadena, estilo))
         story.append(Spacer(0,10))
 
-        tabla =[['ID','Apellidos ','Nombre','Año','Curso','Notal Final','Faltas','Justificadas']]
+        tabla =[['Apellidos ','Nombre','Curso','Notal Final','Faltas','Justificadas']]
         if todos:
             consulta = Alumno.select(orderBy=Alumno.q.apellido1)
         else:
@@ -263,20 +263,22 @@ class AlumnoModel (Model):
             print "Estamos con la persona %s (%s) "%(persona.nombre,persona.id)
             nota_final = "----"
             asis = persona.grupos[0]
-            #print "La asistencia es:",asis.id
+            print "La asistencia es:",asis.id
             try:
                 grupo = asis.grupo.nombre
             except:
                 grupo = "-----"
-            print "El grupo es %s"%grupo
-            notas = Nota.select(Nota.q.asistencia==asis)
+            #print "El grupo es %s"%grupo
+            notas = Nota.select(Nota.q.asistenciaID==asis.id)
             for nota in notas:
+                print "El trimestre %s"%nota.trimestre
                 if nota.trimestre==3:
                     #print "Estamos con la nota", nota.id
-                    print nota
+                    #print nota
                     ### Buscamos la nota de grama, si es 0 cojemos el control3 si es 999 (no presentado ponemos un NP)
                     if nota.grama == 0:
-                        nota_final = "%s / %s"%(nota.control3,nota.control3_baremo)
+                        #nota_final = "%s / %s"%(nota.control3,nota.control3_baremo)
+                        nota_final = "NP"
                     elif nota.grama == 999:
                         nota_final = "NP"
                     else:
@@ -295,7 +297,7 @@ class AlumnoModel (Model):
                 apellidos = persona.apellido1+" "+persona.apellido2
             except:
                 apellidos = persona.apellido1
-            tabla.append([persona.id,apellidos,persona.nombre,"2012",grupo,nota_final,total_faltas,total_faltas_j])
+            tabla.append([apellidos,persona.nombre,grupo,nota_final,total_faltas,total_faltas_j])
         t = Table(tabla)
         t.setStyle([('FONTSIZE',(0,0),(-1,-1),8),('FONTSIZE',(-1,0),(-1,-1),6),('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green)])
         t.setStyle([('LINEABOVE', (0,0), (-1,0), 2, colors.black),('LINEBEFORE', (0,0), (0,-1), 2, colors.black),('LINEABOVE', (0,1), (-1,-1), 0.25, colors.black),('LINEAFTER', (0,0), (-1,-1), 0.25, colors.black),('LINEBELOW', (0,-1), (-1,-1), 2, colors.black),('LINEAFTER', (-1,0), (-1,-1), 2, colors.black),('ALIGN', (1,1), (-1,-1), 'RIGHT')])
