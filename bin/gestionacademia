@@ -31,8 +31,8 @@ if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'gestionacademia'))
 
 def notificar_fallo(exc_type, exc_value, exc_traceback):
     from gestionacademia.utils._global import mostrar_aviso, pedir_confirmacion, enviar_informe_fallo
-    log.critical('UNCAUGHT EXCEPTION %r: %s' % (exc_type, traceback.format_tb(exc_traceback)))
-    print traceback.format_tb(exc_traceback)
+    log.critical('UNCAUGHT EXCEPTION %r: %s %s' % (exc_type, traceback.format_tb(exc_traceback),exc_value))
+    print traceback.format_tb(exc_traceback), exc_value
     if pedir_confirmacion("Ha ocurrido un error. ¿Quiere notificarlo al desarrollador?","Fallo"):
         enviar_informe_fallo()
         

@@ -247,6 +247,8 @@ class GestionacademiaCtrl (Controller):
 
     def on_imp_lista_alumnos(self,widget):
         self.model.alumno.imprimir_lista()
+    def on_imp_lista_notas_asistencias(self,widget):
+        self.model.alumno.imprimir_lista_notas_asistencia()
 
     def _on_menu_preferences_clicked(self, button):
         v = PreferencesView(self.view) # pass GestionacademiaView as the parent

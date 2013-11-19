@@ -241,7 +241,7 @@ class AlumnoModel (Model):
     def imprimir_lista_notas_asistencia(self,todos=False):
         """Pensado para una vez terminado el curso sacar un listado alfabetico 
         con las notas finales y el totald e faltas"""
-        fichero = get_print_path('Alumnos')+"/Listado_Alumnos_Notas_Asistenacia.pdf"
+        fichero = get_print_path('Alumnos')+"/Listado_Alumnos_Notas_Asistencia.pdf"
         estiloHoja = getSampleStyleSheet()
         story = []
         ##Vamos con la cabecera
@@ -254,15 +254,21 @@ class AlumnoModel (Model):
         story.append(Paragraph(cadena, estilo))
         story.append(Spacer(0,10))
 
-        tabla =[['ID','Apellido1','Apellido2','Nombre','Notal Final','Faltas','Justificadas']]
+        tabla =[['ID','Apellidos ','Nombre','Año','Curso','Notal Final','Faltas','Justificadas']]
         if todos:
             consulta = Alumno.select(orderBy=Alumno.q.apellido1)
         else:
             consulta = Alumno.select(Alumno.q.activo==True,orderBy=Alumno.q.apellido1)
         for persona in consulta:
             print "Estamos con la persona %s (%s) "%(persona.nombre,persona.id)
+            nota_final = "----"
             asis = persona.grupos[0]
             #print "La asistencia es:",asis.id
+            try:
+                grupo = asis.grupo.nombre
+            except:
+                grupo = "-----"
+            print "El grupo es %s"%grupo
             notas = Nota.select(Nota.q.asistencia==asis)
             for nota in notas:
                 if nota.trimestre==3:
@@ -284,8 +290,12 @@ class AlumnoModel (Model):
             #    print "Uo :( algún error"
             #    nota_final = "--"
             #    faltas = "--"
-            tabla.append([persona.id,persona.apellido1,persona.apellido2,persona.nombre,\
-                nota_final,total_faltas,total_faltas_j])
+            ##Para los que solo tienen un apellido:
+            try:
+                apellidos = persona.apellido1+" "+persona.apellido2
+            except:
+                apellidos = persona.apellido1
+            tabla.append([persona.id,apellidos,persona.nombre,"2012",grupo,nota_final,total_faltas,total_faltas_j])
         t = Table(tabla)
         t.setStyle([('FONTSIZE',(0,0),(-1,-1),8),('FONTSIZE',(-1,0),(-1,-1),6),('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green)])
         t.setStyle([('LINEABOVE', (0,0), (-1,0), 2, colors.black),('LINEBEFORE', (0,0), (0,-1), 2, colors.black),('LINEABOVE', (0,1), (-1,-1), 0.25, colors.black),('LINEAFTER', (0,0), (-1,-1), 0.25, colors.black),('LINEBELOW', (0,-1), (-1,-1), 2, colors.black),('LINEAFTER', (-1,0), (-1,-1), 2, colors.black),('ALIGN', (1,1), (-1,-1), 'RIGHT')])

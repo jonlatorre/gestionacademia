@@ -285,6 +285,15 @@
                               </object>
                             </child>
                             <child>
+                              <object class="GtkMenuItem" id="imp_lista_notas_asistencias">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="use_action_appearance">False</property>
+                                <property name="label" translatable="yes">Imprimir Listado completo de notas finales y faltas</property>
+                                <signal name="activate" handler="on_imp_lista_notas_asistencias" swapped="no"/>
+                              </object>
+                            </child>
+                            <child>
                               <object class="GtkMenuItem" id="etiquetas">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
@@ -605,7 +614,6 @@
                                   <object class="GtkMenu" id="menu9">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="ubuntu_local">True</property>
                                     <child>
                                       <object class="GtkMenuItem" id="imp_lista_asis_1">
                                         <property name="visible">True</property>
@@ -1133,8 +1141,8 @@
                             <property name="label" translatable="yes">Grupo</property>
                           </object>
                           <packing>
-                            <property name="x_options"></property>
-                            <property name="y_options"></property>
+                            <property name="x_options"/>
+                            <property name="y_options"/>
                           </packing>
                         </child>
                         <child>
@@ -1235,7 +1243,7 @@
                             <property name="label" translatable="yes">Faltas</property>
                           </object>
                           <packing>
-                            <property name="x_options"></property>
+                            <property name="x_options"/>
                           </packing>
                         </child>
                         <child>
@@ -1247,7 +1255,7 @@
                           <packing>
                             <property name="top_attach">1</property>
                             <property name="bottom_attach">2</property>
-                            <property name="x_options"></property>
+                            <property name="x_options"/>
                           </packing>
                         </child>
                         <child>
@@ -1282,8 +1290,8 @@
                             <property name="right_attach">2</property>
                             <property name="top_attach">2</property>
                             <property name="bottom_attach">3</property>
-                            <property name="x_options"></property>
-                            <property name="y_options"></property>
+                            <property name="x_options"/>
+                            <property name="y_options"/>
                           </packing>
                         </child>
                         <child>
@@ -1575,8 +1583,8 @@
                           <packing>
                             <property name="left_attach">1</property>
                             <property name="right_attach">2</property>
-                            <property name="x_options"></property>
-                            <property name="y_options"></property>
+                            <property name="x_options"/>
+                            <property name="y_options"/>
                           </packing>
                         </child>
                         <child>
@@ -1588,8 +1596,8 @@
                           <packing>
                             <property name="left_attach">2</property>
                             <property name="right_attach">3</property>
-                            <property name="x_options"></property>
-                            <property name="y_options"></property>
+                            <property name="x_options"/>
+                            <property name="y_options"/>
                           </packing>
                         </child>
                         <child>
@@ -1879,8 +1887,8 @@ y expresión escrita</property>
                             <property name="right_attach">3</property>
                             <property name="top_attach">8</property>
                             <property name="bottom_attach">9</property>
-                            <property name="x_options"></property>
-                            <property name="y_options"></property>
+                            <property name="x_options"/>
+                            <property name="y_options"/>
                           </packing>
                         </child>
                         <child>
