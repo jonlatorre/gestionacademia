@@ -306,7 +306,7 @@ class GrupoModel (Model):
         story.append(Spacer(0,40))
         ##Intro
         estilo = estiloHoja['BodyText']
-        cadena = "<para alignment=center><b>RELACION DE ALUMNOS POR GRUPO PARA CALIFICIONES</b></para>"
+        cadena = "<para alignment=center><b>RELACION DE ALUMNOS POR GRUPO PARA CALIFICACIONES</b></para>"
         story.append(Paragraph(cadena, estilo))
         story.append(Spacer(0,10))
         ##Datos del docu: alumno, grupo, profes
