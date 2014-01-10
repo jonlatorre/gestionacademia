@@ -19,6 +19,7 @@ from sqlobject import *
 from sqlobject.inheritance import InheritableSQLObject
 
 import new
+import csv
 
 # Local library imports
 from database_model import Alumno, Banco, Asistencia, Nota, Falta
@@ -633,5 +634,15 @@ Los derechos de acceso, rectificación, cancelación y oposición serán ejercit
                 pendientes.append([a.id,"Otro error"])
         debug(pendientes)
         return pendientes
+    
+    def exportar_estadisticas_csv(self):
+		with open(get_print_path('Alumnos/')+'lista_usuarios.csv', 'w+') as csvfile:
+			csvwriter = csv.writer(csvfile, delimiter=',', quotechar='E', quoting=csv.QUOTE_MINIMAL)
+			for alumno in Alumno.select(Alumno.q.activo==True):
+				fila = ["%d"%alumno.id,"%s"%alumno.fecha_nacimiento,"%s"%alumno.fecha_creacion,\
+					"%s"%alumno.grupos[0].grupo.nombre.lower(),"%s"%alumno.grupos[0].grupo.curso.nombre.lower()]
+				print fila
+				csvwriter.writerow(fila)
+			csvfile.close()
     pass # End of class
 
