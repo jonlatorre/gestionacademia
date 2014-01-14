@@ -338,11 +338,9 @@ class AlumnoModel (Model):
         estilo = estiloHoja['BodyText']
 
         #story.append(Spacer(0,30))
-        cadena = "<para alignment=center><b>Escuelas Internacioles Para la Educacióin y el Desarrollo EIDE</b></para>"
+        cadena = "<para alignment=center><b>Escuelas EIDE S.L. : Departamentos de Idiomas</b></para>"
         story.append(Paragraph(cadena, estiloHoja['Heading2']))
-        cadena = "<para alignment=center>Departamentos de Idiomas</para>"
-        story.append(Paragraph(cadena, estiloHoja['Heading2']))
-        story.append(Spacer(0,20))
+        story.append(Spacer(0,10))
         
         ##Datos del alumno
         
@@ -353,7 +351,15 @@ class AlumnoModel (Model):
         tabla.append(["Como nos conocio:",self.observaciones, "email:",self.email])
         t = Table(tabla)
         story.append(t)
-        story.append(Spacer(0,15))
+        story.append(Spacer(0,5))
+        tablabajas =[['Fecha Renovación Curso 20__/__','Fecha Renovación Curso 20__/__','Fecha de baja']]
+        tablabajas.append(['______________________________','______________________________','_____________'])
+        tablabajas.append(['______________________________','______________________________','_____________'])
+        tablabajas.append(['______________________________','______________________________','_____________'])
+        tablabajas.append(['______________________________','______________________________','_____________'])
+        tbajas = Table(tablabajas)
+        story.append(tbajas)
+        ##story.append(Spacer(0,5))
         
         ##Normas
         cadena = "<para alignment=center>NORMAS DEL CENTRO</para>"
@@ -415,7 +421,7 @@ class AlumnoModel (Model):
         t = Table(tabla)
         
         story.append(t)
-        story.append(Spacer(0,40))
+        story.append(Spacer(0,35))
         ##LOPD Pie de página
         lopd = """Conforme a la L.O. 15/1999 de Protección de datos de carácter personal y su R.D. 1720/2007, los datos recabados serán incluidos en un fichero denominado clientes, inscrito en la Agencia de Protección de Datos, siendo su Responsable la empresa ESCUELAS INTERNACIONALES  PARA LA EDUCACION Y EL DESARROLLO EIDE , S.L. La finalidad de la obtención de los datos citados será exclusivamente la gestión de las actuaciones necesarias para la relación contractual. Vd., como titular de los datos, autoriza y consiente la inclusión de los mismos en el citado fichero. 
 Los derechos de acceso, rectificación, cancelación y oposición serán ejercitables de manera gratuita dirigiéndose a ESCUELAS INTERNACIONALES  PARA LA EDUCACION Y EL DESARROLLO EIDE , S.L., con dirección: C/ Genaro Oraa nº6, C.P. 48980, Santurtzi, Bizkaia, indicando en la comunicación decisión referida a los derechos anteriormente mencionados.
