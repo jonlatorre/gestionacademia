@@ -22,10 +22,11 @@ import new
 import csv
 
 # Local library imports
-from database_model import Alumno, Banco, Asistencia, Nota, Falta
+from database_model import Alumno, Banco, Asistencia, Nota, Falta, Historia
 from gestionacademia.utils import _config
 from gestionacademia.utils._global import *
 from gestionacademia.models.banco_model import BancoModel
+
 #Para generación de PDF
 from gestionacademia.utils._imprimir import *
 #Para etiquetas
@@ -82,6 +83,7 @@ class AlumnoModel (Model):
     alum_filtro_nomb = str("")
     alum_filtro_ape1 = str("")
     alum_filtro_ape2 = str("")
+    
     _lista_variables=['activo','nombre','apellido1','apellido2','telefono1','telefono2','email','dni','fecha_nacimiento','fecha_creacion','direccion','ciudad','provincia','cp','bancoID','banco_codigo','sucursal','dc','cuenta','observaciones']
     def __init__(self):
 
@@ -523,10 +525,28 @@ Los derechos de acceso, rectificación, cancelación y oposición serán ejercit
                     provincia=self.provincia,sucursal=self.sucursal,cuenta=self.cuenta,\
                     fecha_nacimiento=datetime.datetime.strptime(self.fecha_nacimiento, self.time_format),observaciones="")
                 self.id = self.a.id
+                debug("Guardando en el historico la creacion")
+                h = Historia(alumno=self.a,tipo="creacion")
             except:
                 print "Unexpected error:", sys.exc_info()[0],sys.exc_info()[1]
                 return -1
         else:
+            if self.activo == False:
+                debug("El alumno está de baja")
+                if self.a.activo == True: ## Si antes estaba dado de alta lo damos de baja
+                    ## Creamo un evento en el historial
+                    debug("Guardando en el historico la baja")
+                    h = Historia(alumno=self.a,tipo="baja")
+                    debug("Eliminado el alumno de los grupos")
+                    for asis in self.a.grupos:
+                        #~ print asis.grupo.nombre, asis.alumno.id
+                        asis.destroySelf()
+            else:
+                print "El alumno está de alta"
+                if self.a.activo == False: ## Si antes estaba dado de baja lo damos de alta
+                    ## Creamo un evento en el historial
+                    h = Historia(alumno=self.a,tipo="alta")
+                    print "Dando de alta el alumno otra vez"
             for variable in self._lista_variables:
                 if (variable == 'fecha_nacimiento'):
                     fecha = self.fecha_nacimiento
@@ -542,13 +562,8 @@ Los derechos de acceso, rectificación, cancelación y oposición serán ejercit
                         pass
                 else:
                     setattr(self.a,variable,getattr(self,variable))
-                if self.activo == False:
-                    print "Eliminado el alumno de los grupos"
-                    for asis in self.a.grupos:
-                        #~ print asis.grupo.nombre, asis.alumno.id
-                        asis.destroySelf()
+                
             ##Regeneramos la lista
-
         self.rellenar_lista()
     def validar(self):
         """Función que valida los campos obligatorios antes de guardar"""
@@ -592,6 +607,8 @@ Los derechos de acceso, rectificación, cancelación y oposición serán ejercit
             ##FIXME
             ## impirmir horario
             asistencia.confirmado = True
+            debug("Guardando en el historico la confirmacion")
+            h = Historia(alumno=self.a,tipo="confirmacion",anotacion="Al grupo %s"%asistencia.grupo.nombre)
         else:
             asistencia.confirmado = False
         self.refrescar_lista_grupos()
@@ -642,13 +659,13 @@ Los derechos de acceso, rectificación, cancelación y oposición serán ejercit
         return pendientes
     
     def exportar_estadisticas_csv(self):
-		with open(get_print_path('Alumnos/')+'lista_usuarios.csv', 'w+') as csvfile:
-			csvwriter = csv.writer(csvfile, delimiter=',', quotechar='E', quoting=csv.QUOTE_MINIMAL)
-			for alumno in Alumno.select(Alumno.q.activo==True):
-				fila = ["%d"%alumno.id,"%s"%alumno.fecha_nacimiento,"%s"%alumno.fecha_creacion,\
-					"%s"%alumno.grupos[0].grupo.nombre.lower(),"%s"%alumno.grupos[0].grupo.curso.nombre.lower()]
-				print fila
-				csvwriter.writerow(fila)
-			csvfile.close()
+        with open(get_print_path('Alumnos/')+'lista_usuarios.csv', 'w+') as csvfile:
+            csvwriter = csv.writer(csvfile, delimiter=',', quotechar='E', quoting=csv.QUOTE_MINIMAL)
+            for alumno in Alumno.select(Alumno.q.activo==True):
+                fila = ["%d"%alumno.id,"%s"%alumno.fecha_nacimiento,"%s"%alumno.fecha_creacion,\
+                    "%s"%alumno.grupos[0].grupo.nombre.lower(),"%s"%alumno.grupos[0].grupo.curso.nombre.lower()]
+                print fila
+                csvwriter.writerow(fila)
+            csvfile.close()
     pass # End of class
 

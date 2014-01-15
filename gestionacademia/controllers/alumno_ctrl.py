@@ -141,13 +141,15 @@ class AlumnoCtrl (Controller):
         tv_widget = self.view['tv_grupos']
         id= get_tv_selected(tv_widget)
         ##FIXME esto hay que hacerlo a través del modelo de asistencia
-        self.model.asistencia.cambiarConfirmacion(id)
+        debug("Queremos cambiar la asistencia del id %s"%id)
+        self.model.cambiarConfirmacion(id)
+        
         pass
     def quitar_grupo(self, widget):
         tv_widget = self.view['tv_grupos']
-        id= get_tv_selected(tv_widget)
+        id=get_tv_selected(tv_widget)
         self.model.eliminarAsistencia(id)
-        pass
+        
     def anadir_grupo(self, widget):
         if self.model.id == -1:
             print "Alumno sin guardar, hay que guardarlo antes de añadir un grupo!"

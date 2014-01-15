@@ -61,6 +61,12 @@ class Asistencia(SQLObject):
     notas = MultipleJoin('Notas')
     faltas = MultipleJoin('Notas')
 
+class Historia(SQLObject):
+	alumno = ForeignKey('Alumno',cascade='null')
+	fecha = DateCol(default=DateTimeCol.now())
+	tipo = UnicodeCol(default="")
+	anotacion = UnicodeCol(default="")
+	
 class Nota(SQLObject):
     asistencia = ForeignKey('Asistencia',cascade='null')
     trimestre = DecimalCol(size=1,precision=0)
