@@ -73,6 +73,7 @@ class AlumnoModel (Model):
     lista_alumnos_filtro.set_visible_column(5)
     combo_alumnos = ListStore(int, str)
     lista_grupos = ListStore(int,str,int,str,str)
+    lista_historico = ListStore(int, str, str, str)
     id = -1
     telefono1 = PhoneClass()
     cuenta = 0
@@ -461,6 +462,7 @@ Los derechos de acceso, rectificación, cancelación y oposición serán ejercit
             self.id=-1
             ##Limpiaos la lista de grupos
             self.lista_grupos.clear()
+            self.lista_historico.clear()
         else:
             self.a = Alumno.get(id)
             for variable in self._lista_variables:
@@ -487,6 +489,7 @@ Los derechos de acceso, rectificación, cancelación y oposición serán ejercit
             if self.email == None:
                 self.email = "---"
             self.refrescar_lista_grupos()
+            self.refrescar_lista_historico()
     def refrescar_lista_grupos(self):
         self.lista_grupos.clear()
         ##Cargamos la lista de grupos a traves de las asistencia, también si tiene descuento
@@ -499,6 +502,11 @@ Los derechos de acceso, rectificación, cancelación y oposición serán ejercit
             for clase in asistencia.grupo.clases:
                 horario += "%s-%s ; "%(clase.dia_semana,clase.horario)
             self.lista_grupos.append([asistencia.id,asistencia.grupo.nombre,asistencia.confirmado,precio,horario])
+    def refrescar_lista_historico(self):
+        self.lista_historico.clear()
+        ##Cargamos la lista de grupos a traves de las asistencia, también si tiene descuento
+        for evento in Historia.select(Historia.q.alumno==self.a):
+            self.lista_historico.append([evento.id,"%s"%evento.fecha,evento.tipo,evento.anotacion])
 
     def guardar(self):
         self.cp = str(self.cp)

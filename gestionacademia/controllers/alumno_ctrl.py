@@ -54,6 +54,9 @@ class AlumnoCtrl (Controller):
         ##Formateando el tv de grupos:
         tabla_grupos=[dict(nombre='Nombre',dato=1),dict(nombre='Confirmado',dato=2),dict(nombre='Precio',dato=3),dict(nombre='Horario',dato=4)]
         tv_init(self.view['tv_grupos'],self.model.lista_grupos,tabla_grupos)
+        ##Formateando el tv de historico:
+        tabla_historico=[dict(nombre='Fecha',dato=1),dict(nombre='Evento',dato=2),dict(nombre='Datos',dato=3)]
+        tv_init(self.view['tv_historico'],self.model.lista_historico,tabla_historico)
         return
 
     # Non-public methods
