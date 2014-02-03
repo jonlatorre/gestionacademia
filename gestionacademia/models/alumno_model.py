@@ -349,8 +349,8 @@ class AlumnoModel (Model):
         
         tabla =[['Nombre',self.nombre,"Apellidos","%s %s"%(self.apellido1,self.apellido2)]]
         tabla.append(['fecha nacimiento',self.fecha_nacimiento,'Telefonos',"%s - %s"%(self.telefono1,self.telefono2)])
-        tabla.append(["Domicilio:",self.direccion])
-        tabla.append(["Poblacion:",self.ciudad,"CP:",self.cp,"DNI:",self.dni])
+        tabla.append(["Domicilio:",self.direccion,"CP:",self.cp])
+        tabla.append(["Poblacion:",self.ciudad,"DNI:",self.dni])
         tabla.append(["Como nos conocio:",self.observaciones, "email:",self.email])
         t = Table(tabla)
         story.append(t)
