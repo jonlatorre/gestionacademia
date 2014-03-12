@@ -8,6 +8,7 @@
 import os.path
 import sys
 import datetime
+import re
 # Third party library imports
 from gtkmvc import Model, Observable
 from gtkmvc.model import SQLObjectModel
@@ -264,10 +265,10 @@ class AlumnoModel (Model):
         else:
             consulta = Alumno.select(Alumno.q.activo==True,orderBy=Alumno.q.apellido1)
         for persona in consulta:
-            print "Estamos con la persona %s (%s) "%(persona.nombre,persona.id)
+            #print "Estamos con la persona %s (%s) "%(persona.nombre,persona.id)
             nota_final = "----"
             asis = persona.grupos[0]
-            print "La asistencia es:",asis.id
+            #print "La asistencia es:",asis.id
             try:
                 grupo = asis.grupo.nombre
             except:
@@ -275,18 +276,29 @@ class AlumnoModel (Model):
             #print "El grupo es %s"%grupo
             notas = Nota.select(Nota.q.asistenciaID==asis.id)
             for nota in notas:
-                print "El trimestre %s"%nota.trimestre
+                #print "El trimestre %s"%nota.trimestre
                 if nota.trimestre==3:
-                    #print "Estamos con la nota", nota.id
-                    #print nota
+                    print "Estamos con la nota", nota.id
+                    print nota
+                    ## primero comprobamos si es un pequeño coggemos la nota del 3º control, sino la de gramatica
+                    nombre_curso = grupo.lower()
+                    #FIXME esto debería ser una función externa
+                    if re.search('junior',nombre_curso) or re.search('beginner',nombre_curso) or re.search('movers',nombre_curso)  or re.search('starters',nombre_curso)  or re.search('flyers',nombre_curso):
+                        print "Es pequeño"
+                        nota_3trimestre = nota.control3
+                        baremo_3trimestre = nota.control3_baremo
+                    else:
+                        print "Es mayor"
+                        nota_3trimestre = nota.grama
+                        baremo_3trimestre = nota.grama_baremo
                     ### Buscamos la nota de grama, si es 0 cojemos el control3 si es 999 (no presentado ponemos un NP)
-                    if nota.grama == 0:
-                        #nota_final = "%s / %s"%(nota.control3,nota.control3_baremo)
+                    if nota_3trimestre == 0:
+                        
                         nota_final = "NP"
-                    elif nota.grama == 999:
+                    elif nota_3trimestre == 999:
                         nota_final = "NP"
                     else:
-                        nota_final = "%s / %s"%(nota.grama,nota.grama_baremo)
+                        nota_final = "%s / %s"%(nota_3trimestre,baremo_3trimestre)
             total_faltas = 0
             total_faltas_j = 0
             for falta in Falta.select(Falta.q.asistenciaID==persona.grupos[0].id):
