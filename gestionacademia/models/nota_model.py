@@ -272,7 +272,7 @@ class NotaModel(Model):
         story.append(t_controles)
         story.append(Spacer(0,20))
 
-        ##FIXME comprobar si el alumno no es begginers o juniors
+        #FIXME esto debería ser una función externa, repetido en alumno_model
         nombre_curso = asistencia.grupo.curso.nombre.lower()
         if re.search('junior',nombre_curso) or re.search('beginner',nombre_curso) or re.search('movers',nombre_curso)  or re.search('starters',nombre_curso)  or re.search('flyers',nombre_curso):
             debug("Juniors y beginners no tienen estas notas.")

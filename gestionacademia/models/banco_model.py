@@ -49,7 +49,7 @@ class BancoModel(Model):
 ##        print "Rellenando/refrescando los modelos del combo y tree"
         self.lista_bancos.clear()
         self.tv_bancos.clear()
-        for b in Banco.select():
+        for b in Banco.select(orderBy=Banco.q.codigo):
             self.lista_bancos.append([b.id,"%s - %s"%(ajustar(b.codigo,4),b.nombre),ajustar(b.codigo,4)])
             self.tv_bancos.append([b.id,str(ajustar(b.codigo,4)),b.nombre])
         return
