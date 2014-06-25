@@ -45,7 +45,7 @@ class CursoModel (Model):
         self.rellenar_lista()
     def rellenar_lista(self):
         self.lista.clear()
-        for curso in Curso.select():
+        for curso in Curso.select(orderBy=Curso.q.nombre):
             try:
                 self.lista.append([curso.id,curso.nombre,curso.examen,curso.nivel,curso.precio,curso.nota_aprobado])
             except:
