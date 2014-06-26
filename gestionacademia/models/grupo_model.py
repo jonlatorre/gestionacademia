@@ -220,7 +220,7 @@ class GrupoModel (Model):
         story.append(Paragraph(cadena, estilo))
         story.append(Spacer(0,10))
         tabla=[['ID','Nombre','Curso','Cuota','Conf.','SinConf','Fecha Min','Fecha Max','Horario']]
-        for grupo in Grupo.select(orderBy='nombre'):
+        for grupo in Grupo.select(orderBy=Grupo.q.nombre):
             num += 1
             ##Primero sacamos la lista de alumnos para calcular los confirmados, sin confirmar y edades...
             confirmados=0
@@ -277,7 +277,7 @@ class GrupoModel (Model):
             res = pedir_confirmacion("Hemos detectado que quieres imprimir las notas de Enero, ¿quieres que sea el mes de Enero de %s ?"%(ano+1),"¿Usar el año que viene?")
             if res:
                 ano = ano + 1;
-        for g in Grupo.select(orderBy='nombre'):
+        for g in Grupo.select(orderBy=Grupo.q.nombre):
             print "Imprimiendo planilla asistencia del grupo %s"%g.id
             self.cargar(g.id)
             try:
@@ -289,7 +289,7 @@ class GrupoModel (Model):
         return num
     def todas_planillas_notas(self,mes):
         num = 0
-        for g in Grupo.select(orderBy='nombre'):
+        for g in Grupo.select(orderBy=Grupo.q.nombre):
             self.cargar(g.id)
             self.imprimir_planilla_notas(mes)
             num += 1
