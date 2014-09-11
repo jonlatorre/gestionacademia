@@ -57,10 +57,11 @@ class ProfesorCtrl (Controller):
     def comprobar_campos(self):
         print "Comprobando si los campos obligatorios están completos"
         ##Comprobamos que los campos oblitarios no estén vacios
-        for variable in ['nombre','apellido1','telefono1','fecha_nacimiento']:
-            if getattr(self.model,variable)=="":
-                print "Campo %s vacio!"%variable
-                return -1
+        ## 2014-09-11 quitamos la validacion en este curso no usan esos datos
+        #for variable in ['nombre','apellido1','telefono1','fecha_nacimiento']:
+        #    if getattr(self.model,variable)=="":
+        #        print "Campo %s vacio!"%variable
+        #        return -1
         ##FIXME validar la fecha, el telefono, etc
         print "todos los campos OK"
         return 1

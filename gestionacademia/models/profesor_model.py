@@ -182,25 +182,32 @@ class ProfesorModel (Model):
         """Función que valida los campos obligatorios antes de guardar"""
         if self.telefono2 == '':
             self.telefono2 = 0
+        if self.apellido1=='':
+            self.apellido1= '---'
         if self.apellido2=='':
             self.apellido2= '---'
-        if self.nombre=='' or self.apellido1=='':
-            raise ValueError("Se debe rellenar nombre y apellido")
-        if not len(str(self.telefono1))==9:
-            raise ValueError("El telefono debe tener 9 numeros")
+        
+        if self.nombre=='' :
+            raise ValueError("Se debe rellenar nombre")
+        #if not len(str(self.telefono1))==9:
+        #    raise ValueError("El telefono debe tener 9 numeros")
         try:
             int(str(self.telefono1))
         except:
-            raise ValueError("El telefono debe tener solo numeros")
+            #raise ValueError("El telefono debe tener solo numeros")
+            self.telefono1=944937005
         if self.fecha_nacimiento == '':
-            raise ValueError("Falta la fecha nacimiento, recuerde que el formato es dia-mes-año")
+            #raise ValueError("Falta la fecha nacimiento, recuerde que el formato es dia-mes-año")
+            self.fecha_nacimiento = "1900-01-01"
         else:
             try:
                 fecha = datetime.datetime.strptime(self.fecha_nacimiento, self.time_format)
             except:
                 raise ValueError("Fecha nacimiento no valida, recuerde que el formato es dia-mes-año")
         if not len(str(self.cp))==5:
-            raise ValueError("El Código Postal debe tener 5 numeros")
+            #raise ValueError("El Código Postal debe tener 5 numeros")
+            self.cp = 48980
+            
         return True
 
 
