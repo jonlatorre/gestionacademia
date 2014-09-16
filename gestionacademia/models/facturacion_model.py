@@ -187,7 +187,7 @@ class FacturacionModel (Model):
         tabla =[['Apellidos, Nombre','Importe']]
         for persona in lista:
             tabla.append([persona[0],persona[1]])
-            importe_listado += int(persona[1])
+            importe_listado += float(persona[1])
             num_listado += 1
         story.append(Table(tabla))
         doc=SimpleDocTemplate(fichero,pagesize=A4,showBoundary=1)
