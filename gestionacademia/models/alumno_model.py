@@ -267,9 +267,10 @@ class AlumnoModel (Model):
         for persona in consulta:
             #print "Estamos con la persona %s (%s) "%(persona.nombre,persona.id)
             nota_final = "----"
-            asis = persona.grupos[0]
+
             #print "La asistencia es:",asis.id
             try:
+                asis = persona.grupos[0]
                 grupo = asis.grupo.nombre
             except:
                 grupo = "-----"
@@ -301,9 +302,12 @@ class AlumnoModel (Model):
                         nota_final = "%s / %s"%(nota_3trimestre,baremo_3trimestre)
             total_faltas = 0
             total_faltas_j = 0
-            for falta in Falta.select(Falta.q.asistenciaID==persona.grupos[0].id):
-                total_faltas = total_faltas + falta.faltas
-                total_faltas_j = total_faltas_j + falta.justificadas
+            try:
+                for falta in Falta.select(Falta.q.asistenciaID==persona.grupos[0].id):
+                    total_faltas = total_faltas + falta.faltas
+                    total_faltas_j = total_faltas_j + falta.justificadas
+            except:
+                pass
             #except:
             #    print "Uo :( algún error"
             #    nota_final = "--"
@@ -679,13 +683,18 @@ Los derechos de acceso, rectificación, cancelación y oposición serán ejercit
         return pendientes
     
     def exportar_estadisticas_csv(self):
-        with open(get_print_path('Alumnos/')+'lista_usuarios.csv', 'w+') as csvfile:
+        file_name = get_print_path('Alumnos/')+'lista_usuarios.csv'
+        with open(file_name, 'w+') as csvfile:
             csvwriter = csv.writer(csvfile, delimiter=',', quotechar='E', quoting=csv.QUOTE_MINIMAL)
             for alumno in Alumno.select(Alumno.q.activo==True):
-                fila = ["%d"%alumno.id,"%s"%alumno.fecha_nacimiento,"%s"%alumno.fecha_creacion,\
-                    "%s"%alumno.grupos[0].grupo.nombre.lower(),"%s"%alumno.grupos[0].grupo.curso.nombre.lower()]
-                print fila
+                try:
+                    fila = ["%d"%alumno.id,"%s"%alumno.fecha_nacimiento,"%s"%alumno.fecha_creacion,\
+                        "%s"%alumno.grupos[0].grupo.nombre.lower(),"%s"%alumno.grupos[0].grupo.curso.nombre.lower()]
+                    #print fila
+                except:
+                    debug("No se ha podido leer información de alumno %d"%alumno.id)
                 csvwriter.writerow(fila)
             csvfile.close()
+        return file_name
     pass # End of class
 

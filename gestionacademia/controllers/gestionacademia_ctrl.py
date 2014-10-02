@@ -723,7 +723,10 @@ class GestionacademiaCtrl (Controller):
             return False
         else:
             return True
-
+    
+    def on_estadisticas_activate(self,widget):
+        fichero = self.model.alumno.exportar_estadisticas_csv()
+        mostrar_aviso("Se han volcado las estidistac ene el fichero %s"%fichero,"Estadísticas volcados")
     def reiniciar_curso(self,widget):
         texto = """ATENCION! Se va a reiniciar el curso. Se llavará a cabo las siguienets acciones
         1- Se borraran todas las notas
