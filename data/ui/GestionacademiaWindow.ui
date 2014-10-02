@@ -94,19 +94,17 @@
                         <signal name="activate" handler="on_nuevo_curso" swapped="no"/>
                       </object>
                     </child>
-
                     <child>
                       <object class="GtkMenuItem" id="estadisticas">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="tooltip_text" translatable="yes">Vuelca a CSV estídicas sobre el a
+                        <property name="tooltip_text" translatable="yes">Vuelca a CSV estídicas sobre el alumnado.</property>
                         <property name="use_action_appearance">False</property>
                         <property name="label" translatable="yes">Estadísticas</property>
                         <property name="use_underline">True</property>
                         <signal name="activate" handler="on_estadisticas_activate" swapped="no"/>
                       </object>
                     </child>
-
                     <child>
                       <object class="GtkMenuItem" id="ComprobarCuentas">
                         <property name="visible">True</property>
