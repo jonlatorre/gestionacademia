@@ -28,6 +28,7 @@ from banco_ctrl import BancoCtrl
 from curso_ctrl import CursoCtrl
 from grupo_ctrl import GrupoCtrl
 from inputalumnos_ctrl import InputAlumnosCtrl
+from inputgrupos_ctrl import InputGruposCtrl
 ##Cargamos las subvistas
 from gestionacademia.views.about_view import AboutView
 from gestionacademia.views.preferences_view import PreferencesView
@@ -40,6 +41,7 @@ from gestionacademia.views.banco_view import BancoView
 from gestionacademia.views.curso_view import CursoView
 from gestionacademia.views.grupo_view import GrupoView
 from gestionacademia.views.inputalumnos_view import InputAlumnosView
+from gestionacademia.views.inputgrupos_view import InputGruposView
 #Modelos
 from gestionacademia.models.database_model import Grupo
 
@@ -623,6 +625,14 @@ class GestionacademiaCtrl (Controller):
 		self.log.debug("Vamos a leer el input de alumnos e imprimir las eiquetas")
 		v = InputAlumnosView(self.view) # pass GestionacademiaView as the parent
 		c = InputAlumnosCtrl(self.model, v)
+		self.log.debug("Lanzamos la ventana")
+		v.run() # this runs in modal mode
+		self.log.debug("Ha terminado")
+		return
+    def on_etiquetas_seleccion_grupos_activate(self, widget):
+		self.log.debug("Vamos a leer el input de grupos e imprimir las eiquetas")
+		v = InputGruposView(self.view) # pass GestionacademiaView as the parent
+		c = InputGruposCtrl(self.model, v)
 		self.log.debug("Lanzamos la ventana")
 		v.run() # this runs in modal mode
 		self.log.debug("Ha terminado")

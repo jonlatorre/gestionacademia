@@ -173,7 +173,7 @@ class AlumnoModel (Model):
                 textobject.textLine(line)
             c.drawText(textobject)
 
-    def imprimir_etiquetas(self,todos=False,lista_alumnos_elegidos=None):
+    def imprimir_etiquetas(self,todos=False,lista_alumnos_elegidos=None,lista_grupos_elegidos=None):
         """Función que imprime etiquetas con los datos de lso alumnos. Si todos es True imprime
         los alumnos dados de baja también"""
         lista = []
@@ -186,6 +186,7 @@ class AlumnoModel (Model):
         if todos:
             logging.debug("Imprimimos las etiquetas de todos los alumnos")
             busqueda = Alumno.select()
+            
         elif lista_alumnos_elegidos!=None:
             logging.debug("Imprimimos solo ciertos alumnos")
             busqueda = []
@@ -197,9 +198,21 @@ class AlumnoModel (Model):
                 except:
                     logging.debug( "No hemos encontrado el alumno con la numero %s"%numero)
             
+        elif lista_grupos_elegidos!=None:
+            logging.debug("Imprimimos solo ciertos grupos")
+            lista_alumnos_elegidos = []
+            busqueda = []
+            logging.debug(lista_grupos_elegidos)
+            for numero in lista_grupos_elegidos:
+                logging.debug("Buscando alumnos ne el grupo %s"%numero)
+                for asistencia in Asistencia.select(Asistencia.q.grupoID==numero):
+                    logging.debug("Añadiendo el alumno %s"%asistencia.alumno.id)
+                    busqueda.append(asistencia.alumno)
+            logging.debug(lista_alumnos_elegidos)
         else:
             logging.debug( "Imprimimos las etiquetas de los alumnos activos")
             busqueda = Alumno.select(Alumno.q.activo==True)
+            
         for alumno in busqueda:
             i = p.get_iter_from_string(str(alumno.provincia))
             provincia = p.get_value(i,1)
@@ -454,6 +467,7 @@ Los derechos de acceso, rectificación, cancelación y oposición serán ejercit
         doc=SimpleDocTemplate(fichero,pagesize=A4)
         doc.build(story) 
         ##Lo mandamos a imprimir
+        send_to_printer(fichero)
         send_to_printer(fichero)
         return
 

@@ -344,6 +344,15 @@
                                         <signal name="activate" handler="on_etiquetas_seleccion_activate" swapped="no"/>
                                       </object>
                                     </child>
+                                    <child>
+                                      <object class="GtkMenuItem" id="etiquetas_grupos">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="use_action_appearance">False</property>
+                                        <property name="label" translatable="yes">Introducir Grupos</property>
+                                        <signal name="activate" handler="on_etiquetas_seleccion_grupos_activate" swapped="no"/>
+                                      </object>
+                                    </child>
                                   </object>
                                 </child>
                               </object>
