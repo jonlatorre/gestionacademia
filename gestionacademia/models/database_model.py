@@ -70,20 +70,19 @@ class Historia(SQLObject):
 class Nota(SQLObject):
     asistencia = ForeignKey('Asistencia',cascade='null')
     trimestre = DecimalCol(size=1,precision=0)
-    control1 = DecimalCol(size=3,precision=0,default="0")
-    control1_baremo = DecimalCol(size=3,precision=0,default="0")
-    control2 = DecimalCol(size=3,precision=0,default="0")
-    control2_baremo = DecimalCol(size=3,precision=0,default="0")
-    control3 = DecimalCol(size=3,precision=0,default="0")
-    control3_baremo = DecimalCol(size=3,precision=0,default="0")
+    #control1 = DecimalCol(size=3,precision=0,default="0")
+    #control1_baremo = DecimalCol(size=3,precision=0,default="0")
+    #control2 = DecimalCol(size=3,precision=0,default="0")
+    #control2_baremo = DecimalCol(size=3,precision=0,default="0")
+    #control3 = DecimalCol(size=3,precision=0,default="0")
+    #control3_baremo = DecimalCol(size=3,precision=0,default="0")
     grama = DecimalCol(size=3,precision=0,default="0")
-    grama_baremo = DecimalCol(size=3,precision=0,default="0")
+    #grama_baremo = DecimalCol(size=3,precision=0,default="0")
     expresion = DecimalCol(size=3,precision=0,default="0")
-    expresion_baremo = DecimalCol(size=3,precision=0,default="0")
+    #expresion_baremo = DecimalCol(size=3,precision=0,default="0")
     lectura = DecimalCol(size=3,precision=0,default="0")
-    lectura_baremo = DecimalCol(size=3,precision=0,default="0")
-    comportamiento = UnicodeCol(length=1,default="R")
-    tareas = UnicodeCol(length=1,default="C")
+    #lectura_baremo = DecimalCol(size=3,precision=0,default="0")
+    
 
 
 
@@ -142,6 +141,7 @@ class Grupo(SQLObject):
     curso = ForeignKey('Curso',cascade='null')
     alumnos = MultipleJoin('Asistencia')
     num_max = DecimalCol(size=2,precision=0,default=14) #El tamaño default no es lo mejor que esté aquí, pero bueno
+    menores = BoolCol(default=0)
 
 
 ##class Provincia(SQLObject):

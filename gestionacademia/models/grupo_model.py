@@ -44,6 +44,7 @@ class GrupoModel (Model):
     """
     g = None
     num_max = 0
+    menores = False
     ##Esta es la lista de grupos
     lista = ListStore(int, str, str,int,int,str,str,str)
     ##Para almacenar las lista de alumnos en un listore (id, nombre, apellidos y DNI)
@@ -141,6 +142,7 @@ class GrupoModel (Model):
             self.nombre=""
             self.cursoID=0
             self.num_max=14
+            self.menores = False
         else:
             self.g = Grupo.get(id)
             self.id = self.g.id
@@ -149,6 +151,7 @@ class GrupoModel (Model):
                 self.cursoID = self.g.cursoID
             else:
                 self.cursoID = -1
+            self.menores = self.g.menores
             self.num_max = self.g.num_max
             self.rellenar_lista_alumnos()
             self.rellenar_lista_clases()

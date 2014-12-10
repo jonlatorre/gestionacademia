@@ -9,6 +9,36 @@
     <property name="page_increment">10</property>
     <property name="page_size">10</property>
   </object>
+  <object class="GtkImage" id="image1">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-add</property>
+  </object>
+  <object class="GtkImage" id="image2">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-add</property>
+  </object>
+  <object class="GtkImage" id="image3">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">Añadir</property>
+  </object>
+  <object class="GtkImage" id="image4">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-add</property>
+  </object>
+  <object class="GtkImage" id="image5">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-zoom-out</property>
+  </object>
+  <object class="GtkImage" id="image6">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-zoom-in</property>
+  </object>
   <object class="GtkWindow" id="gestionacademia_window">
     <property name="width_request">1024</property>
     <property name="height_request">700</property>
@@ -30,7 +60,6 @@
               <object class="GtkMenuItem" id="menuitem1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="use_action_appearance">False</property>
                 <property name="label" translatable="yes">_File</property>
                 <property name="use_underline">True</property>
                 <child type="submenu">
@@ -42,7 +71,6 @@
                         <property name="label">Nuevo Alumno</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="image">image2</property>
                         <property name="use_stock">False</property>
                         <property name="always_show_image">True</property>
@@ -55,7 +83,6 @@
                         <property name="label">Nuevo Grupo</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="image">image3</property>
                         <property name="use_stock">False</property>
                         <accelerator key="g" signal="activate" modifiers="GDK_CONTROL_MASK"/>
@@ -67,7 +94,6 @@
                         <property name="label">Nuevo Banco</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="image">image4</property>
                         <property name="use_stock">False</property>
                         <accelerator key="b" signal="activate" modifiers="GDK_CONTROL_MASK"/>
@@ -78,7 +104,6 @@
                       <object class="GtkMenuItem" id="Nuevo Libro">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="label" translatable="yes">Nuevo Libro</property>
                         <property name="use_underline">True</property>
                         <signal name="activate" handler="on_nuevo_libro" swapped="no"/>
@@ -88,7 +113,6 @@
                       <object class="GtkMenuItem" id="Nuevo Curso">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="label" translatable="yes">Nuevo Curso</property>
                         <property name="use_underline">True</property>
                         <signal name="activate" handler="on_nuevo_curso" swapped="no"/>
@@ -99,7 +123,6 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="tooltip_text" translatable="yes">Vuelca a CSV estídicas sobre el alumnado.</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="label" translatable="yes">Estadísticas</property>
                         <property name="use_underline">True</property>
                         <signal name="activate" handler="on_estadisticas_activate" swapped="no"/>
@@ -109,7 +132,6 @@
                       <object class="GtkMenuItem" id="ComprobarCuentas">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="label" translatable="yes">Comprobar cuentas bancarias</property>
                         <property name="use_underline">True</property>
                         <signal name="activate" handler="on_comprobar_cuentas_alumnos" swapped="no"/>
@@ -126,7 +148,6 @@
                         <property name="label">gtk-quit</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <accelerator key="q" signal="activate" modifiers="GDK_CONTROL_MASK"/>
@@ -141,7 +162,6 @@
               <object class="GtkMenuItem" id="menuitem2">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="use_action_appearance">False</property>
                 <property name="label" translatable="yes">_Edit</property>
                 <property name="use_underline">True</property>
                 <child type="submenu">
@@ -153,7 +173,6 @@
                         <property name="label">gtk-cut</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                       </object>
@@ -163,7 +182,6 @@
                         <property name="label">gtk-copy</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                       </object>
@@ -173,7 +191,6 @@
                         <property name="label">gtk-paste</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                       </object>
@@ -183,7 +200,6 @@
                         <property name="label">gtk-delete</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                       </object>
@@ -198,7 +214,6 @@
                       <object class="GtkMenuItem" id="menuitem5">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="label" translatable="yes">Reiniciar Curso</property>
                         <property name="use_underline">True</property>
                         <signal name="activate" handler="reiniciar_curso" swapped="no"/>
@@ -208,7 +223,6 @@
                       <object class="GtkSeparatorMenuItem" id="menuitem6">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                       </object>
                     </child>
                     <child>
@@ -216,7 +230,6 @@
                         <property name="label">gtk-preferences</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <signal name="activate" handler="_on_menu_preferences_clicked" swapped="no"/>
@@ -230,7 +243,6 @@
               <object class="GtkMenuItem" id="ver">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="use_action_appearance">False</property>
                 <property name="label" translatable="yes">_Ver</property>
                 <property name="use_underline">True</property>
                 <child type="submenu">
@@ -242,7 +254,6 @@
                         <property name="label">Ver todos los alumnos</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="image">image6</property>
                         <property name="use_stock">False</property>
                         <signal name="activate" handler="on_vertodosalumnos_activate" swapped="no"/>
@@ -253,7 +264,6 @@
                         <property name="label">Ver solo alumnos activos</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="image">image5</property>
                         <property name="use_stock">False</property>
                         <signal name="activate" handler="on_veralumnosactivos_activate" swapped="no"/>
@@ -267,7 +277,6 @@
               <object class="GtkMenuItem" id="imp">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="use_action_appearance">False</property>
                 <property name="label" translatable="yes">_Impresión</property>
                 <property name="use_underline">True</property>
                 <child type="submenu">
@@ -278,7 +287,6 @@
                       <object class="GtkMenuItem" id="menuitem4">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="label" translatable="yes">Alumnos</property>
                         <property name="use_underline">True</property>
                         <child type="submenu">
@@ -289,7 +297,6 @@
                               <object class="GtkMenuItem" id="imp_lista_alumnos">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="label" translatable="yes">Imprimir lista de alumnos</property>
                                 <property name="use_underline">True</property>
                                 <signal name="activate" handler="on_imp_lista_alumnos" swapped="no"/>
@@ -299,7 +306,6 @@
                               <object class="GtkMenuItem" id="imp_lista_notas_asistencias">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="label" translatable="yes">Imprimir Listado completo de notas finales y faltas</property>
                                 <signal name="activate" handler="on_imp_lista_notas_asistencias" swapped="no"/>
                               </object>
@@ -308,7 +314,6 @@
                               <object class="GtkMenuItem" id="etiquetas">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="label" translatable="yes">Etiquetas</property>
                                 <property name="use_underline">True</property>
                                 <child type="submenu">
@@ -319,7 +324,6 @@
                                       <object class="GtkMenuItem" id="etiquetas_alta">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Alumnos de Alta</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_etiquetas_alta_activate" swapped="no"/>
@@ -329,7 +333,6 @@
                                       <object class="GtkMenuItem" id="etiquetas_todos">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Todos los Alumnos</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_etiquetas_todos_activate" swapped="no"/>
@@ -339,7 +342,6 @@
                                       <object class="GtkMenuItem" id="etiquetas_input">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Introducir Alumnos</property>
                                         <signal name="activate" handler="on_etiquetas_seleccion_activate" swapped="no"/>
                                       </object>
@@ -348,7 +350,6 @@
                                       <object class="GtkMenuItem" id="etiquetas_grupos">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Introducir Grupos</property>
                                         <signal name="activate" handler="on_etiquetas_seleccion_grupos_activate" swapped="no"/>
                                       </object>
@@ -365,7 +366,6 @@
                       <object class="GtkMenuItem" id="menuitem3">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="label" translatable="yes">Grupos</property>
                         <property name="use_underline">True</property>
                         <child type="submenu">
@@ -377,7 +377,6 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="tooltip_text" translatable="yes">Imprime la lista de asistecia par los que los profesores pasen lista</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="label" translatable="yes">Ficha Asistencia Profesor</property>
                                 <property name="use_underline">True</property>
                                 <child type="submenu">
@@ -388,7 +387,6 @@
                                       <object class="GtkMenuItem" id="imp_planilla_asistencia_1">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Enero</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_planilla_asistencia_1" swapped="no"/>
@@ -398,7 +396,6 @@
                                       <object class="GtkMenuItem" id="imp_planilla_asistencia_2">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Febrero</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_planilla_asistencia_2" swapped="no"/>
@@ -408,7 +405,6 @@
                                       <object class="GtkMenuItem" id="imp_planilla_asistencia_3">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Marzo</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_planilla_asistencia_3" swapped="no"/>
@@ -418,7 +414,6 @@
                                       <object class="GtkMenuItem" id="imp_planilla_asistencia_4">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Abril</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_planilla_asistencia_4" swapped="no"/>
@@ -428,7 +423,6 @@
                                       <object class="GtkMenuItem" id="imp_planilla_asistencia_5">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Mayo</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_planilla_asistencia_5" swapped="no"/>
@@ -438,7 +432,6 @@
                                       <object class="GtkMenuItem" id="imp_planilla_asistencia_6">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Junio</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_planilla_asistencia_6" swapped="no"/>
@@ -448,7 +441,6 @@
                                       <object class="GtkMenuItem" id="imp_planilla_asistencia_7">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Julio</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_planilla_asistencia_7" swapped="no"/>
@@ -458,7 +450,6 @@
                                       <object class="GtkMenuItem" id="imp_planilla_asistencia_8">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Agosto</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_planilla_asistencia_8" swapped="no"/>
@@ -468,7 +459,6 @@
                                       <object class="GtkMenuItem" id="imp_planilla_asistencia_9">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Septiembre</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_planilla_asistencia_9" swapped="no"/>
@@ -478,7 +468,6 @@
                                       <object class="GtkMenuItem" id="imp_planilla_asistencia_10">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Octubre</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_planilla_asistencia_10" swapped="no"/>
@@ -488,7 +477,6 @@
                                       <object class="GtkMenuItem" id="imp_planilla_asistencia_11">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Noviembre</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_planilla_asistencia_11" swapped="no"/>
@@ -498,7 +486,6 @@
                                       <object class="GtkMenuItem" id="imp_planilla_asistencia_12">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Diciembre</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_planilla_asistencia_12" swapped="no"/>
@@ -512,7 +499,6 @@
                               <object class="GtkMenuItem" id="Imp Planilla Notas">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="label" translatable="yes">Ficha Notas Profesor</property>
                                 <property name="use_underline">True</property>
                                 <child type="submenu">
@@ -523,7 +509,6 @@
                                       <object class="GtkMenuItem" id="planilla_1">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Primer Trimestre</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_planilla_notas_1" swapped="no"/>
@@ -533,7 +518,6 @@
                                       <object class="GtkMenuItem" id="planilla_2">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Segundo Trimestre</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_planilla_notas_2" swapped="no"/>
@@ -543,7 +527,6 @@
                                       <object class="GtkMenuItem" id="planilla_3">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Tercer Trimestre</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_planilla_notas_3" swapped="no"/>
@@ -557,7 +540,6 @@
                               <object class="GtkMenuItem" id="imp_lista_grupos">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="label" translatable="yes">Imprimir Lista Grupos</property>
                                 <property name="use_underline">True</property>
                                 <signal name="activate" handler="imp_lista_grupos" swapped="no"/>
@@ -571,7 +553,6 @@
                       <object class="GtkMenuItem" id="notas">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="label" translatable="yes">Notas</property>
                         <property name="use_underline">True</property>
                         <child type="submenu">
@@ -582,7 +563,6 @@
                               <object class="GtkMenuItem" id="imp_notas_1">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="label" translatable="yes">Primer trimestre</property>
                                 <property name="use_underline">True</property>
                                 <signal name="activate" handler="imprimir_notas_1" swapped="no"/>
@@ -592,7 +572,6 @@
                               <object class="GtkMenuItem" id="imp_notas_2">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="label" translatable="yes">Segundo trimestre</property>
                                 <property name="use_underline">True</property>
                                 <signal name="activate" handler="imprimir_notas_2" swapped="no"/>
@@ -602,7 +581,6 @@
                               <object class="GtkMenuItem" id="imp_notas_3">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="label" translatable="yes">Tercer trimestre</property>
                                 <property name="use_underline">True</property>
                                 <signal name="activate" handler="imprimir_notas_3" swapped="no"/>
@@ -616,7 +594,6 @@
                       <object class="GtkMenuItem" id="menu_asis">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="label" translatable="yes">Asistencia</property>
                         <property name="use_underline">True</property>
                         <child type="submenu">
@@ -627,7 +604,6 @@
                               <object class="GtkMenuItem" id="imp_lista_faltas">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="label" translatable="yes">Lista de faltas de asistencia</property>
                                 <property name="use_underline">True</property>
                                 <child type="submenu">
@@ -638,7 +614,6 @@
                                       <object class="GtkMenuItem" id="imp_lista_asis_1">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Enero</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_lista_asis_1_activate" swapped="no"/>
@@ -648,7 +623,6 @@
                                       <object class="GtkMenuItem" id="imp_lista_asis_2">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Febrero</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_lista_asis_2_activate" swapped="no"/>
@@ -658,7 +632,6 @@
                                       <object class="GtkMenuItem" id="imp_lista_asis_3">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Marzo</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_lista_asis_3_activate" swapped="no"/>
@@ -668,7 +641,6 @@
                                       <object class="GtkMenuItem" id="imp_lista_asis_4">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Abril</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_lista_asis_4_activate" swapped="no"/>
@@ -678,7 +650,6 @@
                                       <object class="GtkMenuItem" id="imp_lista_asis_5">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Mayo</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_lista_asis_5_activate" swapped="no"/>
@@ -688,7 +659,6 @@
                                       <object class="GtkMenuItem" id="imp_lista_asis_6">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Junio</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_lista_asis_6_activate" swapped="no"/>
@@ -698,7 +668,6 @@
                                       <object class="GtkMenuItem" id="imp_lista_asis_7">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Julio</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_lista_asis_7_activate" swapped="no"/>
@@ -708,7 +677,6 @@
                                       <object class="GtkMenuItem" id="imp_lista_asis_8">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Agosto</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_lista_asis_8_activate" swapped="no"/>
@@ -718,7 +686,6 @@
                                       <object class="GtkMenuItem" id="imp_lista_asis_9">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Setiembre</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_lista_asis_9_activate" swapped="no"/>
@@ -728,7 +695,6 @@
                                       <object class="GtkMenuItem" id="imp_lista_asis_10">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Octubre</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_lista_asis_10_activate" swapped="no"/>
@@ -738,7 +704,6 @@
                                       <object class="GtkMenuItem" id="imp_lista_asis_11">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Noviembre</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_lista_asis_11_activate" swapped="no"/>
@@ -748,7 +713,6 @@
                                       <object class="GtkMenuItem" id="imp_lista_asis_12">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Diciembre</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_lista_asis_12_activate" swapped="no"/>
@@ -762,7 +726,6 @@
                               <object class="GtkMenuItem" id="menuitem7">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="label" translatable="yes">Cartas a los padres</property>
                                 <property name="use_underline">True</property>
                                 <child type="submenu">
@@ -773,7 +736,6 @@
                                       <object class="GtkMenuItem" id="imp_carta_asis_1">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Enero</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_carta_asis_1_activate" swapped="no"/>
@@ -783,7 +745,6 @@
                                       <object class="GtkMenuItem" id="imp_carta_asis_2">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Febrero</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_carta_asis_2_activate" swapped="no"/>
@@ -793,7 +754,6 @@
                                       <object class="GtkMenuItem" id="imp_carta_asis_3">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Marzo</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_carta_asis_3_activate" swapped="no"/>
@@ -803,7 +763,6 @@
                                       <object class="GtkMenuItem" id="imp_carta_asis_4">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Abril</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_carta_asis_4_activate" swapped="no"/>
@@ -813,7 +772,6 @@
                                       <object class="GtkMenuItem" id="imp_carta_asis_5">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Mayo</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_carta_asis_5_activate" swapped="no"/>
@@ -823,7 +781,6 @@
                                       <object class="GtkMenuItem" id="imp_carta_asis_6">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Julio</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_carta_asis_6_activate" swapped="no"/>
@@ -833,7 +790,6 @@
                                       <object class="GtkMenuItem" id="imp_carta_asis_7">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Junio</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_carta_asis_7_activate" swapped="no"/>
@@ -843,7 +799,6 @@
                                       <object class="GtkMenuItem" id="imp_carta_asis_8">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Agosto</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_carta_asis_8_activate" swapped="no"/>
@@ -853,7 +808,6 @@
                                       <object class="GtkMenuItem" id="imp_carta_asis_9">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Septiembre</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_carta_asis_9_activate" swapped="no"/>
@@ -863,7 +817,6 @@
                                       <object class="GtkMenuItem" id="imp_carta_asis_10">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Octubre</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_carta_asis_10_activate" swapped="no"/>
@@ -873,7 +826,6 @@
                                       <object class="GtkMenuItem" id="imp_carta_asis_11">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Noviembre</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_carta_asis_11_activate" swapped="no"/>
@@ -883,7 +835,6 @@
                                       <object class="GtkMenuItem" id="imp_carta_asis_12">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="use_action_appearance">False</property>
                                         <property name="label" translatable="yes">Diciembre</property>
                                         <property name="use_underline">True</property>
                                         <signal name="activate" handler="on_imp_carta_asis_12_activate" swapped="no"/>
@@ -905,7 +856,6 @@
               <object class="GtkMenuItem" id="ayuda">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="use_action_appearance">False</property>
                 <property name="label" translatable="yes">Ayuda</property>
                 <property name="use_underline">True</property>
                 <child type="submenu">
@@ -917,7 +867,6 @@
                         <property name="label">gtk-about</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <signal name="activate" handler="_on_menu_about_clicked" swapped="no"/>
@@ -1082,7 +1031,6 @@
                           <object class="GtkToolButton" id="toolbutton19">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="label" translatable="yes">toolbutton1</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-new</property>
@@ -1097,7 +1045,6 @@
                           <object class="GtkToolButton" id="toolbutton20">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="label" translatable="yes">toolbutton2</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-edit</property>
@@ -1112,7 +1059,6 @@
                           <object class="GtkToolButton" id="toolbutton21">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="label" translatable="yes">toolbutton3</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-remove</property>
@@ -1241,6 +1187,9 @@
                         <property name="n_rows">3</property>
                         <property name="n_columns">2</property>
                         <child>
+                          <placeholder/>
+                        </child>
+                        <child>
                           <object class="GtkEntry" id="faltas">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -1302,7 +1251,6 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
-                            <property name="use_action_appearance">False</property>
                             <signal name="clicked" handler="on_guardar_faltas_clicked" swapped="no"/>
                           </object>
                           <packing>
@@ -1313,9 +1261,6 @@
                             <property name="x_options"/>
                             <property name="y_options"/>
                           </packing>
-                        </child>
-                        <child>
-                          <placeholder/>
                         </child>
                       </object>
                       <packing>
@@ -1370,7 +1315,6 @@
                           <object class="GtkToolButton" id="toolbutton22">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="label" translatable="yes">toolbutton1</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-new</property>
@@ -1385,7 +1329,6 @@
                           <object class="GtkToolButton" id="toolbutton23">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="label" translatable="yes">toolbutton2</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-edit</property>
@@ -1400,7 +1343,6 @@
                           <object class="GtkToolButton" id="toolbutton24">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="label" translatable="yes">toolbutton3</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-remove</property>
@@ -1499,7 +1441,6 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="use_stock">True</property>
                                 <accelerator key="Page_Up" signal="clicked"/>
                                 <signal name="clicked" handler="on_alumn_anterior_clicked" swapped="no"/>
@@ -1528,7 +1469,6 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="use_stock">True</property>
                                 <accelerator key="Page_Down" signal="clicked"/>
                                 <signal name="clicked" handler="on_alumn_siguiente_clicked" swapped="no"/>
@@ -1592,8 +1532,8 @@
                       <object class="GtkTable" id="tabla_notas">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="n_rows">10</property>
-                        <property name="n_columns">3</property>
+                        <property name="n_rows">6</property>
+                        <property name="n_columns">2</property>
                         <child>
                           <object class="GtkLabel" id="label4">
                             <property name="visible">True</property>
@@ -1608,50 +1548,22 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="label6">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">Baremo</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">2</property>
-                            <property name="right_attach">3</property>
-                            <property name="x_options"/>
-                            <property name="y_options"/>
-                          </packing>
+                          <placeholder/>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="label10">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">Control 1</property>
-                          </object>
-                          <packing>
-                            <property name="top_attach">1</property>
-                            <property name="bottom_attach">2</property>
-                          </packing>
+                          <placeholder/>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="label13">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">Control 2</property>
-                          </object>
-                          <packing>
-                            <property name="top_attach">2</property>
-                            <property name="bottom_attach">3</property>
-                          </packing>
+                          <placeholder/>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="label14">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">Control 3</property>
-                          </object>
-                          <packing>
-                            <property name="top_attach">3</property>
-                            <property name="bottom_attach">4</property>
-                          </packing>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <placeholder/>
                         </child>
                         <child>
                           <object class="GtkLabel" id="label15">
@@ -1661,9 +1573,30 @@
 vocabulario</property>
                           </object>
                           <packing>
-                            <property name="top_attach">4</property>
-                            <property name="bottom_attach">5</property>
+                            <property name="top_attach">1</property>
+                            <property name="bottom_attach">2</property>
                           </packing>
+                        </child>
+                        <child>
+                          <object class="GtkEntry" id="grama">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="invisible_char">•</property>
+                            <property name="invisible_char_set">True</property>
+                            <property name="primary_icon_activatable">False</property>
+                            <property name="secondary_icon_activatable">False</property>
+                            <property name="primary_icon_sensitive">True</property>
+                            <property name="secondary_icon_sensitive">True</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                            <property name="top_attach">1</property>
+                            <property name="bottom_attach">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <placeholder/>
                         </child>
                         <child>
                           <object class="GtkLabel" id="label16">
@@ -1672,8 +1605,8 @@ vocabulario</property>
                             <property name="label" translatable="yes">Expresión Oral</property>
                           </object>
                           <packing>
-                            <property name="top_attach">5</property>
-                            <property name="bottom_attach">6</property>
+                            <property name="top_attach">2</property>
+                            <property name="bottom_attach">3</property>
                           </packing>
                         </child>
                         <child>
@@ -1684,76 +1617,8 @@ vocabulario</property>
 y expresión escrita</property>
                           </object>
                           <packing>
-                            <property name="top_attach">6</property>
-                            <property name="bottom_attach">7</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkEntry" id="control1">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="invisible_char">•</property>
-                            <property name="primary_icon_activatable">False</property>
-                            <property name="secondary_icon_activatable">False</property>
-                            <property name="primary_icon_sensitive">True</property>
-                            <property name="secondary_icon_sensitive">True</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">1</property>
-                            <property name="right_attach">2</property>
-                            <property name="top_attach">1</property>
-                            <property name="bottom_attach">2</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkEntry" id="control2">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="invisible_char">•</property>
-                            <property name="primary_icon_activatable">False</property>
-                            <property name="secondary_icon_activatable">False</property>
-                            <property name="primary_icon_sensitive">True</property>
-                            <property name="secondary_icon_sensitive">True</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">1</property>
-                            <property name="right_attach">2</property>
-                            <property name="top_attach">2</property>
-                            <property name="bottom_attach">3</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkEntry" id="control3">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="invisible_char">•</property>
-                            <property name="primary_icon_activatable">False</property>
-                            <property name="secondary_icon_activatable">False</property>
-                            <property name="primary_icon_sensitive">True</property>
-                            <property name="secondary_icon_sensitive">True</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">1</property>
-                            <property name="right_attach">2</property>
                             <property name="top_attach">3</property>
                             <property name="bottom_attach">4</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkEntry" id="grama">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="invisible_char">•</property>
-                            <property name="primary_icon_activatable">False</property>
-                            <property name="secondary_icon_activatable">False</property>
-                            <property name="primary_icon_sensitive">True</property>
-                            <property name="secondary_icon_sensitive">True</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">1</property>
-                            <property name="right_attach">2</property>
-                            <property name="top_attach">4</property>
-                            <property name="bottom_attach">5</property>
                           </packing>
                         </child>
                         <child>
@@ -1761,6 +1626,7 @@ y expresión escrita</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">•</property>
+                            <property name="invisible_char_set">True</property>
                             <property name="primary_icon_activatable">False</property>
                             <property name="secondary_icon_activatable">False</property>
                             <property name="primary_icon_sensitive">True</property>
@@ -1769,8 +1635,8 @@ y expresión escrita</property>
                           <packing>
                             <property name="left_attach">1</property>
                             <property name="right_attach">2</property>
-                            <property name="top_attach">5</property>
-                            <property name="bottom_attach">6</property>
+                            <property name="top_attach">2</property>
+                            <property name="bottom_attach">3</property>
                           </packing>
                         </child>
                         <child>
@@ -1778,6 +1644,7 @@ y expresión escrita</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">•</property>
+                            <property name="invisible_char_set">True</property>
                             <property name="primary_icon_activatable">False</property>
                             <property name="secondary_icon_activatable">False</property>
                             <property name="primary_icon_sensitive">True</property>
@@ -1786,110 +1653,8 @@ y expresión escrita</property>
                           <packing>
                             <property name="left_attach">1</property>
                             <property name="right_attach">2</property>
-                            <property name="top_attach">6</property>
-                            <property name="bottom_attach">7</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkEntry" id="control1_baremo">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="invisible_char">•</property>
-                            <property name="primary_icon_activatable">False</property>
-                            <property name="secondary_icon_activatable">False</property>
-                            <property name="primary_icon_sensitive">True</property>
-                            <property name="secondary_icon_sensitive">True</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">2</property>
-                            <property name="right_attach">3</property>
-                            <property name="top_attach">1</property>
-                            <property name="bottom_attach">2</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkEntry" id="control2_baremo">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="invisible_char">•</property>
-                            <property name="primary_icon_activatable">False</property>
-                            <property name="secondary_icon_activatable">False</property>
-                            <property name="primary_icon_sensitive">True</property>
-                            <property name="secondary_icon_sensitive">True</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">2</property>
-                            <property name="right_attach">3</property>
-                            <property name="top_attach">2</property>
-                            <property name="bottom_attach">3</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkEntry" id="control3_baremo">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="invisible_char">•</property>
-                            <property name="primary_icon_activatable">False</property>
-                            <property name="secondary_icon_activatable">False</property>
-                            <property name="primary_icon_sensitive">True</property>
-                            <property name="secondary_icon_sensitive">True</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">2</property>
-                            <property name="right_attach">3</property>
                             <property name="top_attach">3</property>
                             <property name="bottom_attach">4</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkEntry" id="grama_baremo">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="invisible_char">•</property>
-                            <property name="primary_icon_activatable">False</property>
-                            <property name="secondary_icon_activatable">False</property>
-                            <property name="primary_icon_sensitive">True</property>
-                            <property name="secondary_icon_sensitive">True</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">2</property>
-                            <property name="right_attach">3</property>
-                            <property name="top_attach">4</property>
-                            <property name="bottom_attach">5</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkEntry" id="expresion_baremo">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="invisible_char">•</property>
-                            <property name="primary_icon_activatable">False</property>
-                            <property name="secondary_icon_activatable">False</property>
-                            <property name="primary_icon_sensitive">True</property>
-                            <property name="secondary_icon_sensitive">True</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">2</property>
-                            <property name="right_attach">3</property>
-                            <property name="top_attach">5</property>
-                            <property name="bottom_attach">6</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkEntry" id="lectura_baremo">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="invisible_char">•</property>
-                            <property name="primary_icon_activatable">False</property>
-                            <property name="secondary_icon_activatable">False</property>
-                            <property name="primary_icon_sensitive">True</property>
-                            <property name="secondary_icon_sensitive">True</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">2</property>
-                            <property name="right_attach">3</property>
-                            <property name="top_attach">6</property>
-                            <property name="bottom_attach">7</property>
                           </packing>
                         </child>
                         <child>
@@ -1898,15 +1663,14 @@ y expresión escrita</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
-                            <property name="use_action_appearance">False</property>
                             <accelerator key="s" signal="clicked" modifiers="GDK_CONTROL_MASK"/>
                             <signal name="clicked" handler="on_guarda_nota_clicked" swapped="no"/>
                           </object>
                           <packing>
-                            <property name="left_attach">2</property>
-                            <property name="right_attach">3</property>
-                            <property name="top_attach">8</property>
-                            <property name="bottom_attach">9</property>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                            <property name="top_attach">4</property>
+                            <property name="bottom_attach">5</property>
                             <property name="x_options"/>
                             <property name="y_options"/>
                           </packing>
@@ -1917,83 +1681,14 @@ y expresión escrita</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
-                            <property name="use_action_appearance">False</property>
                             <signal name="clicked" handler="imp_notas_grupo" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
                             <property name="right_attach">2</property>
-                            <property name="top_attach">9</property>
-                            <property name="bottom_attach">10</property>
+                            <property name="top_attach">5</property>
+                            <property name="bottom_attach">6</property>
                           </packing>
-                        </child>
-                        <child>
-                          <object class="GtkLabel" id="label33">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">Comportamiento</property>
-                          </object>
-                          <packing>
-                            <property name="top_attach">7</property>
-                            <property name="bottom_attach">8</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkLabel" id="label34">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">Tareas</property>
-                          </object>
-                          <packing>
-                            <property name="top_attach">8</property>
-                            <property name="bottom_attach">9</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkEntry" id="comportamiento">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="invisible_char">●</property>
-                            <property name="primary_icon_activatable">False</property>
-                            <property name="secondary_icon_activatable">False</property>
-                            <property name="primary_icon_sensitive">True</property>
-                            <property name="secondary_icon_sensitive">True</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">1</property>
-                            <property name="right_attach">2</property>
-                            <property name="top_attach">7</property>
-                            <property name="bottom_attach">8</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkEntry" id="tareas">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="invisible_char">●</property>
-                            <property name="primary_icon_activatable">False</property>
-                            <property name="secondary_icon_activatable">False</property>
-                            <property name="primary_icon_sensitive">True</property>
-                            <property name="secondary_icon_sensitive">True</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">1</property>
-                            <property name="right_attach">2</property>
-                            <property name="top_attach">8</property>
-                            <property name="bottom_attach">9</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
                         </child>
                       </object>
                       <packing>
@@ -2248,7 +1943,6 @@ y expresión escrita</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
-                        <property name="use_action_appearance">False</property>
                         <signal name="clicked" handler="on_factura_generar" swapped="no"/>
                       </object>
                       <packing>
@@ -2267,7 +1961,6 @@ y expresión escrita</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="draw_indicator">True</property>
                           </object>
                           <packing>
@@ -2282,7 +1975,6 @@ y expresión escrita</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="draw_indicator">True</property>
                             <signal name="toggled" handler="on_facturar_grupos_sueltos_toggled" swapped="no"/>
                           </object>
@@ -2388,7 +2080,6 @@ y expresión escrita</property>
                           <object class="GtkToolButton" id="toolbutton10">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="label" translatable="yes">toolbutton1</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-new</property>
@@ -2403,7 +2094,6 @@ y expresión escrita</property>
                           <object class="GtkToolButton" id="toolbutton11">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="label" translatable="yes">toolbutton2</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-edit</property>
@@ -2418,7 +2108,6 @@ y expresión escrita</property>
                           <object class="GtkToolButton" id="toolbutton12">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="label" translatable="yes">toolbutton3</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-remove</property>
@@ -2479,7 +2168,6 @@ y expresión escrita</property>
                           <object class="GtkToolButton" id="toolbutton7">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="label" translatable="yes">toolbutton1</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-new</property>
@@ -2494,7 +2182,6 @@ y expresión escrita</property>
                           <object class="GtkToolButton" id="toolbutton8">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="label" translatable="yes">toolbutton2</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-edit</property>
@@ -2509,7 +2196,6 @@ y expresión escrita</property>
                           <object class="GtkToolButton" id="toolbutton9">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="label" translatable="yes">toolbutton3</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-remove</property>
@@ -2590,7 +2276,6 @@ y expresión escrita</property>
                           <object class="GtkToolButton" id="toolbutton4">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="label" translatable="yes">toolbutton1</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-new</property>
@@ -2605,7 +2290,6 @@ y expresión escrita</property>
                           <object class="GtkToolButton" id="toolbutton5">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="label" translatable="yes">toolbutton2</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-edit</property>
@@ -2620,7 +2304,6 @@ y expresión escrita</property>
                           <object class="GtkToolButton" id="toolbutton6">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="label" translatable="yes">toolbutton3</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-remove</property>
@@ -2684,7 +2367,6 @@ y expresión escrita</property>
                           <object class="GtkToolButton" id="toolbutton1">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="label" translatable="yes">toolbutton1</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-new</property>
@@ -2699,7 +2381,6 @@ y expresión escrita</property>
                           <object class="GtkToolButton" id="toolbutton2">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="label" translatable="yes">toolbutton2</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-edit</property>
@@ -2714,7 +2395,6 @@ y expresión escrita</property>
                           <object class="GtkToolButton" id="toolbutton3">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="label" translatable="yes">toolbutton3</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-remove</property>
@@ -2778,7 +2458,6 @@ y expresión escrita</property>
                           <object class="GtkToolButton" id="toolbutton16">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="label" translatable="yes">toolbutton1</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-new</property>
@@ -2793,7 +2472,6 @@ y expresión escrita</property>
                           <object class="GtkToolButton" id="toolbutton17">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="label" translatable="yes">toolbutton2</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-edit</property>
@@ -2808,7 +2486,6 @@ y expresión escrita</property>
                           <object class="GtkToolButton" id="toolbutton18">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="label" translatable="yes">toolbutton3</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-remove</property>
@@ -2872,7 +2549,6 @@ y expresión escrita</property>
                           <object class="GtkToolButton" id="toolbutton13">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="label" translatable="yes">toolbutton1</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-new</property>
@@ -2887,7 +2563,6 @@ y expresión escrita</property>
                           <object class="GtkToolButton" id="toolbutton14">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="label" translatable="yes">toolbutton2</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-edit</property>
@@ -2902,7 +2577,6 @@ y expresión escrita</property>
                           <object class="GtkToolButton" id="toolbutton15">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="label" translatable="yes">toolbutton3</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-remove</property>
@@ -2989,36 +2663,6 @@ y expresión escrita</property>
       </object>
     </child>
   </object>
-  <object class="GtkImage" id="image1">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-add</property>
-  </object>
-  <object class="GtkImage" id="image2">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-add</property>
-  </object>
-  <object class="GtkImage" id="image3">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">Añadir</property>
-  </object>
-  <object class="GtkImage" id="image4">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-add</property>
-  </object>
-  <object class="GtkImage" id="image5">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-zoom-out</property>
-  </object>
-  <object class="GtkImage" id="image6">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-zoom-in</property>
-  </object>
   <object class="GtkMenu" id="popup">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -3027,7 +2671,6 @@ y expresión escrita</property>
         <property name="label">gtk-delete</property>
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="use_action_appearance">False</property>
         <property name="use_underline">True</property>
         <property name="use_stock">True</property>
       </object>

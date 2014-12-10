@@ -37,6 +37,7 @@ class CursoModel (Model):
     nivel = ""
     precio = 0
     nota_aprobado = 50
+    
     def __init__(self):
         """Constructor for CursoModel initialises the model with its parent
         class, then fills the liststore for the treeview.
