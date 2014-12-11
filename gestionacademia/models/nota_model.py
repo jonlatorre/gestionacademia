@@ -32,7 +32,7 @@ from gestionacademia.utils._imprimir import *
 def limpiar_nota(nota):
     """Función para la impresiónn que devuelve en blanco si la nota y el baremo son 0"""
     if nota==0:
-        return "0"
+        return 0
     elif nota==-1 or nota==999:
         return "NP"
     else:
@@ -179,14 +179,19 @@ class NotaModel(Model):
             if len(list(res)):
                 n = res[0]
                 #print "Encontrada nota %i"%n.id
-                for variable in self.__observables__:
+                for variable in "grama","expresion","lectura":
                     #print "Cargando %s con el valor %s"%(variable,getattr(n,variable))
-                    notas.update({variable: limpiar_nota(getattr(n,variable))})
+                    nota = limpiar_nota(getattr(n,variable))
+                    baremo = limpiar_nota(getattr(n,"%s_baremo"%variable))
+                    if nota != "NP" and baremo != 0:
+                        nota_final = 100*int(nota)/int(baremo)
+                    print "Tenemos la nota final",nota_final
+                    notas.update({variable: nota_final})
             else:
                 #print "No hay nota :("
-                for variable in self.__observables__:
+                for variable in "grama","expresion","lectura":
                     #print "Cargando %s con el valor %s"%(variable,"-")
-                    notas.update({variable: "0"})
+                    notas.update({variable: "-"})
             #print notas
             notas_trimestres.update({trimestre: notas})
 
@@ -243,25 +248,28 @@ class NotaModel(Model):
         story.append(Paragraph(cadena, estilo))
         story.append(Spacer(0,20))
         ##Tabla con las notas
-        tabla =[['Evaluación','Primer Trimestre','Segundo Trimestre','Tercer Trimestre']]
-        tabla.append(["Grammar",\
-            "%s"%(int(notas_trimestres[1]['grama'])*100/int(notas_trimestres[1]['grama_baremo'])),\
-            "%s"%(int(notas_trimestres[2]['grama'])*100/int(notas_trimestres[1]['grama_baremo'])),\
-            "%s"%(int(notas_trimestres[3]['grama'])*100/int(notas_trimestres[1]['grama_baremo']))])
+        tabla =[['EVALUACION','Primer Trimestre','Segundo Trimestre','Tercer Trimestre']]
+        tabla.append(["GRAMMAR",\
+            "%s"%(notas_trimestres[1]['grama']),\
+            "%s"%(notas_trimestres[2]['grama']),\
+            "%s"%(notas_trimestres[3]['grama'])])
+        
         if (not asistencia.grupo.menores):
-            tabla.append(["Oral",\
-                "%s"%(int(notas_trimestres[1]['expresion'])*100/int(notas_trimestres[1]['expresion_baremo'])),\
-                "%s"%(int(notas_trimestres[2]['expresion'])*100/int(notas_trimestres[1]['expresion_baremo'])),\
-                "%s"%(int(notas_trimestres[3]['expresion'])*100/int(notas_trimestres[1]['expresion_baremo']))])
-            tabla.append(["Reading",\
-                "%s"%(int(notas_trimestres[1]['lectura'])*100/int(notas_trimestres[1]['lectura_baremo'])),\
-                "%s"%(int(notas_trimestres[2]['lectura'])*100/int(notas_trimestres[1]['lectura_baremo'])),\
-                "%s"%(int(notas_trimestres[3]['lectura'])*100/int(notas_trimestres[1]['lectura_baremo']))])
-
+            tabla.append(["ORAL",\
+                "%s"%(notas_trimestres[1]['expresion']),\
+                "%s"%(notas_trimestres[2]['expresion']),\
+                "%s"%(notas_trimestres[3]['expresion'])])
+            tabla.append(["READING",\
+                "%s"%(notas_trimestres[1]['lectura']),\
+                "%s"%(notas_trimestres[2]['lectura']),\
+                "%s"%(notas_trimestres[3]['lectura'])])
+        
         t_notas = Table(tabla)
+        print "Damos estilo ala tabla"
+        t_notas.setStyle([('FONTNAME', (0,0), (-1,0), 'Times-Bold'),('FONTNAME', (0,0), (0,-1), 'Times-Bold')])
         #t_notas.setStyle([('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green)])
         story.append(t_notas)
-        story.append(Spacer(0,10))
+        story.append(Spacer(0,85))
         ###Explicaciones y baremos
         #cadena="Comportamiento: M = Malo, R = Regular, B = Bueno, E = Muy Bueno"
         #story.append(Paragraph(cadena, estilo))
