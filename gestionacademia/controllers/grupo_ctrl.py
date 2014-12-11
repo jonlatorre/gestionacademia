@@ -62,6 +62,7 @@ class GrupoCtrl (Controller):
         cb_init(self.view['cb_curso'],self.model.curso.lista,self.model.grupo.cursoID)
         cb_init(self.view['cb_mes_asistencia'],self.model.lista_meses,'1')
         cb_init(self.view['cb_mes_notas'],self.model.lista_trimestres,'1')
+        #~ self.view['menores'].set_active(self.model.menores)
         return
 
     # Non-public methods
@@ -190,6 +191,7 @@ class GrupoCtrl (Controller):
         self.adapt('grupo.nombre','nombre')
         self.adapt('grupo.num_max','num_max')
         self.adapt('grupo.id','id')
+        self.adapt('grupo.menores','menores')
 ##        #Conectamos todas las variables del calendario,que estánen un array
 ##        for variable in self.model.grupo.lista_variables:
 ##            self.adapt('grupo.%s'%variable,variable)

@@ -160,12 +160,13 @@ class GrupoModel (Model):
         if self.id==-1:
             ##FIXME estoy puede fallar, al añadir alumnos y clases a un grupo que AUN no existe
             debug("Creando el grupo")
-            self.g = Grupo(nombre = self.nombre,curso=Curso.get(self.cursoID),num_max=self.num_max)
+            self.g = Grupo(nombre = self.nombre,curso=Curso.get(self.cursoID),num_max=self.num_max,menores = self.menores)
             self.id = self.g.id
         else:
             self.g.nombre = self.nombre
             self.g.curso = Curso.get(self.cursoID)
             self.g.num_max = self.num_max
+            self.g.menores = self.menores
         ##Antes de salir refrescamos la lista
         self.rellenar_lista()
         return

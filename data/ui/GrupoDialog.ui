@@ -125,6 +125,20 @@
                         <property name="position">3</property>
                       </packing>
                     </child>
+                    <child>
+                      <object class="GtkCheckButton" id="menores">
+                        <property name="visible">True</property>
+                        <property name="sensitive">True</property>
+                        <property name="can_focus">True</property>
+                        
+                        <property name="label">menores</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">False</property>
+                        <property name="position">4</property>
+                      </packing>
+                    </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -169,7 +183,7 @@
                       <packing>
                         <property name="expand">True</property>
                         <property name="fill">True</property>
-                        <property name="position">2</property>
+                        <property name="position">4</property>
                       </packing>
                     </child>
                     <child>
