@@ -294,17 +294,18 @@ class AlumnoModel (Model):
                 if nota.trimestre==3:
                     print "Estamos con la nota", nota.id
                     print nota
-                    ## primero comprobamos si es un pequeño coggemos la nota del 3º control, sino la de gramatica
-                    nombre_curso = grupo.lower()
-                    #FIXME esto debería ser una función externa
-                    if re.search('junior',nombre_curso) or re.search('beginner',nombre_curso) or re.search('movers',nombre_curso)  or re.search('starters',nombre_curso)  or re.search('flyers',nombre_curso):
-                        print "Es pequeño"
-                        nota_3trimestre = nota.control3
-                        baremo_3trimestre = nota.control3_baremo
-                    else:
-                        print "Es mayor"
-                        nota_3trimestre = nota.grama
-                        baremo_3trimestre = nota.grama_baremo
+                    #~ ## primero comprobamos si es un pequeño coggemos la nota del 3º control, sino la de gramatica
+                    #~ nombre_curso = grupo.lower()
+                    #~ #FIXME esto debería ser una función externa
+                    #~ if re.search('junior',nombre_curso) or re.search('beginner',nombre_curso) or re.search('movers',nombre_curso)  or re.search('starters',nombre_curso)  or re.search('flyers',nombre_curso):
+                        #~ print "Es pequeño"
+                        #~ nota_3trimestre = nota.control3
+                        #~ baremo_3trimestre = nota.control3_baremo
+                    #~ else:
+                        #~ print "Es mayor"
+                        #~ nota_3trimestre = nota.grama
+                        #~ baremo_3trimestre = nota.grama_baremo
+                    nota_3trimestre = nota.grama   
                     ### Buscamos la nota de grama, si es 0 cojemos el control3 si es 999 (no presentado ponemos un NP)
                     if nota_3trimestre == 0:
                         
@@ -312,7 +313,7 @@ class AlumnoModel (Model):
                     elif nota_3trimestre == 999:
                         nota_final = "NP"
                     else:
-                        nota_final = "%s / %s"%(nota_3trimestre,baremo_3trimestre)
+                        nota_final = "%s /100"%(nota_3trimestre)
             total_faltas = 0
             total_faltas_j = 0
             try:

@@ -277,7 +277,7 @@ class GrupoModel (Model):
         ano = date.today().year
         #FIXME esto estaría mejor en el controlador o en la vista
         if mes == 1:
-            print "Estamos trabajando cone l mes de enero!"
+            print "Estamos trabajando con el mes de enero!"
             res = pedir_confirmacion("Hemos detectado que quieres imprimir las notas de Enero, ¿quieres que sea el mes de Enero de %s ?"%(ano+1),"¿Usar el año que viene?")
             if res:
                 ano = ano + 1;
@@ -325,33 +325,35 @@ class GrupoModel (Model):
         story.append(Spacer(0,20))
 
         ##Tabla con las notas (diferente para peques y adultos
-        if re.search("junior",str(self.g.curso.nombre).lower()) or re.search("begin",str(self.g.curso.nombre).lower()):
+        
+        #~ if re.search("junior",str(self.g.curso.nombre).lower()) or re.search("begin",str(self.g.curso.nombre).lower()):
+        if self.g.menores:
             ##Solo para los peques
-            tabla =[['Num.','Apellidos, Nombre','Control1','Control2','Control Final','Compor.','Tareas']]
+            tabla =[['Num.','Apellidos, Nombre','Grammar']]
             for asis in self.g.alumnos:
                 a = asis.alumno
-                tabla.append([a.id,"%s %s,%s"%(a.apellido1,a.apellido2,a.nombre),"   /   ","   /   ","   /   ","  ","  "])
+                tabla.append([a.id,"%s %s,%s"%(a.apellido1,a.apellido2,a.nombre),"   /100"])
             t = Table(tabla)
             t.setStyle([('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green),('FONTSIZE',(0,0),(-1,-1),9)])
             story.append(t)
             story.append(Spacer(0,20))
         else:
             ##Adultos llevan todos los conceptos
-            tabla =[['Num.','Apellidos, Nombre','Ctrl1','Ctrl2','Ctrl Final','Compor.','Tareas','Gramá.','Expre.','Lectura']]
+            tabla =[['Num.','Apellidos, Nombre','Grammar.','Oral','Reading']]
             for asis in self.g.alumnos:
                 a = asis.alumno
-                tabla.append([a.id,"%s %s,%s"%(a.apellido1,a.apellido2,a.nombre),"   /   ","   /   ","   /   ","  ","  ","   /   ","   /   ","   /   "])
+                tabla.append([a.id,"%s %s,%s"%(a.apellido1,a.apellido2,a.nombre),"   /100","   /100","   /100"])
             t = Table(tabla)
             t.setStyle([('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green),
                 ('FONTSIZE',(0,0),(-1,-1),10)])
             story.append(t)
             story.append(Spacer(0,20))
 
-        ##Explicaciones y baremos
-        cadena="Comportamiento: M = Malo, R = Regular, B = Bueno, E = Muy Bueno"
-        story.append(Paragraph(cadena, estilo))
-        cadena="Realización tareas: N = Nunca, P = Pocas veces, A = A veces, C = Casi siempre, S = Siempre"
-        story.append(Paragraph(cadena, estilo))
+        #~ ##Explicaciones y baremos
+        #~ cadena="Comportamiento: M = Malo, R = Regular, B = Bueno, E = Muy Bueno"
+        #~ story.append(Paragraph(cadena, estilo))
+        #~ cadena="Realización tareas: N = Nunca, P = Pocas veces, A = A veces, C = Casi siempre, S = Siempre"
+        #~ story.append(Paragraph(cadena, estilo))
 
         ##Pie de página
 

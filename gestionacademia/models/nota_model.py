@@ -247,17 +247,17 @@ class NotaModel(Model):
             "%s"%(notas_trimestres[1]['grama']),\
             "%s"%(notas_trimestres[2]['grama']),\
             "%s"%(notas_trimestres[3]['grama'])])
+        if (not asistencia.grupo.menores):
+            tabla.append(["Oral",\
+                "%s"%(notas_trimestres[1]['expresion']),\
+                "%s"%(notas_trimestres[2]['expresion']),\
+                "%s"%(notas_trimestres[3]['expresion'])])
 
-        tabla.append(["Oral",\
-            "%s"%(notas_trimestres[1]['expresion']),\
-            "%s"%(notas_trimestres[2]['expresion']),\
-            "%s"%(notas_trimestres[3]['expresion'])])
 
-
-        tabla.append(["Reading",\
-            "%s"%(notas_trimestres[1]['lectura']),\
-            "%s"%(notas_trimestres[2]['lectura']),\
-            "%s"%(notas_trimestres[3]['lectura'])])
+            tabla.append(["Reading",\
+                "%s"%(notas_trimestres[1]['lectura']),\
+                "%s"%(notas_trimestres[2]['lectura']),\
+                "%s"%(notas_trimestres[3]['lectura'])])
 
         t_notas = Table(tabla)
         #t_notas.setStyle([('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green)])
