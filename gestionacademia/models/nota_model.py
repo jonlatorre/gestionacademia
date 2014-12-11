@@ -71,16 +71,16 @@ class NotaModel(Model):
     #~ control3=int()
     #~ control3_baremo=int()
     grama=int()
-    #~ grama_baremo=int()
+    grama_baremo=int()
     expresion=int()
-    #~ expresion_baremo=int()
+    expresion_baremo=int()
     lectura=int()
-    #~ lectura_baremo=int()
+    lectura_baremo=int()
     fjustificadas=int()
     fnojustificadas=int()
     #~ tareas = str()
     #~ comportamiento = str()
-    __observables__ = ('grama', 'expresion', 'lectura')
+    __observables__ = ('grama','grama_baremo','expresion','expresion_baremo','lectura','lectura_baremo')
     def __init__(self,id=-1):
 
         """Constructor for HorarioModel initialises the model with its parent
@@ -102,14 +102,14 @@ class NotaModel(Model):
         #~ control2_baremo=int()
         #~ control3=int()
         #~ control3_baremo=int()
-        grama=int()
-        #~ grama_baremo=int()
-        expresion=int()
-        #~ expresion_baremo=int()
-        lectura=int()
-        #~ lectura_baremo=int()
-        #~ fjustificadas=int()
-        #~ fnojustificadas=int()
+        self.grama=int()
+        self.grama_baremo=int()
+        self.expresion=int()
+        self.expresion_baremo=int()
+        self.lectura=int()
+        self.lectura_baremo=int()
+        fjustificadas=int()
+        fnojustificadas=int()
         #~ tareas = ""
         #~ comportamiento = ""
     def buscar(self):
@@ -140,6 +140,7 @@ class NotaModel(Model):
         ##ATENCION: antes hay que establecer las propiedades alumnoID,grupoID y trimestre
         if self.buscar()==1:
             print "Cargando las Notas"
+            print self.__observables__
             for variable in self.__observables__:
                 print "Cargando variable %s con el valor %s"%(variable,getattr(self.n,variable))
                 setattr(self,variable,getattr(self.n,variable))
@@ -185,7 +186,7 @@ class NotaModel(Model):
                 #print "No hay nota :("
                 for variable in self.__observables__:
                     #print "Cargando %s con el valor %s"%(variable,"-")
-                    notas.update({variable: "-"})
+                    notas.update({variable: "0"})
             #print notas
             notas_trimestres.update({trimestre: notas})
 
@@ -242,46 +243,42 @@ class NotaModel(Model):
         story.append(Paragraph(cadena, estilo))
         story.append(Spacer(0,20))
         ##Tabla con las notas
-        tabla =[['','Primer Trimestre','Segundo Trimestre','Tercer Trimestre']]
+        tabla =[['Evaluación','Primer Trimestre','Segundo Trimestre','Tercer Trimestre']]
         tabla.append(["Grammar",\
-            "%s"%(notas_trimestres[1]['grama']),\
-            "%s"%(notas_trimestres[2]['grama']),\
-            "%s"%(notas_trimestres[3]['grama'])])
+            "%s"%(int(notas_trimestres[1]['grama'])*100/int(notas_trimestres[1]['grama_baremo'])),\
+            "%s"%(int(notas_trimestres[2]['grama'])*100/int(notas_trimestres[1]['grama_baremo'])),\
+            "%s"%(int(notas_trimestres[3]['grama'])*100/int(notas_trimestres[1]['grama_baremo']))])
         if (not asistencia.grupo.menores):
             tabla.append(["Oral",\
-                "%s"%(notas_trimestres[1]['expresion']),\
-                "%s"%(notas_trimestres[2]['expresion']),\
-                "%s"%(notas_trimestres[3]['expresion'])])
-
-
+                "%s"%(int(notas_trimestres[1]['expresion'])*100/int(notas_trimestres[1]['expresion_baremo'])),\
+                "%s"%(int(notas_trimestres[2]['expresion'])*100/int(notas_trimestres[1]['expresion_baremo'])),\
+                "%s"%(int(notas_trimestres[3]['expresion'])*100/int(notas_trimestres[1]['expresion_baremo']))])
             tabla.append(["Reading",\
-                "%s"%(notas_trimestres[1]['lectura']),\
-                "%s"%(notas_trimestres[2]['lectura']),\
-                "%s"%(notas_trimestres[3]['lectura'])])
+                "%s"%(int(notas_trimestres[1]['lectura'])*100/int(notas_trimestres[1]['lectura_baremo'])),\
+                "%s"%(int(notas_trimestres[2]['lectura'])*100/int(notas_trimestres[1]['lectura_baremo'])),\
+                "%s"%(int(notas_trimestres[3]['lectura'])*100/int(notas_trimestres[1]['lectura_baremo']))])
 
         t_notas = Table(tabla)
         #t_notas.setStyle([('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green)])
         story.append(t_notas)
-
+        story.append(Spacer(0,10))
         ###Explicaciones y baremos
         #cadena="Comportamiento: M = Malo, R = Regular, B = Bueno, E = Muy Bueno"
         #story.append(Paragraph(cadena, estilo))
         #cadena="Realización tareas: N = Nunca, P = Pocas veces, A = A veces, C = Casi siempre, S = Siempre"
         #story.append(Paragraph(cadena, estilo))
-        cadena="Para que un examen se considere aprobado se deberá superar el %d %%"%asistencia.grupo.curso.nota_aprobado
+        cadena="Las notas se calculan sobre 100. Para que un examen se considere aprobado se deberá superar el %d %%"%asistencia.grupo.curso.nota_aprobado
         story.append(Paragraph(cadena, estilo))
         cadena="NP: No Presentado"
         story.append(Paragraph(cadena, estilo))
         story.append(Spacer(0,10))
-        ##Observaciones
-        cadena="<b>Observaciones del profesorado:                                          </b>"
-        story.append(Paragraph(cadena, estilo))
-        story.append(Spacer(0,80))
+        #~ ##Observaciones
+        #~ cadena="<b>Observaciones del profesorado:                                          </b>"
+        #~ story.append(Paragraph(cadena, estilo))
+        #~ story.append(Spacer(0,80))
         if (asistencia.grupo.menores):
             ##Fecha y firmas
-            cadena="Visto bueno del centro"
-            story.append(Paragraph(cadena, estilo))
-            cadena="<para alignment=right>Firma de los padres</para>"
+            cadena="Sello bueno del centro                    <para alignment=right>Firma de los padres</para>"
             story.append(Paragraph(cadena, estilo))
             story.append(Spacer(0,30))
 

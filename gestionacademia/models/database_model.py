@@ -76,12 +76,12 @@ class Nota(SQLObject):
     #control2_baremo = DecimalCol(size=3,precision=0,default="0")
     #control3 = DecimalCol(size=3,precision=0,default="0")
     #control3_baremo = DecimalCol(size=3,precision=0,default="0")
-    grama = DecimalCol(size=3,precision=0,default="0")
-    #grama_baremo = DecimalCol(size=3,precision=0,default="0")
-    expresion = DecimalCol(size=3,precision=0,default="0")
-    #expresion_baremo = DecimalCol(size=3,precision=0,default="0")
-    lectura = DecimalCol(size=3,precision=0,default="0")
-    #lectura_baremo = DecimalCol(size=3,precision=0,default="0")
+    grama = DecimalCol(size=3,precision=0,default=0)
+    grama_baremo = DecimalCol(size=3,precision=0,default=0)
+    expresion = DecimalCol(size=3,precision=0,default=0)
+    expresion_baremo = DecimalCol(size=3,precision=0,default=0)
+    lectura = DecimalCol(size=3,precision=0,default=0)
+    lectura_baremo = DecimalCol(size=3,precision=0,default=0)
     
 
 
