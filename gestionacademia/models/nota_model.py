@@ -279,14 +279,17 @@ class NotaModel(Model):
         story.append(Paragraph(cadena, estilo))
         cadena="NP: No Presentado"
         story.append(Paragraph(cadena, estilo))
-        story.append(Spacer(0,10))
+        story.append(Spacer(0,20))
         #~ ##Observaciones
         #~ cadena="<b>Observaciones del profesorado:                                          </b>"
         #~ story.append(Paragraph(cadena, estilo))
         #~ story.append(Spacer(0,80))
         if (asistencia.grupo.menores):
             ##Fecha y firmas
-            cadena="Sello bueno del centro                    <para alignment=right>Firma de los padres</para>"
+            
+            cadena="Sello del centro ---------------- Firma de los padres"
+            print "Añadimos la parte de sello y firma"
+            print cadena
             story.append(Paragraph(cadena, estilo))
             story.append(Spacer(0,30))
 
