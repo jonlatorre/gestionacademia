@@ -1557,7 +1557,7 @@
                           <object class="GtkLabel" id="label15">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">Grammar</property>
+                            <property name="label" translatable="yes">Grammar/Final</property>
                           </object>
                           <packing>
                             <property name="top_attach">1</property>
@@ -1586,7 +1586,7 @@
                           <object class="GtkLabel" id="label16">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">Oral</property>
+                            <property name="label" translatable="yes">Speaking</property>
                           </object>
                           <packing>
                             <property name="top_attach">2</property>

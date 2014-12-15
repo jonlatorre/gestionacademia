@@ -249,13 +249,17 @@ class NotaModel(Model):
         story.append(Spacer(0,20))
         ##Tabla con las notas
         tabla =[['EVALUACION','Primer Trimestre','Segundo Trimestre','Tercer Trimestre']]
-        tabla.append(["GRAMMAR",\
-            "%s"%(notas_trimestres[1]['grama']),\
-            "%s"%(notas_trimestres[2]['grama']),\
-            "%s"%(notas_trimestres[3]['grama'])])
-        
-        if (not asistencia.grupo.menores):
-            tabla.append(["ORAL",\
+        if (asistencia.grupo.menores):
+            tabla.append(["EXAMEN FINAL",\
+                "%s"%(notas_trimestres[1]['grama']),\
+                "%s"%(notas_trimestres[2]['grama']),\
+                "%s"%(notas_trimestres[3]['grama'])])
+        else:
+            tabla.append(["GRAMMAR",\
+                "%s"%(notas_trimestres[1]['grama']),\
+                "%s"%(notas_trimestres[2]['grama']),\
+                "%s"%(notas_trimestres[3]['grama'])])
+            tabla.append(["SPEAKING",\
                 "%s"%(notas_trimestres[1]['expresion']),\
                 "%s"%(notas_trimestres[2]['expresion']),\
                 "%s"%(notas_trimestres[3]['expresion'])])
