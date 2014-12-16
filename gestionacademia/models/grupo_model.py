@@ -327,9 +327,9 @@ class GrupoModel (Model):
         ##Tabla con las notas (diferente para peques y adultos
         
         #~ if re.search("junior",str(self.g.curso.nombre).lower()) or re.search("begin",str(self.g.curso.nombre).lower()):
-        if self.g.menores:
+        if self.g.menores or self.g.curso.solo_examen_final:
             ##Solo para los peques
-            tabla =[['Num.','Apellidos, Nombre','Grammar']]
+            tabla =[['Num.','Apellidos, Nombre','Final']]
             for asis in self.g.alumnos:
                 a = asis.alumno
                 tabla.append([a.id,"%s %s,%s"%(a.apellido1,a.apellido2,a.nombre),"   /100"])
