@@ -255,15 +255,15 @@ class NotaModel(Model):
                 "%s"%(notas_trimestres[2]['grama']),\
                 "%s"%(notas_trimestres[3]['grama'])])
         else:
-            tabla.append(["GRAMMAR",\
+            tabla.append(["Grammar",\
                 "%s"%(notas_trimestres[1]['grama']),\
                 "%s"%(notas_trimestres[2]['grama']),\
                 "%s"%(notas_trimestres[3]['grama'])])
-            tabla.append(["SPEAKING",\
+            tabla.append(["Listening & Speaking",\
                 "%s"%(notas_trimestres[1]['expresion']),\
                 "%s"%(notas_trimestres[2]['expresion']),\
                 "%s"%(notas_trimestres[3]['expresion'])])
-            tabla.append(["READING",\
+            tabla.append(["Reading & Writing",\
                 "%s"%(notas_trimestres[1]['lectura']),\
                 "%s"%(notas_trimestres[2]['lectura']),\
                 "%s"%(notas_trimestres[3]['lectura'])])

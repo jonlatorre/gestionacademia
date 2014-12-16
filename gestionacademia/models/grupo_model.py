@@ -332,14 +332,14 @@ class GrupoModel (Model):
             tabla =[['Num.','Apellidos, Nombre','Final']]
             for asis in self.g.alumnos:
                 a = asis.alumno
-                tabla.append([a.id,"%s %s,%s"%(a.apellido1,a.apellido2,a.nombre),"   /100"])
+                tabla.append([a.id,"%s %s,%s"%(a.apellido1,a.apellido2,a.nombre),"   /    "])
             t = Table(tabla)
             t.setStyle([('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green),('FONTSIZE',(0,0),(-1,-1),9)])
             story.append(t)
             story.append(Spacer(0,20))
         else:
             ##Adultos llevan todos los conceptos
-            tabla =[['Num.','Apellidos, Nombre','Grammar.','Oral','Reading']]
+            tabla =[['Num.','Apellidos, Nombre','Grammar','Listening & Speaking','Reading & Writing']]
             for asis in self.g.alumnos:
                 a = asis.alumno
                 tabla.append([a.id,"%s %s,%s"%(a.apellido1,a.apellido2,a.nombre),"   /    ","   /    ","   /    "])
