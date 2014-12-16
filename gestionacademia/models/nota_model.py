@@ -249,7 +249,7 @@ class NotaModel(Model):
         story.append(Spacer(0,20))
         ##Tabla con las notas
         tabla =[['EVALUACION','Primer Trimestre','Segundo Trimestre','Tercer Trimestre']]
-        if (asistencia.grupo.menores):
+        if (asistencia.grupo.menores) or (asistencia.grupo.curso.solo_examen_final):
             tabla.append(["EXAMEN FINAL",\
                 "%s"%(notas_trimestres[1]['grama']),\
                 "%s"%(notas_trimestres[2]['grama']),\
