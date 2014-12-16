@@ -37,6 +37,7 @@ class CursoModel (Model):
     nivel = ""
     precio = 0
     nota_aprobado = 50
+    solo_examen_final = False
     
     def __init__(self):
         """Constructor for CursoModel initialises the model with its parent
@@ -67,6 +68,7 @@ class CursoModel (Model):
             self.nivel = ""
             self.precio = 100
             self.nota_aprobado = 50
+            self.solo_examen_final = False
             self.tv_libros.clear()
         else:
             self.c = Curso.get(id)
@@ -76,12 +78,13 @@ class CursoModel (Model):
             self.nivel = self.c.nivel
             self.precio = self.c.precio
             self.nota_aprobado = self.c.nota_aprobado
+            self.solo_examen_final = self.c.solo_examen_final
             self.rellenar_lista_libros()
         return
     def guardar(self):
         if self.id == -1:
             print "Creando curso nuevo"
-            self.c = Curso(nombre = self.nombre,examen = self.examen,nivel = self.nivel, precio = self.precio, nota_aprobado = self.nota_aprobado)
+            self.c = Curso(nombre = self.nombre,examen = self.examen,nivel = self.nivel, precio = self.precio, nota_aprobado = self.nota_aprobado,solo_examen_final=self.solo_examen_final)
             self.id = self.c.id
         else:
             print "Guardando el curso %i %s"%(self.id,self.nombre)
@@ -90,6 +93,7 @@ class CursoModel (Model):
             self.c.nivel = self.nivel
             self.c.precio = self.precio
             self.c.nota_aprobado = self.nota_aprobado
+            self.c.solo_examen_final = self.solo_examen_final
         ##Antes de salir refrescamos la lista
         self.rellenar_lista()
         return

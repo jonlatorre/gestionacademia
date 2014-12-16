@@ -134,6 +134,7 @@ class Curso(SQLObject):
     nivel = UnicodeCol(default="")
     libros = RelatedJoin('Libro')
     nota_aprobado = FloatCol(default=50)
+    solo_examen_final = BoolCol(default=0)
 
 class Grupo(SQLObject):
     nombre = UnicodeCol()

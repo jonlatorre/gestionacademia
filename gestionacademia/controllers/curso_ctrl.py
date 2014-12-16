@@ -90,4 +90,6 @@ class CursoCtrl (Controller):
         self.adapt('curso.nivel','nivel')
         self.adapt('curso.precio','precio')
         self.adapt('curso.nota_aprobado','nota_aprobado')
+        self.adapt('curso.solo_examen_final','solo_examen_final')
+        
     pass # End of class
