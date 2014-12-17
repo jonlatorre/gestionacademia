@@ -183,8 +183,11 @@ class NotaModel(Model):
                     #print "Cargando %s con el valor %s"%(variable,getattr(n,variable))
                     nota = limpiar_nota(getattr(n,variable))
                     baremo = limpiar_nota(getattr(n,"%s_baremo"%variable))
+                    print "Hemos limpiado la nota y tenemos",nota,baremo
                     if nota != "NP" and baremo != 0:
                         nota_final = 100*int(nota)/int(baremo)
+                    else:
+                        nota_final = "NP"
                     print "Tenemos la nota final",nota_final
                     notas.update({variable: nota_final})
             else:
