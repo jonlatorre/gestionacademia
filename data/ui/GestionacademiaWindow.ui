@@ -311,6 +311,14 @@
                               </object>
                             </child>
                             <child>
+                              <object class="GtkMenuItem" id="imp_lista_notas_asistencias_1_trim">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">Imprimir Listado completo de notas del 1º trimestre</property>
+                                <signal name="activate" handler="on_imp_lista_notas_asistencias_1_trim" swapped="no"/>
+                              </object>
+                            </child>
+                            <child>
                               <object class="GtkMenuItem" id="etiquetas">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>

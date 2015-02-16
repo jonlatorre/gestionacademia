@@ -255,7 +255,76 @@ class AlumnoModel (Model):
         doc.build(story)
         send_to_printer(fichero)
         return
-    
+    def imprimir_lista_notas_asistencia_1_trim(self,todos=False):
+        """Pensado para una vez terminado el trimestre sacar un listado alfabetico 
+        con las notas y las faltas"""
+        fichero = get_print_path('Alumnos')+"/Listado_Alumnos_Notas_Asistencia_1_trim.pdf"
+        estiloHoja = getSampleStyleSheet()
+        story = []
+        ##Vamos con la cabecera
+        ##banner = os.path.join(_config.get_data_path(), 'media', 'banner_eide.png')
+        ##img=Image(banner)
+        ##story.append(img)
+
+        estilo = estiloHoja['BodyText']
+        cadena = "<para alignment=center><b>LISTADO DE ALUMNOS, NOTAS Y FALTAS</b></para>"
+        story.append(Paragraph(cadena, estilo))
+        story.append(Spacer(0,10))
+
+        tabla =[['Apellidos ','Nombre','Curso','Notal 1º Trim','Faltas','Justificadas']]
+        if todos:
+            consulta = Alumno.select(orderBy=Alumno.q.apellido1)
+        else:
+            consulta = Alumno.select(Alumno.q.activo==True,orderBy=Alumno.q.apellido1)
+        for persona in consulta:
+            #print "Estamos con la persona %s (%s) "%(persona.nombre,persona.id)
+            nota_final = "----"
+
+            #print "La asistencia es:",asis.id
+            try:
+                asis = persona.grupos[0]
+                grupo = asis.grupo.nombre
+            except:
+                grupo = "-----"
+            #print "El grupo es %s"%grupo
+            try:
+                nota = Nota.select(AND(Nota.q.asistenciaID==asis.id,Nota.q.trimestre==1))[0]
+                print "Estamos con la nota", nota.id
+                print nota
+                ##cromprobar cual es la nota buena, si grama u otra
+                nota_trimestre = nota.grama   
+                baremo_trimestre = nota.grama_baremo
+                ### Buscamos la nota de grama, si es 0 cojemos el control3 si es 999 (no presentado ponemos un NP)
+                if nota_trimestre == 0:
+                    nota_final = "NP"
+                elif nota_trimestre == 999:
+                    nota_final = "NP"
+                else:
+                    nota_final = "%s / %s"%(nota_trimestre,baremo_trimestre)
+            except:
+                nota_final="pendiente"
+            total_faltas = 0
+            total_faltas_j = 0
+            try:
+                for falta in Falta.select(Falta.q.asistenciaID==persona.grupos[0].id):
+                    total_faltas = total_faltas + falta.faltas
+                    total_faltas_j = total_faltas_j + falta.justificadas
+            except:
+                pass
+            try:
+                apellidos = persona.apellido1+" "+persona.apellido2
+            except:
+                apellidos = persona.apellido1
+            tabla.append([apellidos,persona.nombre,grupo,nota_final,total_faltas,total_faltas_j])
+        t = Table(tabla)
+        t.setStyle([('FONTSIZE',(0,0),(-1,-1),8),('FONTSIZE',(-1,0),(-1,-1),6),('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green)])
+        t.setStyle([('LINEABOVE', (0,0), (-1,0), 2, colors.black),('LINEBEFORE', (0,0), (0,-1), 2, colors.black),('LINEABOVE', (0,1), (-1,-1), 0.25, colors.black),('LINEAFTER', (0,0), (-1,-1), 0.25, colors.black),('LINEBELOW', (0,-1), (-1,-1), 2, colors.black),('LINEAFTER', (-1,0), (-1,-1), 2, colors.black),('ALIGN', (1,1), (-1,-1), 'RIGHT')])
+        story.append(t)
+        doc=SimpleDocTemplate(fichero,pagesize=A4,showBoundary=0)
+        doc.build(story)
+        send_to_printer(fichero)
+        return
+
     def imprimir_lista_notas_asistencia(self,todos=False):
         """Pensado para una vez terminado el curso sacar un listado alfabetico 
         con las notas finales y el totald e faltas"""

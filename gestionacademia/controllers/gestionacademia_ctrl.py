@@ -251,6 +251,8 @@ class GestionacademiaCtrl (Controller):
         self.model.alumno.imprimir_lista()
     def on_imp_lista_notas_asistencias(self,widget):
         self.model.alumno.imprimir_lista_notas_asistencia()
+    def on_imp_lista_notas_asistencias_1_trim(self,widget):
+        self.model.alumno.imprimir_lista_notas_asistencia_1_trim()
 
     def _on_menu_preferences_clicked(self, button):
         v = PreferencesView(self.view) # pass GestionacademiaView as the parent
@@ -622,21 +624,21 @@ class GestionacademiaCtrl (Controller):
         mostrar_aviso("Se han impreso %s etiquetas"%res,"Etiquetas impresas")
         return
     def on_etiquetas_seleccion_activate(self, widget):
-		self.log.debug("Vamos a leer el input de alumnos e imprimir las eiquetas")
-		v = InputAlumnosView(self.view) # pass GestionacademiaView as the parent
-		c = InputAlumnosCtrl(self.model, v)
-		self.log.debug("Lanzamos la ventana")
-		v.run() # this runs in modal mode
-		self.log.debug("Ha terminado")
-		return
+        self.log.debug("Vamos a leer el input de alumnos e imprimir las eiquetas")
+        v = InputAlumnosView(self.view) # pass GestionacademiaView as the parent
+        c = InputAlumnosCtrl(self.model, v)
+        self.log.debug("Lanzamos la ventana")
+        v.run() # this runs in modal mode
+        self.log.debug("Ha terminado")
+        return
     def on_etiquetas_seleccion_grupos_activate(self, widget):
-		self.log.debug("Vamos a leer el input de grupos e imprimir las eiquetas")
-		v = InputGruposView(self.view) # pass GestionacademiaView as the parent
-		c = InputGruposCtrl(self.model, v)
-		self.log.debug("Lanzamos la ventana")
-		v.run() # this runs in modal mode
-		self.log.debug("Ha terminado")
-		return
+        self.log.debug("Vamos a leer el input de grupos e imprimir las eiquetas")
+        v = InputGruposView(self.view) # pass GestionacademiaView as the parent
+        c = InputGruposCtrl(self.model, v)
+        self.log.debug("Lanzamos la ventana")
+        v.run() # this runs in modal mode
+        self.log.debug("Ha terminado")
+        return
 
     ##Para la parte de facturar
     def on_factura_generar(self,widget):
