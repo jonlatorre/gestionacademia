@@ -32,7 +32,7 @@ from gestionacademia.utils._imprimir import *
 def limpiar_nota(nota):
     """Función para la impresiónn que devuelve en blanco si la nota y el baremo son 0"""
     if nota==0:
-        return 0
+        return "0"
     elif nota==-1 or nota==999:
         return "NP"
     else:
@@ -52,66 +52,85 @@ def convertir_tareas(tareas):
     except:
         return "-"
 
-
 class NotaModel(Model):
-
-    """Model del banco
-    Metodos públicos:
-
-    """
     n = None
     asistenciaID = -1
     alumnoID = -1
     grupoID = -1
     trimestre = -1
-    #~ control1=int()
-    #~ control1_baremo=int()
-    #~ control2=int()
-    #~ control2_baremo=int()
-    #~ control3=int()
-    #~ control3_baremo=int()
-    grama=int()
-    grama_baremo=int()
-    expresion=int()
-    expresion_baremo=int()
-    lectura=int()
-    lectura_baremo=int()
-    fjustificadas=int()
-    fnojustificadas=int()
-    #~ tareas = str()
-    #~ comportamiento = str()
-    __observables__ = ('grama','grama_baremo','expresion','expresion_baremo','lectura','lectura_baremo')
+    control = int()
+    control_np = bool()
+    control_na = bool()
+    gramar = int()
+    gramar_np = bool()
+    gramar_na = bool()
+    read_writing = int()
+    read_writing_np = bool()
+    read_writing_na = bool()
+    reading = int()
+    reading_np = bool()
+    reading_na = bool()
+    writing = int()
+    writing_np = bool()
+    writing_na = bool()
+    useofenglish = int()
+    useofenglish_np = bool()
+    useofenglish_na = bool()
+    listening = int()
+    listening_np = bool()
+    listening_na = bool()
+    speaking = int()
+    speaking_np = bool()
+    speaking_na = bool()
+    comportamiento = ""
+    __observables__ = ('control','control_np','control_na',
+        'gramar','gramar_np','gramar_na',
+        'read_writing','read_writing_np','read_writing_na',
+        'reading','reading_np','reading_na',
+        'writing','writing_np','writing_na',
+        'useofenglish','useofenglish_np','useofenglish_na',
+        'listening','listening_np','listening_na',
+        'speaking','speaking_np','speaking_na',
+        'comportamiento')
+    
     def __init__(self,id=-1):
-
-        """Constructor for HorarioModel initialises the model with its parent
+        """Constructor for NotaModel initialises the model with its parent
         class, then sets credits to the contents of a file.
         """
         Model.__init__(self)
         self.clear()
 
     def clear(self):
-##        print "Limpiando"
         n = None
         asistenciaID = -1
         alumnoID = -1
         grupoID = -1
         trimestre = -1
-        #~ control1=int()
-        #~ control1_baremo=int()
-        #~ control2=int()
-        #~ control2_baremo=int()
-        #~ control3=int()
-        #~ control3_baremo=int()
-        self.grama=int()
-        self.grama_baremo=int()
-        self.expresion=int()
-        self.expresion_baremo=int()
-        self.lectura=int()
-        self.lectura_baremo=int()
-        fjustificadas=int()
-        fnojustificadas=int()
-        #~ tareas = ""
-        #~ comportamiento = ""
+        control = int()
+        control_np = bool()
+        control_na = bool()
+        gramar = int()
+        gramar_np = bool()
+        gramar_na = bool()
+        read_writing = int()
+        read_writing_np = bool()
+        read_writing_na = bool()
+        reading = int()
+        reading_np = bool()
+        reading_na = bool()
+        writing = int()
+        writing_np = bool()
+        writing_na = bool()
+        useofenglish = int()
+        useofenglish_np = bool()
+        useofenglish_na = bool()
+        listening = int()
+        listening_np = bool()
+        listening_na = bool()
+        speaking = int()
+        speaking_np = bool()
+        speaking_na = bool()
+        comportamiento = ""    
     def buscar(self):
         ##Buscamos la asistencia
         print "Buscado la nota del alumno %i al grupo %i trimestre %i"%(self.alumnoID,self.grupoID,self.trimestre)
@@ -140,7 +159,6 @@ class NotaModel(Model):
         ##ATENCION: antes hay que establecer las propiedades alumnoID,grupoID y trimestre
         if self.buscar()==1:
             print "Cargando las Notas"
-            print self.__observables__
             for variable in self.__observables__:
                 print "Cargando variable %s con el valor %s"%(variable,getattr(self.n,variable))
                 setattr(self,variable,getattr(self.n,variable))
@@ -164,8 +182,8 @@ class NotaModel(Model):
             num_notas+=1
             mostrar_aviso("Funcion deshabilitada","Funcion deshabilitada")
             #self.imprimir_nota(n)
-
         return num_notas
+        
     def imprimir_nota(self,asistencia,trimestre_imprimir):
         hoy=date.today()
         ##FIXME esto debería ir a preferencias
@@ -179,20 +197,12 @@ class NotaModel(Model):
             if len(list(res)):
                 n = res[0]
                 #print "Encontrada nota %i"%n.id
-                for variable in "grama","expresion","lectura":
+                for variable in self.__observables__:
                     #print "Cargando %s con el valor %s"%(variable,getattr(n,variable))
-                    nota = limpiar_nota(getattr(n,variable))
-                    baremo = limpiar_nota(getattr(n,"%s_baremo"%variable))
-                    print "Hemos limpiado la nota y tenemos",nota,baremo
-                    if nota != "NP" and baremo != 0:
-                        nota_final = 100*int(nota)/int(baremo)
-                    else:
-                        nota_final = "NP"
-                    print "Tenemos la nota final",nota_final
-                    notas.update({variable: nota_final})
+                    notas.update({variable: limpiar_nota(getattr(n,variable))})
             else:
                 #print "No hay nota :("
-                for variable in "grama","expresion","lectura":
+                for variable in self.__observables__:
                     #print "Cargando %s con el valor %s"%(variable,"-")
                     notas.update({variable: "-"})
             #print notas
@@ -251,54 +261,83 @@ class NotaModel(Model):
         story.append(Paragraph(cadena, estilo))
         story.append(Spacer(0,20))
         ##Tabla con las notas
-        tabla =[['EVALUACION','Primer Trimestre','Segundo Trimestre','Tercer Trimestre']]
-        if (asistencia.grupo.menores) or (asistencia.grupo.curso.solo_examen_final):
-            tabla.append(["EXAMEN FINAL",\
-                "%s"%(notas_trimestres[1]['grama']),\
-                "%s"%(notas_trimestres[2]['grama']),\
-                "%s"%(notas_trimestres[3]['grama'])])
-        else:
-            tabla.append(["Grammar",\
-                "%s"%(notas_trimestres[1]['grama']),\
-                "%s"%(notas_trimestres[2]['grama']),\
-                "%s"%(notas_trimestres[3]['grama'])])
-            tabla.append(["Listening & Speaking",\
-                "%s"%(notas_trimestres[1]['expresion']),\
-                "%s"%(notas_trimestres[2]['expresion']),\
-                "%s"%(notas_trimestres[3]['expresion'])])
-            tabla.append(["Reading & Writing",\
-                "%s"%(notas_trimestres[1]['lectura']),\
-                "%s"%(notas_trimestres[2]['lectura']),\
-                "%s"%(notas_trimestres[3]['lectura'])])
+        tabla_controles =[['Concepto','Primer Trimestre','Segundo Trimestre','Tercer Trimestre']]
         
-        t_notas = Table(tabla)
-        print "Damos estilo ala tabla"
-        t_notas.setStyle([('FONTNAME', (0,0), (-1,0), 'Times-Bold'),('FONTNAME', (0,0), (0,-1), 'Times-Bold')])
-        #t_notas.setStyle([('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green)])
-        story.append(t_notas)
-        story.append(Spacer(0,85))
+        tabla_controles.append(["Control 1",\
+            "%s/%s"%(notas_trimestres[1]['control1'],notas_trimestres[1]['control1_baremo']),\
+            "%s/%s"%(notas_trimestres[2]['control1'],notas_trimestres[2]['control1_baremo']),\
+            "%s/%s"%(notas_trimestres[3]['control1'],notas_trimestres[3]['control1_baremo'])])
+        tabla_controles.append(["Control 2",\
+            "%s/%s"%(notas_trimestres[1]['control2'],notas_trimestres[1]['control2_baremo']),\
+            "%s/%s"%(notas_trimestres[2]['control2'],notas_trimestres[2]['control2_baremo']),\
+            "%s/%s"%(notas_trimestres[3]['control2'],notas_trimestres[3]['control2_baremo'])])
+
+        tabla_controles.append(["Control Final",\
+            "%s/%s"%(notas_trimestres[1]['control3'],notas_trimestres[1]['control3_baremo']),\
+            "%s/%s"%(notas_trimestres[2]['control3'],notas_trimestres[2]['control3_baremo']),\
+            "%s/%s"%(notas_trimestres[3]['control3'],notas_trimestres[3]['control3_baremo'])])
+
+
+        tabla_controles.append(["Tareas",\
+            "%s"%(convertir_tareas(notas_trimestres[1]['tareas'])),\
+            "%s"%(convertir_tareas(notas_trimestres[2]['tareas'])),\
+            "%s"%(convertir_tareas(notas_trimestres[3]['tareas']))])
+        tabla_controles.append(["Comportamiento",\
+            "%s"%(convertir_comportamiento(notas_trimestres[1]['comportamiento'])),\
+            "%s"%(convertir_comportamiento(notas_trimestres[2]['comportamiento'])),\
+            "%s"%(convertir_comportamiento(notas_trimestres[3]['comportamiento']))])
+
+        t_controles = Table(tabla_controles)
+        t_controles.setStyle([('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green)])
+        story.append(t_controles)
+        story.append(Spacer(0,20))
+
+        ##FIXME comprobar si el alumno no es begginers o juniors
+        if re.search('junior',asistencia.grupo.curso.nombre.lower()) or re.search('beginner',asistencia.grupo.curso.nombre.lower()):
+            debug("Juniors y beginners no tienen estas notas.")
+            pass
+        else:
+            tabla =[['Concepto','Primer Trimestre','Segundo Trimestre','Tercer Trimestre']]
+            tabla.append(["Gramática y vocabulario",\
+                "%s/%s"%(notas_trimestres[1]['grama'],notas_trimestres[1]['grama_baremo']),\
+                "%s/%s"%(notas_trimestres[2]['grama'],notas_trimestres[2]['grama_baremo']),\
+                "%s/%s"%(notas_trimestres[3]['grama'],notas_trimestres[3]['grama_baremo'])])
+
+            tabla.append(["Expresión oral",\
+                "%s/%s"%(notas_trimestres[1]['expresion'],notas_trimestres[1]['expresion_baremo']),\
+                "%s/%s"%(notas_trimestres[2]['expresion'],notas_trimestres[2]['expresion_baremo']),\
+                "%s/%s"%(notas_trimestres[3]['expresion'],notas_trimestres[3]['expresion_baremo'])])
+
+
+            tabla.append(["Lectura, comprensión y expresión escrita",\
+                "%s/%s"%(notas_trimestres[1]['lectura'],notas_trimestres[1]['lectura_baremo']),\
+                "%s/%s"%(notas_trimestres[2]['lectura'],notas_trimestres[2]['lectura_baremo']),\
+                "%s/%s"%(notas_trimestres[3]['lectura'],notas_trimestres[3]['lectura_baremo'])])
+
+            t_notas = Table(tabla)
+            t_notas.setStyle([('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green)])
+            story.append(t_notas)
+
         ###Explicaciones y baremos
         #cadena="Comportamiento: M = Malo, R = Regular, B = Bueno, E = Muy Bueno"
         #story.append(Paragraph(cadena, estilo))
         #cadena="Realización tareas: N = Nunca, P = Pocas veces, A = A veces, C = Casi siempre, S = Siempre"
         #story.append(Paragraph(cadena, estilo))
-        cadena="Las notas se calculan sobre 100. Para que un examen se considere aprobado se deberá superar el %d %%"%asistencia.grupo.curso.nota_aprobado
+        cadena="Para que un examen se considere aprobado se deberá superar el %d %%"%asistencia.grupo.curso.nota_aprobado
         story.append(Paragraph(cadena, estilo))
         cadena="NP: No Presentado"
         story.append(Paragraph(cadena, estilo))
-        story.append(Spacer(0,20))
-        #~ ##Observaciones
-        #~ cadena="<b>Observaciones del profesorado:                                          </b>"
-        #~ story.append(Paragraph(cadena, estilo))
-        #~ story.append(Spacer(0,80))
-        if (asistencia.grupo.menores):
-            ##Fecha y firmas
-            
-            cadena="Sello del centro ---------------- Firma de los padres"
-            print "Añadimos la parte de sello y firma"
-            print cadena
-            story.append(Paragraph(cadena, estilo))
-            story.append(Spacer(0,30))
+        story.append(Spacer(0,10))
+        ##Observaciones
+        cadena="<b>Observaciones del profesorado:                                          </b>"
+        story.append(Paragraph(cadena, estilo))
+        story.append(Spacer(0,80))
+        ##Fecha y firmas
+        cadena="Visto bueno del centro"
+        story.append(Paragraph(cadena, estilo))
+        cadena="<para alignment=right>Firma de los padres</para>"
+        story.append(Paragraph(cadena, estilo))
+        story.append(Spacer(0,30))
 
         ##Pie de página
 

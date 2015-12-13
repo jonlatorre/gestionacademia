@@ -61,31 +61,44 @@ class Asistencia(SQLObject):
     notas = MultipleJoin('Notas')
     faltas = MultipleJoin('Notas')
 
-class Historia(SQLObject):
-	alumno = ForeignKey('Alumno',cascade='null')
-	fecha = DateCol(default=DateTimeCol.now())
-	tipo = UnicodeCol(default="")
-	anotacion = UnicodeCol(default="")
-	
 class Nota(SQLObject):
     asistencia = ForeignKey('Asistencia',cascade='null')
     trimestre = DecimalCol(size=1,precision=0)
-    #control1 = DecimalCol(size=3,precision=0,default="0")
-    #control1_baremo = DecimalCol(size=3,precision=0,default="0")
-    #control2 = DecimalCol(size=3,precision=0,default="0")
-    #control2_baremo = DecimalCol(size=3,precision=0,default="0")
-    #control3 = DecimalCol(size=3,precision=0,default="0")
-    #control3_baremo = DecimalCol(size=3,precision=0,default="0")
-    grama = DecimalCol(size=3,precision=0,default=0)
-    grama_baremo = DecimalCol(size=3,precision=0,default=0)
-    expresion = DecimalCol(size=3,precision=0,default=0)
-    expresion_baremo = DecimalCol(size=3,precision=0,default=0)
-    lectura = DecimalCol(size=3,precision=0,default=0)
-    lectura_baremo = DecimalCol(size=3,precision=0,default=0)
     
-
-
-
+    control = DecimalCol(size=3,precision=0)
+    control_np = BoolCol(default=0)
+    control_na = BoolCol(default=0)
+    
+    gramar = DecimalCol(size=3,precision=0,default="0")
+    gramar_np = BoolCol(default=0)
+    gramar_na = BoolCol(default=0)
+    
+    read_writing = DecimalCol(size=3,precision=0,default="0")
+    read_writing_np = BoolCol(default=0)
+    read_writing_na = BoolCol(default=0)
+    
+    reading = DecimalCol(size=3,precision=0,default="0")
+    reading_np = BoolCol(default=0)
+    reading_na = BoolCol(default=0)
+    
+    writing = DecimalCol(size=3,precision=0,default="0")
+    writing_np = BoolCol(default=0)
+    writing_na = BoolCol(default=0)
+    
+    useofenglish = DecimalCol(size=3,precision=0,default="0")
+    useofenglish_np = BoolCol(default=0)
+    useofenglish_na = BoolCol(default=0)
+    
+    listening = DecimalCol(size=3,precision=0,default="0")
+    listening_np = BoolCol(default=0)
+    listening_na = BoolCol(default=0)
+    
+    speaking = DecimalCol(size=3,precision=0,default="0")
+    speaking_np = BoolCol(default=0)
+    speaking_na = BoolCol(default=0)
+    
+    comportamiento = UnicodeCol(length=1,default="R")
+    
 class Falta(SQLObject):
     asistencia = ForeignKey('Asistencia',cascade='null')
     mes = DecimalCol(size=1,precision=0)
@@ -126,6 +139,9 @@ class Clase(SQLObject):
     profesor = ForeignKey('Profesor',cascade='null')
     grupo = RelatedJoin('Grupo')
 
+class ModeloNotas(SQLObject):
+    descripcion = UnicodeCol(default="")
+
 class Curso(SQLObject):
     nombre = UnicodeCol()
     precio = FloatCol(default=100)
@@ -134,7 +150,7 @@ class Curso(SQLObject):
     nivel = UnicodeCol(default="")
     libros = RelatedJoin('Libro')
     nota_aprobado = FloatCol(default=50)
-    solo_examen_final = BoolCol(default=0)
+    modelo_notas = RelatedJoin('ModeloNotas')
 
 class Grupo(SQLObject):
     nombre = UnicodeCol()
@@ -142,7 +158,6 @@ class Grupo(SQLObject):
     curso = ForeignKey('Curso',cascade='null')
     alumnos = MultipleJoin('Asistencia')
     num_max = DecimalCol(size=2,precision=0,default=14) #El tamaño default no es lo mejor que esté aquí, pero bueno
-    menores = BoolCol(default=0)
 
 
 ##class Provincia(SQLObject):
