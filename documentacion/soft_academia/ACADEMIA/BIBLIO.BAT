@@ -1,3 +1,0 @@
-cd academia
-pbibliot
-exit

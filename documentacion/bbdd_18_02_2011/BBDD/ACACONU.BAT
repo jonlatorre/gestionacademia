@@ -1,8 +1,0 @@
-ECHO OFF
-REM **** PROGRAMA ACACONU.BAT **** LLAMA A ACACONU.SRT ****
-CLS
-ECHO CLASIFICANDO FICHERO DE DATOS. Espere por Favor...
-ECHO ---------------------------------------------------
-COPY A:RECIBOS.DAT C:RECIBOS.FAC
-PCSORT ACACONU.SRT
-EXIT
