@@ -294,9 +294,14 @@ class GrupoModel (Model):
     def todas_planillas_notas(self,mes):
         num = 0
         for g in Grupo.select(orderBy=Grupo.q.nombre):
-            self.cargar(g.id)
-            self.imprimir_planilla_notas(mes)
-            num += 1
+            if len(g.alumnos) > 0:
+                print "Vamos a cargar %s"%g.id
+                self.cargar(g.id)
+                self.imprimir_planilla_notas(mes)
+                num += 1
+            else:
+                print "Grupo vacio"
+        
         return num
     def imprimir_planilla_notas(self,trimestre):
         ##Para la impresion de la planilla de notas
@@ -329,27 +334,37 @@ class GrupoModel (Model):
         #~ if re.search("junior",str(self.g.curso.nombre).lower()) or re.search("begin",str(self.g.curso.nombre).lower()):
         if self.g.menores or self.g.curso.solo_examen_final:
             ##Solo para los peques
-            tabla =[['Num.','Apellidos, Nombre','Final']]
+            tabla =[['Num.','Apellidos, Nombre','Control/Final']]
             ##FIXME nota aprobado???
-            pie = "Puntuación siempre sobre un tatal de 100 puntos. Aprobado ___ puntos"
+            pie = "Puntuación siempre sobre un total de 100 puntos. Aprobado ___ puntos"
             for asis in self.g.alumnos:
                 a = asis.alumno
-                tabla.append([a.id,"%s %s,%s"%(a.apellido1,a.apellido2,a.nombre),"   /    "])
+                tabla.append([a.id,"%s %s,%s"%(a.apellido1,a.apellido2,a.nombre),"  "])
             t = Table(tabla)
             t.setStyle([('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green),('FONTSIZE',(0,0),(-1,-1),9)])
             story.append(t)
             story.append(Spacer(0,20))
         else:
             ##Adultos
-            if self.g.curso.modelo_notas.nombre == "elemntary_intermediate":
+            if self.g.curso.modelo_notas == "elemntary_intermediate":
                 tabla =[['Num.','Apellidos, Nombre','Use Of English','Reading','Writing','Listening','Speaking']]
-                pie = "Puntuación siempre sobre un tatal de 100 puntos. Aprobado 70 puntos"
-            elif self.g.curso.modelo_notas.nombre == "upper_proficiency":
+                pie = "Puntuación siempre sobre un total de 100 puntos. Aprobado 70 puntos"
+                for asis in self.g.alumnos:
+                    a = asis.alumno
+                    tabla.append([a.id,"%s %s,%s"%(a.apellido1,a.apellido2,a.nombre),"  ","  ","  ","  ","  "])
+            elif self.g.curso.modelo_notas == "upper_proficiency":
                 tabla =[['Num.','Apellidos, Nombre','Grammar','Reading','Writing','Listening','Speaking']]
-                pie = "Puntuación siempre sobre un tatal de 100 puntos. Aprobado 60 puntos"
-            for asis in self.g.alumnos:
-                a = asis.alumno
-                tabla.append([a.id,"%s %s,%s"%(a.apellido1,a.apellido2,a.nombre),"   /    ","   /    ","   /    "])
+                pie = "Puntuación siempre sobre un total de 100 puntos. Aprobado 60 puntos"
+                for asis in self.g.alumnos:
+                    a = asis.alumno
+                    tabla.append([a.id,"%s %s,%s"%(a.apellido1,a.apellido2,a.nombre),"  ","  ","  ","  ","  "])
+            else:
+                tabla =[['Num.','Apellidos, Nombre','Control/Final']]
+                ##FIXME nota aprobado???
+                pie = "Puntuación siempre sobre un total de 100 puntos. Aprobado ___ puntos"
+                for asis in self.g.alumnos:
+                    a = asis.alumno
+                    tabla.append([a.id,"%s %s,%s"%(a.apellido1,a.apellido2,a.nombre),"  "])
             t = Table(tabla)
             t.setStyle([('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green),
                 ('FONTSIZE',(0,0),(-1,-1),10)])
@@ -361,7 +376,7 @@ class GrupoModel (Model):
         #~ story.append(Paragraph(cadena, estilo))
         #~ cadena="Realización tareas: N = Nunca, P = Pocas veces, A = A veces, C = Casi siempre, S = Siempre"
         story.append(Paragraph(pie, estilo))
-        pie = "NP para los no presentados. NA si no aplica este trismeste algún concepto"
+        pie = "NP para los no presentados. NA si no aplica este trimestre algún concepto"
         story.append(Paragraph(pie, estilo))
 
         ##Pie de página

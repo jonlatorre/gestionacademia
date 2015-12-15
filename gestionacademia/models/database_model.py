@@ -75,9 +75,9 @@ class Nota(SQLObject):
     control_np = BoolCol(default=0)
     control_na = BoolCol(default=0)
     
-    gramar = DecimalCol(size=3,precision=0,default="0")
-    gramar_np = BoolCol(default=0)
-    gramar_na = BoolCol(default=0)
+    grammar = DecimalCol(size=3,precision=0,default="0")
+    grammar_np = BoolCol(default=0)
+    grammar_na = BoolCol(default=0)
         
     reading = DecimalCol(size=3,precision=0,default="0")
     reading_np = BoolCol(default=0)
@@ -150,6 +150,7 @@ class Curso(SQLObject):
     libros = RelatedJoin('Libro')
     nota_aprobado = FloatCol(default=50)
     modelo_notas = UnicodeCol(default="")
+    solo_examen_final = BoolCol(default=0)
 
 class Grupo(SQLObject):
     nombre = UnicodeCol()
@@ -157,6 +158,7 @@ class Grupo(SQLObject):
     curso = ForeignKey('Curso',cascade='null')
     alumnos = MultipleJoin('Asistencia')
     num_max = DecimalCol(size=2,precision=0,default=14) #El tamaño default no es lo mejor que esté aquí, pero bueno
+    menores = BoolCol(default=0)
 
 
 ##class Provincia(SQLObject):
