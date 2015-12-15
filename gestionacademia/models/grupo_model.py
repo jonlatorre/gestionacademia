@@ -330,6 +330,8 @@ class GrupoModel (Model):
         if self.g.menores or self.g.curso.solo_examen_final:
             ##Solo para los peques
             tabla =[['Num.','Apellidos, Nombre','Final']]
+            ##FIXME nota aprobado???
+            pie = "Puntuación siempre sobre un tatal de 100 puntos. Aprobado ___ puntos"
             for asis in self.g.alumnos:
                 a = asis.alumno
                 tabla.append([a.id,"%s %s,%s"%(a.apellido1,a.apellido2,a.nombre),"   /    "])
@@ -338,8 +340,13 @@ class GrupoModel (Model):
             story.append(t)
             story.append(Spacer(0,20))
         else:
-            ##Adultos llevan todos los conceptos
-            tabla =[['Num.','Apellidos, Nombre','Grammar','Listening & Speaking','Reading & Writing']]
+            ##Adultos
+            if self.g.curso.modelo_notas.nombre == "elemntary_intermediate":
+                tabla =[['Num.','Apellidos, Nombre','Use Of English','Reading','Writing','Listening','Speaking']]
+                pie = "Puntuación siempre sobre un tatal de 100 puntos. Aprobado 70 puntos"
+            elif self.g.curso.modelo_notas.nombre == "upper_proficiency":
+                tabla =[['Num.','Apellidos, Nombre','Grammar','Reading','Writing','Listening','Speaking']]
+                pie = "Puntuación siempre sobre un tatal de 100 puntos. Aprobado 60 puntos"
             for asis in self.g.alumnos:
                 a = asis.alumno
                 tabla.append([a.id,"%s %s,%s"%(a.apellido1,a.apellido2,a.nombre),"   /    ","   /    ","   /    "])
@@ -353,7 +360,9 @@ class GrupoModel (Model):
         #~ cadena="Comportamiento: M = Malo, R = Regular, B = Bueno, E = Muy Bueno"
         #~ story.append(Paragraph(cadena, estilo))
         #~ cadena="Realización tareas: N = Nunca, P = Pocas veces, A = A veces, C = Casi siempre, S = Siempre"
-        #~ story.append(Paragraph(cadena, estilo))
+        story.append(Paragraph(pie, estilo))
+        pie = "NP para los no presentados. NA si no aplica este trismeste algún concepto"
+        story.append(Paragraph(pie, estilo))
 
         ##Pie de página
 

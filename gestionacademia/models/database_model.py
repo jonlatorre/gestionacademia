@@ -51,6 +51,12 @@ class Alumno(SQLObject):
     ##Otras entidades relacionadas
     grupos  = MultipleJoin('Asistencia')
 
+class Historia(SQLObject):
+	alumno = ForeignKey('Alumno',cascade='null')
+	fecha = DateCol(default=DateTimeCol.now())
+	tipo = UnicodeCol(default="")
+	anotacion = UnicodeCol(default="")
+
 class Asistencia(SQLObject):
     grupo = ForeignKey('Grupo',cascade='null')
     alumno = ForeignKey('Alumno',cascade='null')
@@ -72,11 +78,7 @@ class Nota(SQLObject):
     gramar = DecimalCol(size=3,precision=0,default="0")
     gramar_np = BoolCol(default=0)
     gramar_na = BoolCol(default=0)
-    
-    read_writing = DecimalCol(size=3,precision=0,default="0")
-    read_writing_np = BoolCol(default=0)
-    read_writing_na = BoolCol(default=0)
-    
+        
     reading = DecimalCol(size=3,precision=0,default="0")
     reading_np = BoolCol(default=0)
     reading_na = BoolCol(default=0)
@@ -139,9 +141,6 @@ class Clase(SQLObject):
     profesor = ForeignKey('Profesor',cascade='null')
     grupo = RelatedJoin('Grupo')
 
-class ModeloNotas(SQLObject):
-    descripcion = UnicodeCol(default="")
-
 class Curso(SQLObject):
     nombre = UnicodeCol()
     precio = FloatCol(default=100)
@@ -150,7 +149,7 @@ class Curso(SQLObject):
     nivel = UnicodeCol(default="")
     libros = RelatedJoin('Libro')
     nota_aprobado = FloatCol(default=50)
-    modelo_notas = RelatedJoin('ModeloNotas')
+    modelo_notas = UnicodeCol(default="")
 
 class Grupo(SQLObject):
     nombre = UnicodeCol()
@@ -286,7 +285,7 @@ def populate():
     inicializar_alumnos()
     inicializar_clases()
     inicializar_grupos()
-    dia = Festivo(ano=2010,mes=11,dia=01)
+    dia = Festivo(ano=2015,mes=11,dia=01)
 
 def generaNif():
     import random
@@ -302,4 +301,4 @@ if __name__=='__main__':
     print "Nos ejecutan en solitario"
 
     #inicializar_grupos()
-    populate()
+    #populate()

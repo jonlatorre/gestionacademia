@@ -64,9 +64,6 @@ class NotaModel(Model):
     gramar = int()
     gramar_np = bool()
     gramar_na = bool()
-    read_writing = int()
-    read_writing_np = bool()
-    read_writing_na = bool()
     reading = int()
     reading_np = bool()
     reading_na = bool()
@@ -85,7 +82,6 @@ class NotaModel(Model):
     comportamiento = ""
     __observables__ = ('control','control_np','control_na',
         'gramar','gramar_np','gramar_na',
-        'read_writing','read_writing_np','read_writing_na',
         'reading','reading_np','reading_na',
         'writing','writing_np','writing_na',
         'useofenglish','useofenglish_np','useofenglish_na',
@@ -112,9 +108,6 @@ class NotaModel(Model):
         gramar = int()
         gramar_np = bool()
         gramar_na = bool()
-        read_writing = int()
-        read_writing_np = bool()
-        read_writing_na = bool()
         reading = int()
         reading_np = bool()
         reading_na = bool()
