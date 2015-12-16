@@ -71,31 +71,31 @@ class Nota(SQLObject):
     asistencia = ForeignKey('Asistencia',cascade='null')
     trimestre = DecimalCol(size=1,precision=0)
     
-    control = DecimalCol(size=3,precision=0)
+    control = DecimalCol(size=3,precision=0,default=0)
     control_np = BoolCol(default=0)
     control_na = BoolCol(default=0)
     
-    grammar = DecimalCol(size=3,precision=0,default="0")
+    grammar = DecimalCol(size=3,precision=0,default=0)
     grammar_np = BoolCol(default=0)
     grammar_na = BoolCol(default=0)
         
-    reading = DecimalCol(size=3,precision=0,default="0")
+    reading = DecimalCol(size=3,precision=0,default=0)
     reading_np = BoolCol(default=0)
     reading_na = BoolCol(default=0)
     
-    writing = DecimalCol(size=3,precision=0,default="0")
+    writing = DecimalCol(size=3,precision=0,default=0)
     writing_np = BoolCol(default=0)
     writing_na = BoolCol(default=0)
     
-    useofenglish = DecimalCol(size=3,precision=0,default="0")
+    useofenglish = DecimalCol(size=3,precision=0,default=0)
     useofenglish_np = BoolCol(default=0)
     useofenglish_na = BoolCol(default=0)
     
-    listening = DecimalCol(size=3,precision=0,default="0")
+    listening = DecimalCol(size=3,precision=0,default=0)
     listening_np = BoolCol(default=0)
     listening_na = BoolCol(default=0)
     
-    speaking = DecimalCol(size=3,precision=0,default="0")
+    speaking = DecimalCol(size=3,precision=0,default=0)
     speaking_np = BoolCol(default=0)
     speaking_na = BoolCol(default=0)
     

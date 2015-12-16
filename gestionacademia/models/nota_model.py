@@ -80,14 +80,7 @@ class NotaModel(Model):
     speaking_np = bool()
     speaking_na = bool()
     comportamiento = ""
-    __observables__ = ('control','control_np','control_na',
-        'grammar','grammar_np','grammar_na',
-        'reading','reading_np','reading_na',
-        'writing','writing_np','writing_na',
-        'useofenglish','useofenglish_np','useofenglish_na',
-        'listening','listening_np','listening_na',
-        'speaking','speaking_np','speaking_na',
-        'comportamiento')
+    __observables__ = ('control','control_np','control_na','grammar','grammar_np','grammar_na','reading','reading_np','reading_na','writing','writing_np','writing_na','useofenglish','useofenglish_np','useofenglish_na','listening','listening_np','listening_na','speaking','speaking_np','speaking_na','comportamiento')
     
     def __init__(self,id=-1):
         """Constructor for NotaModel initialises the model with its parent
@@ -139,7 +132,7 @@ class NotaModel(Model):
                 self.n = res[0]
                 print "Encontrada nota %i"%self.n.id
             else:
-                print "Creando nota nueva"
+                print "No existe, creando nota nueva",asis,self.trimestre
                 self.n = Nota(asistencia=asis,trimestre=self.trimestre)
                 print "Creada",self.n
             self.id = self.n.id
@@ -163,7 +156,7 @@ class NotaModel(Model):
         if self.trimestre==-1 or self.alumnoID == -1 or self.grupoID == -1:
             print "No se puede guardar si no están definidos todos los cambos"
             return -1
-        print "Guardando la Nota %i del alumno %i grupo %i trimestre %i"%(self.n.id,self.alumnoID,self.grupoID,self.trimestre)
+        #print "Guardando la Nota %i del alumno %i grupo %i trimestre %i"%(self.n.id,self.alumnoID,self.grupoID,self.trimestre)
         for variable in self.__observables__:
             print "Guardando %s con el valor %s"%(variable,getattr(self,variable))
             setattr(self.n,variable,getattr(self,variable))
