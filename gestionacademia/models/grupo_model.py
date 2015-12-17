@@ -294,9 +294,14 @@ class GrupoModel (Model):
     def todas_planillas_notas(self,mes):
         num = 0
         for g in Grupo.select(orderBy=Grupo.q.nombre):
-            self.cargar(g.id)
-            self.imprimir_planilla_notas(mes)
-            num += 1
+            if len(g.alumnos) > 0:
+                print "Vamos a cargar %s"%g.id
+                self.cargar(g.id)
+                self.imprimir_planilla_notas(mes)
+                num += 1
+            else:
+                print "Grupo vacio"
+        
         return num
     def imprimir_planilla_notas(self,trimestre):
         ##Para la impresion de la planilla de notas
@@ -316,6 +321,7 @@ class GrupoModel (Model):
         ##Datos del docu: alumno, grupo, profes
         cadena = "Grupo: <b>%s %s</b>"%(self.g.id,self.g.nombre)
         cadena = cadena + "     Curso: <b>%s</b>"%self.g.curso.nombre
+        cadena = cadena + "     Modelo Notas: <b>%s</b>"%self.g.curso.modelo_notas
         story.append(Paragraph(cadena, estilo))
         profes = ""
         for c in self.g.clases:
@@ -323,45 +329,33 @@ class GrupoModel (Model):
         cadena = "Profesores %s"%profes
         story.append(Paragraph(cadena, estilo))
         story.append(Spacer(0,20))
-
-        ##Tabla con las notas (diferente para peques y adultos
-        
-        #~ if re.search("junior",str(self.g.curso.nombre).lower()) or re.search("begin",str(self.g.curso.nombre).lower()):
-        if self.g.menores or self.g.curso.solo_examen_final:
-            ##Solo para los peques
-            tabla =[['Num.','Apellidos, Nombre','Final']]
+        #En base al modelo d enotas cmabiamos los campos de la tabla
+        if self.g.curso.modelo_notas == "upper_proficiency":
+            tabla =[['Num.','Apellidos, Nombre','Use Of English','Reading','Writing','Listening','Speaking']]
+            pie = "Puntuación siempre sobre un total de 100 puntos. Aprobado 60 puntos"
             for asis in self.g.alumnos:
                 a = asis.alumno
-                tabla.append([a.id,"%s %s,%s"%(a.apellido1,a.apellido2,a.nombre),"   /    "])
-            t = Table(tabla)
-            t.setStyle([('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green),('FONTSIZE',(0,0),(-1,-1),9)])
-            story.append(t)
-            story.append(Spacer(0,20))
+                tabla.append([a.id,"%s %s,%s"%(a.apellido1,a.apellido2,a.nombre),"  ","  ","  ","  ","  "])
+        elif self.g.curso.modelo_notas == "elementary_intermediate":
+            tabla =[['Num.','Apellidos, Nombre','Grammar','Reading','Writing','Listening','Speaking']]
+            pie = "Puntuación siempre sobre un total de 100 puntos. Aprobado 70 puntos"
+            for asis in self.g.alumnos:
+                a = asis.alumno
+                tabla.append([a.id,"%s %s,%s"%(a.apellido1,a.apellido2,a.nombre),"  ","  ","  ","  ","  "])
         else:
-            ##Adultos llevan todos los conceptos
-            tabla =[['Num.','Apellidos, Nombre','Grammar','Listening & Speaking','Reading & Writing']]
+            tabla =[['Num.','Apellidos, Nombre','Control/Final']]
+            ##FIXME nota aprobado???
+            pie = "Puntuación siempre sobre un total de 100 puntos. Aprobado ___ puntos"
             for asis in self.g.alumnos:
                 a = asis.alumno
-                tabla.append([a.id,"%s %s,%s"%(a.apellido1,a.apellido2,a.nombre),"   /    ","   /    ","   /    "])
-            t = Table(tabla)
-            t.setStyle([('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green),
-                ('FONTSIZE',(0,0),(-1,-1),10)])
-            story.append(t)
-            story.append(Spacer(0,20))
-
-        #~ ##Explicaciones y baremos
-        #~ cadena="Comportamiento: M = Malo, R = Regular, B = Bueno, E = Muy Bueno"
-        #~ story.append(Paragraph(cadena, estilo))
-        #~ cadena="Realización tareas: N = Nunca, P = Pocas veces, A = A veces, C = Casi siempre, S = Siempre"
-        #~ story.append(Paragraph(cadena, estilo))
-
-        ##Pie de página
-
-        #cadena="<para alignment=center><b>Genaro Oraá,6 - 48980 SANTURTZI (Spain)- Tlf. + 34 944 937 005 - FAX +34 944 615 723</b></para>"
-        #story.append(Paragraph(cadena, estilo))
-        #cadena="<para alignment=center><b><a href=\"http:\\www.eide.es\">www.eide.es</a> - e-mail: eide@eide.es</b></para>"
-        #story.append(Paragraph(cadena, estilo))
-        story.append(Spacer(0,20))
+                tabla.append([a.id,"%s %s,%s"%(a.apellido1,a.apellido2,a.nombre),"  "])
+        t = Table(tabla)
+        t.setStyle([('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green),('FONTSIZE',(0,0),(-1,-1),9)])
+        story.append(t)
+        story.append(Spacer(0,20))        
+        story.append(Paragraph(pie, estilo))
+        pie = "NP para los no presentados. NA si no aplica este trimestre algún concepto"
+        story.append(Paragraph(pie, estilo))
         doc=SimpleDocTemplate(fichero,pagesize=A4,showBoundary=0)
         doc.build(story)
         send_to_printer(fichero)

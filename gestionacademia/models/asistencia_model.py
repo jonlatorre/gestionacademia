@@ -33,11 +33,6 @@ from gestionacademia.utils._global import *
 
 
 class AsistenciaModel(Model):
-
-    """Model del banco
-    Metodos públicos:
-
-    """
     a = None
     confirmado = False
     precio = str()
@@ -47,10 +42,6 @@ class AsistenciaModel(Model):
     grupoID = -1
     __observables__ = ('confirmado','precio','factura','metalico')
     def __init__(self,id=-1):
-
-        """Constructor for HorarioModel initialises the model with its parent
-        class, then sets credits to the contents of a file.
-        """
         Model.__init__(self)
         self.alumnoModel = AlumnoModel()
         self.grupoModel = GrupoModel()
@@ -78,14 +69,10 @@ class AsistenciaModel(Model):
         print "Imprimiendo horario..."
         self.imprimir_horario()
     def cargar(self,id):
-        ##print "Cargando el Asistencia %i"%id
-        if id == -1:
-            ##print "Es nuevo, nada que cargar"
+        if id == -1:            
             return
         self.a = Asistencia.get(id)
-        for variable in ['precio','id','confirmado','alumnoID','grupoID','factura','metalico']:
-            ##print "Cargando variable %s co el valor %s"%(variable,getattr(self.a,variable))
-
+        for variable in ['precio','id','confirmado','alumnoID','grupoID','factura','metalico']:            
             setattr(self,variable,getattr(self.a,variable))
         if self.precio == None:
             self.precio = ""

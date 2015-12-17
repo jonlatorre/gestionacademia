@@ -1,3 +1,0 @@
-[user]
-uname=Estibaliz Gomez
-uid=924030870

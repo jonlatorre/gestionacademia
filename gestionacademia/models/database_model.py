@@ -51,6 +51,12 @@ class Alumno(SQLObject):
     ##Otras entidades relacionadas
     grupos  = MultipleJoin('Asistencia')
 
+class Historia(SQLObject):
+	alumno = ForeignKey('Alumno',cascade='null')
+	fecha = DateCol(default=DateTimeCol.now())
+	tipo = UnicodeCol(default="")
+	anotacion = UnicodeCol(default="")
+
 class Asistencia(SQLObject):
     grupo = ForeignKey('Grupo',cascade='null')
     alumno = ForeignKey('Alumno',cascade='null')
@@ -61,31 +67,40 @@ class Asistencia(SQLObject):
     notas = MultipleJoin('Notas')
     faltas = MultipleJoin('Notas')
 
-class Historia(SQLObject):
-	alumno = ForeignKey('Alumno',cascade='null')
-	fecha = DateCol(default=DateTimeCol.now())
-	tipo = UnicodeCol(default="")
-	anotacion = UnicodeCol(default="")
-	
 class Nota(SQLObject):
     asistencia = ForeignKey('Asistencia',cascade='null')
     trimestre = DecimalCol(size=1,precision=0)
-    #control1 = DecimalCol(size=3,precision=0,default="0")
-    #control1_baremo = DecimalCol(size=3,precision=0,default="0")
-    #control2 = DecimalCol(size=3,precision=0,default="0")
-    #control2_baremo = DecimalCol(size=3,precision=0,default="0")
-    #control3 = DecimalCol(size=3,precision=0,default="0")
-    #control3_baremo = DecimalCol(size=3,precision=0,default="0")
-    grama = DecimalCol(size=3,precision=0,default=0)
-    grama_baremo = DecimalCol(size=3,precision=0,default=0)
-    expresion = DecimalCol(size=3,precision=0,default=0)
-    expresion_baremo = DecimalCol(size=3,precision=0,default=0)
-    lectura = DecimalCol(size=3,precision=0,default=0)
-    lectura_baremo = DecimalCol(size=3,precision=0,default=0)
     
-
-
-
+    control = DecimalCol(size=3,precision=0,default=0)
+    control_np = BoolCol(default=0)
+    control_na = BoolCol(default=0)
+    
+    grammar = DecimalCol(size=3,precision=0,default=0)
+    grammar_np = BoolCol(default=0)
+    grammar_na = BoolCol(default=0)
+        
+    reading = DecimalCol(size=3,precision=0,default=0)
+    reading_np = BoolCol(default=0)
+    reading_na = BoolCol(default=0)
+    
+    writing = DecimalCol(size=3,precision=0,default=0)
+    writing_np = BoolCol(default=0)
+    writing_na = BoolCol(default=0)
+    
+    useofenglish = DecimalCol(size=3,precision=0,default=0)
+    useofenglish_np = BoolCol(default=0)
+    useofenglish_na = BoolCol(default=0)
+    
+    listening = DecimalCol(size=3,precision=0,default=0)
+    listening_np = BoolCol(default=0)
+    listening_na = BoolCol(default=0)
+    
+    speaking = DecimalCol(size=3,precision=0,default=0)
+    speaking_np = BoolCol(default=0)
+    speaking_na = BoolCol(default=0)
+    
+    comportamiento = UnicodeCol(length=1,default="R")
+    
 class Falta(SQLObject):
     asistencia = ForeignKey('Asistencia',cascade='null')
     mes = DecimalCol(size=1,precision=0)
@@ -134,6 +149,7 @@ class Curso(SQLObject):
     nivel = UnicodeCol(default="")
     libros = RelatedJoin('Libro')
     nota_aprobado = FloatCol(default=50)
+    modelo_notas = UnicodeCol(default="")
     solo_examen_final = BoolCol(default=0)
 
 class Grupo(SQLObject):
@@ -271,7 +287,7 @@ def populate():
     inicializar_alumnos()
     inicializar_clases()
     inicializar_grupos()
-    dia = Festivo(ano=2010,mes=11,dia=01)
+    dia = Festivo(ano=2015,mes=11,dia=01)
 
 def generaNif():
     import random
@@ -287,4 +303,4 @@ if __name__=='__main__':
     print "Nos ejecutan en solitario"
 
     #inicializar_grupos()
-    populate()
+    #populate()
