@@ -96,7 +96,11 @@ class FacturacionModel (Model):
             ##Comprobamos si aun no hemos cambiado de banco
             if nuevo_banco == banco:
                 ##Sumamos el importe al total de este banco y el numero de cargos en el banco
-                total_banco = float(total_banco) + float(importe)
+                try:
+                    total_banco = float(total_banco) + float(importe)
+                except:
+                    print "nO HEMOS PODIDO SUMAR sS AL BANCO %s"
+                    print pago
                 recibos_banco += 1
                 tabla.append(['',pago[1],"%s-%s-%s-%s"%(ajustar(ccc[0],4),ajustar(ccc[1],4),ajustar(ccc[2],2),ajustar(ccc[3],10)),importe])
             else:
@@ -311,7 +315,10 @@ class FacturacionModel (Model):
         importe=cobro[3]
         concepto=cobro[4]
         #Sumamos el importe al total
-        self.importe_recibos += float(importe)
+        try:
+            self.importe_recibos += float(importe)
+        except:
+            print "NO hemos podido genrerar el import para %s %s"%(nombre,importe)
         self.numero_recibos += 1
         cod_reg = "56"
         cod_dato = "80"

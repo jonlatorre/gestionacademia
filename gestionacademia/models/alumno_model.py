@@ -597,7 +597,10 @@ Los derechos de acceso, rectificación, cancelación y oposición serán ejercit
             if asistencia.precio == None or asistencia.precio == "":
                 precio = "Sin descuento"
             else:
-                precio = float(asistencia.precio.replace(",","."))
+                try: 
+                    precio = float(asistencia.precio.replace(",","."))
+                except: 
+                    precio = "Sin Descuento"
             horario = ""
             for clase in asistencia.grupo.clases:
                 horario += "%s-%s ; "%(clase.dia_semana,clase.horario)
