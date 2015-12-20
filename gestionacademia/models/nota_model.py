@@ -8,6 +8,7 @@
 import os.path,os
 from datetime import date
 import re
+import sys
 # Third party library imports
 from gtkmvc import Model
 from gtkmvc.model import SQLObjectModel
@@ -31,12 +32,15 @@ from gestionacademia.utils._imprimir import *
 
 def limpiar_nota(nota):
     """Función para la impresiónn que devuelve en blanco si la nota y el baremo son 0"""
-    if nota==0:
-        return "0"
-    elif nota==-1 or nota==999:
-        return "NP"
-    else:
+    print "somos limpiar nota",nota,type(nota)
+    if type(nota) == int:
         return nota
+    else:
+        try:
+            return int(nota)
+        except:
+            print "No podemos pasar a int la nota, devolvemos 0"
+            return 0
 
 def convertir_comportamiento(comportamiento):
     conversion = {'M': "Malo", 'R': 'Regular', 'B':'Bueno', 'E':'Muy Bueno'}
@@ -125,16 +129,23 @@ class NotaModel(Model):
             return -1
         res = Asistencia.select(AND(Asistencia.q.alumnoID==self.alumnoID,Asistencia.q.grupoID==self.grupoID))
         if len(list(res)):
+            print "Hemos encontrado la asistencia",res
             ##en base a la asistencia buscamos si hay una nota
             asis = res[0]
             res = Nota.select(AND(Nota.q.asistenciaID==asis.id,Nota.q.trimestre==self.trimestre))
-            if len(list(res)):
+            print "Hemos encontrado",res
+            try:
                 self.n = res[0]
                 print "Encontrada nota %i"%self.n.id
-            else:
+            except:
+                print sys.exc_info()[0]
                 print "No existe, creando nota nueva",asis,self.trimestre
-                self.n = Nota(asistencia=asis,trimestre=self.trimestre)
-                print "Creada",self.n
+                try:
+                    self.n = Nota(asistencia=asis,trimestre=self.trimestre)
+                    print "Creada",self.n
+                except:
+                    print sys.exc_info()
+                    print "No hemos podido crear la nota!"
             self.id = self.n.id
             return 1
         else:
@@ -183,14 +194,28 @@ class NotaModel(Model):
             if len(list(res)):
                 n = res[0]
                 #print "Encontrada nota %i"%n.id
+                np = False
+                na = False
                 for variable in self.__observables__:
                     #print "Cargando %s con el valor %s"%(variable,getattr(n,variable))
-                    notas.update({variable: limpiar_nota(getattr(n,variable))})
+                    #Si es una variable _np o _na no hacemos nada
+                    if re.search("_np",variable) or re.search("_na",variable):
+                        np = False
+                        na = False
+                    else:
+                        np = getattr(n,"%s_np"%variable)
+                        na = getattr(n,"%s_na"%variable)
+                    if na:
+                        notas.update({variable: "NA"})
+                    elif np:
+                        notas.update({variable: "NP"})
+                    else:
+                        notas.update({variable: limpiar_nota(getattr(n,variable))})
             else:
                 #print "No hay nota :("
                 for variable in self.__observables__:
                     #print "Cargando %s con el valor %s"%(variable,"-")
-                    notas.update({variable: "-"})
+                    notas.update({variable: 0})
             #print notas
             notas_trimestres.update({trimestre: notas})
 
@@ -247,71 +272,141 @@ class NotaModel(Model):
         story.append(Paragraph(cadena, estilo))
         story.append(Spacer(0,20))
         ##Tabla con las notas
-        tabla_controles =[['Concepto','Primer Trimestre','Segundo Trimestre','Tercer Trimestre']]
         
-        tabla_controles.append(["Control 1",\
-            "%s/%s"%(notas_trimestres[1]['control1'],notas_trimestres[1]['control1_baremo']),\
-            "%s/%s"%(notas_trimestres[2]['control1'],notas_trimestres[2]['control1_baremo']),\
-            "%s/%s"%(notas_trimestres[3]['control1'],notas_trimestres[3]['control1_baremo'])])
-        tabla_controles.append(["Control 2",\
-            "%s/%s"%(notas_trimestres[1]['control2'],notas_trimestres[1]['control2_baremo']),\
-            "%s/%s"%(notas_trimestres[2]['control2'],notas_trimestres[2]['control2_baremo']),\
-            "%s/%s"%(notas_trimestres[3]['control2'],notas_trimestres[3]['control2_baremo'])])
-
-        tabla_controles.append(["Control Final",\
-            "%s/%s"%(notas_trimestres[1]['control3'],notas_trimestres[1]['control3_baremo']),\
-            "%s/%s"%(notas_trimestres[2]['control3'],notas_trimestres[2]['control3_baremo']),\
-            "%s/%s"%(notas_trimestres[3]['control3'],notas_trimestres[3]['control3_baremo'])])
-
-
-        tabla_controles.append(["Tareas",\
-            "%s"%(convertir_tareas(notas_trimestres[1]['tareas'])),\
-            "%s"%(convertir_tareas(notas_trimestres[2]['tareas'])),\
-            "%s"%(convertir_tareas(notas_trimestres[3]['tareas']))])
-        tabla_controles.append(["Comportamiento",\
-            "%s"%(convertir_comportamiento(notas_trimestres[1]['comportamiento'])),\
-            "%s"%(convertir_comportamiento(notas_trimestres[2]['comportamiento'])),\
-            "%s"%(convertir_comportamiento(notas_trimestres[3]['comportamiento']))])
-
-        t_controles = Table(tabla_controles)
-        t_controles.setStyle([('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green)])
-        story.append(t_controles)
-        story.append(Spacer(0,20))
-
-        ##FIXME comprobar si el alumno no es begginers o juniors
-        if re.search('junior',asistencia.grupo.curso.nombre.lower()) or re.search('beginner',asistencia.grupo.curso.nombre.lower()):
-            debug("Juniors y beginners no tienen estas notas.")
-            pass
-        else:
+        if asistencia.grupo.curso.modelo_notas == "upper_proficiency":
             tabla =[['Concepto','Primer Trimestre','Segundo Trimestre','Tercer Trimestre']]
-            tabla.append(["Gramática y vocabulario",\
-                "%s/%s"%(notas_trimestres[1]['grama'],notas_trimestres[1]['grama_baremo']),\
-                "%s/%s"%(notas_trimestres[2]['grama'],notas_trimestres[2]['grama_baremo']),\
-                "%s/%s"%(notas_trimestres[3]['grama'],notas_trimestres[3]['grama_baremo'])])
+            tabla.append(["Reading",\
+                "%s"%(notas_trimestres[1]['reading']),\
+                "%s"%(notas_trimestres[2]['reading']),\
+                "%s"%(notas_trimestres[3]['reading'])])
+            tabla.append(["Use of english",\
+                "%s"%(notas_trimestres[1]['useofenglish']),\
+                "%s"%(notas_trimestres[2]['useofenglish']),\
+                "%s"%(notas_trimestres[3]['useofenglish'])])
+            tabla.append(["Writing",\
+                "%s"%(notas_trimestres[1]['writing']),\
+                "%s"%(notas_trimestres[2]['writing']),\
+                "%s"%(notas_trimestres[3]['writing'])])
+            tabla.append(["Speaking",\
+                "%s"%(notas_trimestres[1]['reading']),\
+                "%s"%(notas_trimestres[2]['reading']),\
+                "%s"%(notas_trimestres[3]['reading'])])
+            tabla.append(["Listening",\
+                "%s"%(notas_trimestres[1]['listening']),\
+                "%s"%(notas_trimestres[2]['listening']),\
+                "%s"%(notas_trimestres[3]['listening'])])    
 
-            tabla.append(["Expresión oral",\
-                "%s/%s"%(notas_trimestres[1]['expresion'],notas_trimestres[1]['expresion_baremo']),\
-                "%s/%s"%(notas_trimestres[2]['expresion'],notas_trimestres[2]['expresion_baremo']),\
-                "%s/%s"%(notas_trimestres[3]['expresion'],notas_trimestres[3]['expresion_baremo'])])
-
-
-            tabla.append(["Lectura, comprensión y expresión escrita",\
-                "%s/%s"%(notas_trimestres[1]['lectura'],notas_trimestres[1]['lectura_baremo']),\
-                "%s/%s"%(notas_trimestres[2]['lectura'],notas_trimestres[2]['lectura_baremo']),\
-                "%s/%s"%(notas_trimestres[3]['lectura'],notas_trimestres[3]['lectura_baremo'])])
+            nota_final_trimestre_1 = (\
+                notas_trimestres[1]['reading'] +\
+                notas_trimestres[1]['useofenglish'] +\
+                notas_trimestres[1]['writing'] +\
+                notas_trimestres[1]['reading'] + \
+                notas_trimestres[1]['listening']) / 5
+            nota_final_trimestre_2 = (\
+                notas_trimestres[2]['reading'] +\
+                notas_trimestres[2]['useofenglish'] +\
+                notas_trimestres[2]['writing'] +\
+                notas_trimestres[2]['reading'] + \
+                notas_trimestres[2]['listening']) / 5
+            nota_final_trimestre_3 = (\
+                notas_trimestres[3]['reading'] +\
+                notas_trimestres[3]['useofenglish'] +\
+                notas_trimestres[3]['writing'] +\
+                notas_trimestres[3]['reading'] + \
+                notas_trimestres[3]['listening']) / 5
+            
+            tabla.append(["Nota Final",\
+                "%s"%(nota_final_trimestre_1),\
+                "%s"%(nota_final_trimestre_2),\
+                "%s"%(nota_final_trimestre_3)])    
 
             t_notas = Table(tabla)
             t_notas.setStyle([('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green)])
             story.append(t_notas)
+        elif asistencia.grupo.curso.modelo_notas == "elementary_intermediate":
+            tabla =[['Concepto','Primer Trimestre','Segundo Trimestre','Tercer Trimestre']]
+            tabla.append(["Grammar",\
+                "%s"%(notas_trimestres[1]['grammar']),\
+                "%s"%(notas_trimestres[2]['grammar']),\
+                "%s"%(notas_trimestres[3]['grammar'])])
+            tabla.append(["Reading",\
+                "%s"%(notas_trimestres[1]['reading']),\
+                "%s"%(notas_trimestres[2]['reading']),\
+                "%s"%(notas_trimestres[3]['reading'])])
+            tabla.append(["Writing",\
+                "%s"%(notas_trimestres[1]['writing']),\
+                "%s"%(notas_trimestres[2]['writing']),\
+                "%s"%(notas_trimestres[3]['writing'])])
+            tabla.append(["Speaking",\
+                "%s"%(notas_trimestres[1]['reading']),\
+                "%s"%(notas_trimestres[2]['reading']),\
+                "%s"%(notas_trimestres[3]['reading'])])
+            tabla.append(["Listening",\
+                "%s"%(notas_trimestres[1]['listening']),\
+                "%s"%(notas_trimestres[2]['listening']),\
+                "%s"%(notas_trimestres[3]['listening'])])    
+
+            nota_final_trimestre_1 = (\
+                notas_trimestres[1]['reading'] +\
+                notas_trimestres[1]['grammar'] +\
+                notas_trimestres[1]['writing'] +\
+                notas_trimestres[1]['reading'] + \
+                notas_trimestres[1]['listening']) / 5
+            nota_final_trimestre_2 = (\
+                notas_trimestres[2]['reading'] +\
+                notas_trimestres[2]['grammar'] +\
+                notas_trimestres[2]['writing'] +\
+                notas_trimestres[2]['reading'] + \
+                notas_trimestres[2]['listening']) / 5
+            nota_final_trimestre_3 = (\
+                notas_trimestres[3]['reading'] +\
+                notas_trimestres[3]['grammar'] +\
+                notas_trimestres[3]['writing'] +\
+                notas_trimestres[3]['reading'] + \
+                notas_trimestres[3]['listening']) / 5
+
+            tabla.append(["Nota Final",\
+                "%s"%(nota_final_trimestre_1),\
+                "%s"%(nota_final_trimestre_2),\
+                "%s"%(nota_final_trimestre_3)])    
+            t_notas = Table(tabla)
+            t_notas.setStyle([('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green)])
+            story.append(t_notas)
+        
+        else:
+            tabla_controles =[['Concepto','Primer Trimestre','Segundo Trimestre','Tercer Trimestre']]        
+            tabla_controles.append(["Control",\
+                "%s"%(notas_trimestres[1]['control']),\
+                "%s"%(notas_trimestres[2]['control']),\
+                "%s"%(notas_trimestres[3]['control'])])                
+
+            if asistencia.grupo.menores:
+                tabla_controles.append(["Comportamiento",\
+                    "%s"%(convertir_comportamiento(notas_trimestres[1]['comportamiento'])),\
+                    "%s"%(convertir_comportamiento(notas_trimestres[2]['comportamiento'])),\
+                    "%s"%(convertir_comportamiento(notas_trimestres[3]['comportamiento']))])
+
+            t_controles = Table(tabla_controles)
+            t_controles.setStyle([('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green)])
+            story.append(t_controles)
+
+        story.append(Spacer(0,20))
 
         ###Explicaciones y baremos
         #cadena="Comportamiento: M = Malo, R = Regular, B = Bueno, E = Muy Bueno"
         #story.append(Paragraph(cadena, estilo))
-        #cadena="Realización tareas: N = Nunca, P = Pocas veces, A = A veces, C = Casi siempre, S = Siempre"
-        #story.append(Paragraph(cadena, estilo))
-        cadena="Para que un examen se considere aprobado se deberá superar el %d %%"%asistencia.grupo.curso.nota_aprobado
+        
+        if asistencia.grupo.curso.modelo_notas == "upper_proficiency":
+            nota_aprobado = "60"
+        elif asistencia.grupo.curso.modelo_notas == "elementary_intermediate":
+            nota_aprobado = "70"
+        else:
+            nota_aprobado = asistencia.grupo.curso.nota_aprobado
+        cadena="Para que un examen se considere aprobado se deberá superar el %s"%nota_aprobado
         story.append(Paragraph(cadena, estilo))
         cadena="NP: No Presentado"
+        story.append(Paragraph(cadena, estilo))
+        cadena="NA: Ese trimestre no se evaluaba"
         story.append(Paragraph(cadena, estilo))
         story.append(Spacer(0,10))
         ##Observaciones

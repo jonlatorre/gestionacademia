@@ -100,6 +100,8 @@ class Nota(SQLObject):
     speaking_na = BoolCol(default=0)
     
     comportamiento = UnicodeCol(length=1,default="R")
+    comportamiento_np = BoolCol(default=0)
+    comportamiento_na = BoolCol(default=0)
     
 class Falta(SQLObject):
     asistencia = ForeignKey('Asistencia',cascade='null')
