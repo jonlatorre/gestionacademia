@@ -406,7 +406,7 @@ class NotaModel(Model):
         story.append(Paragraph(cadena, estilo))
         cadena="NP: No Presentado"
         story.append(Paragraph(cadena, estilo))
-        cadena="NA: Ese trimestre no se evaluaba"
+        cadena="NA: Ese trimestre no se evalúa"
         story.append(Paragraph(cadena, estilo))
         story.append(Spacer(0,10))
         ##Observaciones
