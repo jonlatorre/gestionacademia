@@ -19,6 +19,7 @@ from datetime import date
 
 import new
 import re
+import sys
 
 #Para trabajar con calendarios
 from calendar import Calendar
@@ -490,7 +491,7 @@ class GrupoModel (Model):
                 if e == "list index out of range":
                     print "No hay nota aun!"
                 else:
-                    print "Otro error:", e
+                    print "Otro error:", sys.exc_info()
 
 
     def borrar(self):

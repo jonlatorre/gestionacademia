@@ -32,14 +32,14 @@ from gestionacademia.utils._imprimir import *
 
 def limpiar_nota(nota):
     """Función para la impresiónn que devuelve en blanco si la nota y el baremo son 0"""
-    print "somos limpiar nota",nota,type(nota)
+    #~ print "somos limpiar nota",nota,type(nota)
     if type(nota) == int:
         return nota
     else:
         try:
             return int(nota)
         except:
-            print "No podemos pasar a int la nota, devolvemos 0"
+            #~ print "No podemos pasar a int la nota, devolvemos 0",sys.exc_info()
             return 0
 
 def convertir_comportamiento(comportamiento):
@@ -138,7 +138,7 @@ class NotaModel(Model):
                 self.n = res[0]
                 print "Encontrada nota %i"%self.n.id
             except:
-                print sys.exc_info()[0]
+                print sys.exc_info()
                 print "No existe, creando nota nueva",asis,self.trimestre
                 try:
                     self.n = Nota(asistencia=asis,trimestre=self.trimestre)
@@ -211,15 +211,37 @@ class NotaModel(Model):
                         notas.update({variable: "NP"})
                     else:
                         notas.update({variable: limpiar_nota(getattr(n,variable))})
+                lista_materias=[]
+                if asistencia.grupo.curso.modelo_notas == "elementary_intermediate":
+                    lista_materias = ['reading', 'grammar', 'writing', 'reading', 'listening']
+                elif asistencia.grupo.curso.modelo_notas == "upper_proficiency":
+                    lista_materias = ['reading', 'useofenglish', 'writing', 'reading', 'listening']
+                else: 
+                    lista_materias=[]
+                if len(lista_materias) > 0:
+                    #Calculamos la nota final:
+                    lista_notas = []
+                    for materia in lista_materias:
+                        #~ print "miramos si %s tiene na"%materia,getattr(n,"%s_na"%materia)
+                        if getattr(n,"%s_na"%materia):
+                            #~ print "miramos si %s tiene na"%materia,getattr(n,"%s_na"%materia)
+                            pass
+                        else:
+                            lista_notas.append(limpiar_nota(getattr(n,materia)))
+                    #~ print "Lista", lista_notas
+                    nota_final = sum(lista_notas) / len(lista_notas)
+                    #~ print "Nota final", nota_final
+                    notas.update({"nota_final": nota_final})
+                        
             else:
-                #print "No hay nota :("
+                #~ print "No hay nota aun"
                 for variable in self.__observables__:
-                    #print "Cargando %s con el valor %s"%(variable,"-")
                     notas.update({variable: 0})
-            #print notas
+                    notas.update({"nota_final": 0})
+            #~ print "Añadimos las notas de trimestre", notas
             notas_trimestres.update({trimestre: notas})
 
-        #print notas_trimestres
+        #~ print "En total: ",notas_trimestres
         estiloHoja = getSampleStyleSheet()
         story = []
         ##Vamos con la cabecera
@@ -295,34 +317,14 @@ class NotaModel(Model):
                 "%s"%(notas_trimestres[1]['listening']),\
                 "%s"%(notas_trimestres[2]['listening']),\
                 "%s"%(notas_trimestres[3]['listening'])])    
-
-            nota_final_trimestre_1 = (\
-                notas_trimestres[1]['reading'] +\
-                notas_trimestres[1]['useofenglish'] +\
-                notas_trimestres[1]['writing'] +\
-                notas_trimestres[1]['reading'] + \
-                notas_trimestres[1]['listening']) / 5
-            nota_final_trimestre_2 = (\
-                notas_trimestres[2]['reading'] +\
-                notas_trimestres[2]['useofenglish'] +\
-                notas_trimestres[2]['writing'] +\
-                notas_trimestres[2]['reading'] + \
-                notas_trimestres[2]['listening']) / 5
-            nota_final_trimestre_3 = (\
-                notas_trimestres[3]['reading'] +\
-                notas_trimestres[3]['useofenglish'] +\
-                notas_trimestres[3]['writing'] +\
-                notas_trimestres[3]['reading'] + \
-                notas_trimestres[3]['listening']) / 5
-            
-            tabla.append(["Nota Final",\
-                "%s"%(nota_final_trimestre_1),\
-                "%s"%(nota_final_trimestre_2),\
-                "%s"%(nota_final_trimestre_3)])    
-
+            tabla.append(["Final",\
+                "%s"%(notas_trimestres[1]['nota_final']),\
+                "%s"%(notas_trimestres[2]['nota_final']),\
+                "%s"%(notas_trimestres[3]['nota_final'])])
             t_notas = Table(tabla)
             t_notas.setStyle([('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green)])
             story.append(t_notas)
+            
         elif asistencia.grupo.curso.modelo_notas == "elementary_intermediate":
             tabla =[['Concepto','Primer Trimestre','Segundo Trimestre','Tercer Trimestre']]
             tabla.append(["Grammar",\
@@ -345,30 +347,10 @@ class NotaModel(Model):
                 "%s"%(notas_trimestres[1]['listening']),\
                 "%s"%(notas_trimestres[2]['listening']),\
                 "%s"%(notas_trimestres[3]['listening'])])    
-
-            nota_final_trimestre_1 = (\
-                notas_trimestres[1]['reading'] +\
-                notas_trimestres[1]['grammar'] +\
-                notas_trimestres[1]['writing'] +\
-                notas_trimestres[1]['reading'] + \
-                notas_trimestres[1]['listening']) / 5
-            nota_final_trimestre_2 = (\
-                notas_trimestres[2]['reading'] +\
-                notas_trimestres[2]['grammar'] +\
-                notas_trimestres[2]['writing'] +\
-                notas_trimestres[2]['reading'] + \
-                notas_trimestres[2]['listening']) / 5
-            nota_final_trimestre_3 = (\
-                notas_trimestres[3]['reading'] +\
-                notas_trimestres[3]['grammar'] +\
-                notas_trimestres[3]['writing'] +\
-                notas_trimestres[3]['reading'] + \
-                notas_trimestres[3]['listening']) / 5
-
-            tabla.append(["Nota Final",\
-                "%s"%(nota_final_trimestre_1),\
-                "%s"%(nota_final_trimestre_2),\
-                "%s"%(nota_final_trimestre_3)])    
+            tabla.append(["Final",\
+                "%s"%(notas_trimestres[1]['nota_final']),\
+                "%s"%(notas_trimestres[2]['nota_final']),\
+                "%s"%(notas_trimestres[3]['nota_final'])])
             t_notas = Table(tabla)
             t_notas.setStyle([('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green)])
             story.append(t_notas)
@@ -379,13 +361,11 @@ class NotaModel(Model):
                 "%s"%(notas_trimestres[1]['control']),\
                 "%s"%(notas_trimestres[2]['control']),\
                 "%s"%(notas_trimestres[3]['control'])])                
-
             if asistencia.grupo.menores:
                 tabla_controles.append(["Comportamiento",\
                     "%s"%(convertir_comportamiento(notas_trimestres[1]['comportamiento'])),\
                     "%s"%(convertir_comportamiento(notas_trimestres[2]['comportamiento'])),\
                     "%s"%(convertir_comportamiento(notas_trimestres[3]['comportamiento']))])
-
             t_controles = Table(tabla_controles)
             t_controles.setStyle([('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green)])
             story.append(t_controles)
