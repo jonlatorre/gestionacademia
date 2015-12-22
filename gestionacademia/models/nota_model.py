@@ -157,7 +157,7 @@ class NotaModel(Model):
         if self.buscar()==1:
             print "Cargando las Notas"
             for variable in self.__observables__:
-                print "Cargando variable %s con el valor %s"%(variable,getattr(self.n,variable))
+                #print "Cargando variable %s con el valor %s"%(variable,getattr(self.n,variable))
                 setattr(self,variable,getattr(self.n,variable))
         else:
             print "No podemos cargar la nota!"
@@ -310,9 +310,9 @@ class NotaModel(Model):
                 "%s"%(notas_trimestres[2]['writing']),\
                 "%s"%(notas_trimestres[3]['writing'])])
             tabla.append(["Speaking",\
-                "%s"%(notas_trimestres[1]['reading']),\
-                "%s"%(notas_trimestres[2]['reading']),\
-                "%s"%(notas_trimestres[3]['reading'])])
+                "%s"%(notas_trimestres[1]['speaking']),\
+                "%s"%(notas_trimestres[2]['speaking']),\
+                "%s"%(notas_trimestres[3]['speaking'])])
             tabla.append(["Listening",\
                 "%s"%(notas_trimestres[1]['listening']),\
                 "%s"%(notas_trimestres[2]['listening']),\
@@ -340,9 +340,9 @@ class NotaModel(Model):
                 "%s"%(notas_trimestres[2]['writing']),\
                 "%s"%(notas_trimestres[3]['writing'])])
             tabla.append(["Speaking",\
-                "%s"%(notas_trimestres[1]['reading']),\
-                "%s"%(notas_trimestres[2]['reading']),\
-                "%s"%(notas_trimestres[3]['reading'])])
+                "%s"%(notas_trimestres[1]['speaking']),\
+                "%s"%(notas_trimestres[2]['speaking']),\
+                "%s"%(notas_trimestres[3]['speaking'])])
             tabla.append(["Listening",\
                 "%s"%(notas_trimestres[1]['listening']),\
                 "%s"%(notas_trimestres[2]['listening']),\
