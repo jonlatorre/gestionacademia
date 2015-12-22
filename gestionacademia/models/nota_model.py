@@ -42,6 +42,17 @@ def limpiar_nota(nota):
             #~ print "No podemos pasar a int la nota, devolvemos 0",sys.exc_info()
             return 0
 
+def nota_media(lista):
+    print lista
+    total=float(0)
+    for nota in lista:
+        print "Sumamos",nota
+        total = total + float(nota)
+    numero = float(len(lista))
+    media = ( total / numero )
+    print "Total, numero notas, media",total,numero,media
+    return media
+
 def convertir_comportamiento(comportamiento):
     conversion = {'M': "Malo", 'R': 'Regular', 'B':'Bueno', 'E':'Muy Bueno'}
     try:
@@ -213,9 +224,9 @@ class NotaModel(Model):
                         notas.update({variable: limpiar_nota(getattr(n,variable))})
                 lista_materias=[]
                 if asistencia.grupo.curso.modelo_notas == "elementary_intermediate":
-                    lista_materias = ['reading', 'grammar', 'writing', 'reading', 'listening']
+                    lista_materias = ['reading', 'grammar', 'writing', 'speaking', 'listening']
                 elif asistencia.grupo.curso.modelo_notas == "upper_proficiency":
-                    lista_materias = ['reading', 'useofenglish', 'writing', 'reading', 'listening']
+                    lista_materias = ['reading', 'useofenglish', 'writing', 'speaking', 'listening']
                 else: 
                     lista_materias=[]
                 if len(lista_materias) > 0:
@@ -229,7 +240,7 @@ class NotaModel(Model):
                         else:
                             lista_notas.append(limpiar_nota(getattr(n,materia)))
                     #~ print "Lista", lista_notas
-                    nota_final = sum(lista_notas) / len(lista_notas)
+                    nota_final = nota_media(lista_notas)
                     #~ print "Nota final", nota_final
                     notas.update({"nota_final": nota_final})
                         
@@ -318,9 +329,9 @@ class NotaModel(Model):
                 "%s"%(notas_trimestres[2]['listening']),\
                 "%s"%(notas_trimestres[3]['listening'])])    
             tabla.append(["Final",\
-                "%s"%(notas_trimestres[1]['nota_final']),\
-                "%s"%(notas_trimestres[2]['nota_final']),\
-                "%s"%(notas_trimestres[3]['nota_final'])])
+                "%.2f"%(notas_trimestres[1]['nota_final']),\
+                "%.2f"%(notas_trimestres[2]['nota_final']),\
+                "%.2f"%(notas_trimestres[3]['nota_final'])])
             t_notas = Table(tabla)
             t_notas.setStyle([('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green)])
             story.append(t_notas)
@@ -348,9 +359,9 @@ class NotaModel(Model):
                 "%s"%(notas_trimestres[2]['listening']),\
                 "%s"%(notas_trimestres[3]['listening'])])    
             tabla.append(["Final",\
-                "%s"%(notas_trimestres[1]['nota_final']),\
-                "%s"%(notas_trimestres[2]['nota_final']),\
-                "%s"%(notas_trimestres[3]['nota_final'])])
+                "%.2f"%(notas_trimestres[1]['nota_final']),\
+                "%.2f"%(notas_trimestres[2]['nota_final']),\
+                "%.2f"%(notas_trimestres[3]['nota_final'])])
             t_notas = Table(tabla)
             t_notas.setStyle([('TEXTCOLOR',(0,1),(0,-1),colors.blue), ('TEXTCOLOR',(1,1), (2,-1),colors.green)])
             story.append(t_notas)
