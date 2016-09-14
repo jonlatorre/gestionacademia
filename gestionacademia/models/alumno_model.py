@@ -374,7 +374,7 @@ class AlumnoModel (Model):
                         #~ print "Es mayor"
                         #~ nota_3trimestre = nota.grama
                         #~ baremo_3trimestre = nota.grama_baremo
-                    nota_3trimestre = nota.grama   
+                    nota_3trimestre = nota.grammar   
                     ### Buscamos la nota de grama, si es 0 cojemos el control3 si es 999 (no presentado ponemos un NP)
                     if nota_3trimestre == 0:
                         
